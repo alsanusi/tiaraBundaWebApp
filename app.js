@@ -1,8 +1,12 @@
 const express = require('express')
 const app = express()
 
+//Setting up templaing view engine - EJS
+app.set('view engine', 'ejs')
+app.use(express.static("views"))
+
 app.get('/', (req, res) => {
-    res.send("Welcome")
+    res.render('index')
 })
 
 app.listen(3000, () => {
