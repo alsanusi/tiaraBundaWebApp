@@ -9,6 +9,10 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
+app.get('/panel', (req, res) => {
+    res.render('panel/index')
+})
+
 app.listen(3000, () => {
     console.log('Server running at port 3000: http://127.0.0.1:3000')
 })
