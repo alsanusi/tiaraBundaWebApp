@@ -43,6 +43,14 @@
                         <div class="col-lg-5 col-md-6">
                             <h1 class="text-white">Selamat Datang!</h1>
                             <p class="text-lead text-light">Selamat datang di Tiara Bunda Web App.</p>
+                            <!-- Error and Success Message -->
+                            <% if(messages.error){ %>
+                            <h2 style="color:#d82436">Login Gagal!</h2>
+                            <p style="color:#fff"><%- messages.error %></p>
+                            <!-- </br> -->
+                            <%} else if(messages.success){ %>
+                            <h4 style="color:#5cb85c">Login Berhasil!</h4>
+                            <% } %>
                         </div>
                     </div>
                 </div>

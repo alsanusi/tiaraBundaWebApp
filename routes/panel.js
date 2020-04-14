@@ -1,6 +1,11 @@
 const express = require('express')
 const app = express()
 
+let adminCredential = {
+    username: 'admin',
+    password: 'admin123'
+}
+
 app.get('/', (req, res) => {
     res.render('panel/index', {
         userName: '',
@@ -11,8 +16,15 @@ app.get('/', (req, res) => {
 app.post('/login', (req, res) => {
     let username = req.body.userName;
     let pass = req.body.userPass;
-    if (username === "admin" && pass === "admin") {
+    if (username === adminCredential.username && pass === adminCredential.password) {
         res.redirect('/panel/dashboard')
+    } else {
+        let error_msg = "Username dan Password Salah!"
+        req.flash('error', error_msg)
+        res.render('panel/index', {
+            userName: '',
+            userPass: ''
+        })
     }
 })
 
