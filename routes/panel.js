@@ -28,6 +28,14 @@ app.post('/login', (req, res) => {
     }
 })
 
+app.get('/tambahDataSiswa', (req, res) => {
+    res.render('panel/tambahDataSiswa')
+})
+
+app.get('/kelolaDataSiswa', (req, res) => {
+    res.render('panel/kelolaDataSiswa')
+})
+
 app.get('/dashboard', (req, res) => {
     res.render('panel/dashboard')
 })
