@@ -3,7 +3,7 @@ const app = express()
 
 let adminCredential = {
     username: 'admin',
-    password: 'admin123'
+    password: 'admin'
 }
 
 const generateStudentId = () => {
@@ -15,10 +15,7 @@ const generateStudentId = () => {
 }
 
 app.get('/', (req, res) => {
-    res.render('panel/index', {
-        userName: '',
-        userPass: ''
-    })
+    res.render('panel/index')
 })
 
 app.post('/login', (req, res) => {
@@ -38,12 +35,13 @@ app.post('/login', (req, res) => {
 
 app.get('/dashboard', (req, res) => {
     res.render('panel/dashboard')
-    console.log(generateStudentId())
 })
 
 // Siswa
 app.get('/tambahDataSiswa', (req, res) => {
-    res.render('panel/tambahDataSiswa')
+    res.render('panel/tambahDataSiswa', {
+        idSiswa: generateStudentId()
+    })
 })
 
 app.get('/kelolaDataSiswa', (req, res) => {
