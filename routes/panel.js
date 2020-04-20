@@ -34,12 +34,20 @@ let adminCredential = {
     password: 'admin'
 }
 
-const generateStudentId = () => {
+const generateIdSiswa = () => {
     let uniqueId, currentDate, day;
     uniqueId = Math.floor(Math.random() * 1000);
     currentDate = new Date();
     day = currentDate.getDate()
     return 'S' + day + uniqueId;
+}
+
+const cariDataSiswa = (kelas, semester) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT * FROM dataSiswa WHERE kelas = ? AND semester = ?', [kelas, semester], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
 }
 
 app.get('/', (req, res) => {
@@ -68,7 +76,7 @@ app.get('/dashboard', (req, res) => {
 // Siswa
 app.get('/tambahDataSiswa', (req, res) => {
     res.render('panel/siswa/tambahDataSiswa', {
-        id: generateStudentId(),
+        id: generateIdSiswa(),
         kelas: 1,
         status: 'Siswa',
         semester: 1
@@ -82,7 +90,7 @@ app.post('/tambahDataSiswa', (req, res) => {
             let error_msg = "Besar foto profil siswa melebihi 3 MB!"
             req.flash('error', error_msg)
             res.render('panel/siswa/tambahDataSiswa', {
-                id: generateStudentId(),
+                id: generateIdSiswa(),
                 namaLengkap: '',
                 tempatLahir: '',
                 tanggalLahir: '',
@@ -99,7 +107,7 @@ app.post('/tambahDataSiswa', (req, res) => {
                 let error_msg = 'Input foto profil siswa!'
                 req.flash('error', error_msg)
                 res.render('panel/siswa/tambahDataSiswa', {
-                    id: generateStudentId(),
+                    id: generateIdSiswa(),
                     namaLengkap: '',
                     tempatLahir: '',
                     tanggalLahir: '',
@@ -113,7 +121,7 @@ app.post('/tambahDataSiswa', (req, res) => {
                 })
             } else {
                 let dataSiswa = {
-                    id: generateStudentId(),
+                    id: generateIdSiswa(),
                     fotoProfil: req.file.filename,
                     namaLengkap: req.sanitize('namaLengkap').escape().trim(),
                     tempatLahir: req.sanitize('tempatLahir').escape().trim(),
@@ -145,7 +153,7 @@ app.post('/tambahDataSiswa', (req, res) => {
                     } else {
                         req.flash('success', 'Data siswa berhasil ditambahkan!')
                         res.render('panel/siswa/tambahDataSiswa', {
-                            id: generateStudentId(),
+                            id: generateIdSiswa(),
                             namaLengkap: '',
                             tempatLahir: '',
                             tanggalLahir: '',
@@ -164,17 +172,22 @@ app.post('/tambahDataSiswa', (req, res) => {
     })
 })
 
+app.post('/cariDataSiswa', async (req, res) => {
+    let inputKelas = req.body.kelas;
+    let inputSemester = req.body.semester;
+    const hasilCariDataSiswa = await cariDataSiswa(inputKelas, inputSemester);
+    res.render('panel/siswa/kelolaDataSiswa', {
+        kelas: inputKelas,
+        semester: inputSemester,
+        listDataSiswa: hasilCariDataSiswa
+    })
+})
+
 app.get('/kelolaDataSiswa', (req, res) => {
-    dbConnection.con.query('SELECT * FROM dataSiswa', (err, rows) => {
-        if (err) {
-            res.render('panel/siswa/kelolaDataSiswa', {
-                listDataSiswa: ''
-            })
-        } else {
-            res.render('panel/siswa/kelolaDataSiswa', {
-                listDataSiswa: rows
-            })
-        }
+    res.render('panel/siswa/kelolaDataSiswa', {
+        listDataSiswa: '',
+        kelas: 1,
+        semester: 1
     })
 })
 

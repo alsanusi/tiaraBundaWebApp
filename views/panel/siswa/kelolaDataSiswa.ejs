@@ -256,12 +256,66 @@
         </div>
         <!-- Page content -->
         <div class="container-fluid mt--7">
-            <!-- Table -->
+            <!--  -->
             <div class="row">
                 <div class="col">
                     <div class="card shadow">
-                        <div class="card-header border-0">
-                            <h3 class="mb-0">Tabel Data Siswa</h3>
+                        <form name="cariDataSiswa" action="/panel/cariDataSiswa" method="POST">
+                            <div class="card-header bg-white border-0">
+                                <div class="row align-items-center" style="margin-bottom: 20px;">
+                                    <div class="col-12">
+                                        <h3 class="mb-0">Cari Data Siswa</h3>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-5">
+                                        <label>Kelas:</label>
+                                        <select class="form-control" name="kelas">
+                                            <optgroup label="SELECTED">
+                                                <option value="<%= kelas %>"><%= kelas %></option>
+                                            </optgroup>
+                                            <optgroup label="OPSI">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="col-5">
+                                        <label>Semester:</label>
+                                        <select class="form-control" name="semester">
+                                            <optgroup label="SELECTED">
+                                                <option value="<%= semester %>"><%= semester %></option>
+                                            </optgroup>
+                                            <optgroup label="OPSI">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="col-2 text-center">
+                                        <button type="submit" class="btn btn-primary notika-btn-primary">Cari
+                                            Data</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Table -->
+            <div class="row" style="margin-top: 20px">
+                <div class="col">
+                    <div class="card shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <h3 class="mb-0">Tabel Data Siswa</h3>
+                                </div>
+                            </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush">
@@ -308,6 +362,7 @@
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                     <a class="dropdown-item" href="#">Edit Data Siswa</a>
                                                     <a class="dropdown-item" href="#">Hapus Data Siswa</a>
+                                                    <a class="dropdown-item" href="#">Konversi Alumni</a>
                                                 </div>
                                             </div>
                                         </td>
