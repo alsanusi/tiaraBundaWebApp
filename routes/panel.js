@@ -28,6 +28,11 @@ app.post('/login', (req, res) => {
     }
 })
 
+app.get('/dashboard', (req, res) => {
+    res.render('panel/dashboard')
+})
+
+// Siswa
 app.get('/tambahDataSiswa', (req, res) => {
     res.render('panel/tambahDataSiswa')
 })
@@ -36,8 +41,13 @@ app.get('/kelolaDataSiswa', (req, res) => {
     res.render('panel/kelolaDataSiswa')
 })
 
-app.get('/dashboard', (req, res) => {
-    res.render('panel/dashboard')
+// Guru
+app.get('/tambahDataGuru', (req, res) => {
+    res.render('panel/tambahDataGuru')
+})
+
+app.get('/kelolaDataGuru', (req, res) => {
+    res.render('panel/kelolaDataGuru')
 })
 
 module.exports = app
