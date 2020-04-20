@@ -13,4 +13,8 @@ app.get('/blog-detail', (req, res) => {
     res.render('blog-detail')
 })
 
+app.get('/kotakSaran', (req, res) => {
+    res.render('kotakSaran')
+})
+
 module.exports = app
