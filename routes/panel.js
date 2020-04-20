@@ -6,6 +6,14 @@ let adminCredential = {
     password: 'admin123'
 }
 
+const generateStudentId = () => {
+    let uniqueId, currentDate, day;
+    uniqueId = Math.floor(Math.random() * 1000);
+    currentDate = new Date();
+    day = currentDate.getDate()
+    return 'S' + day + uniqueId;
+}
+
 app.get('/', (req, res) => {
     res.render('panel/index', {
         userName: '',
@@ -30,6 +38,7 @@ app.post('/login', (req, res) => {
 
 app.get('/dashboard', (req, res) => {
     res.render('panel/dashboard')
+    console.log(generateStudentId())
 })
 
 // Siswa
