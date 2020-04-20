@@ -67,7 +67,7 @@ app.get('/dashboard', (req, res) => {
 
 // Siswa
 app.get('/tambahDataSiswa', (req, res) => {
-    res.render('panel/tambahDataSiswa', {
+    res.render('panel/siswa/tambahDataSiswa', {
         id: generateStudentId(),
         kelas: 1,
         status: 'Siswa',
@@ -81,7 +81,7 @@ app.post('/tambahDataSiswa', (req, res) => {
         if (err) {
             let error_msg = "Besar foto profil siswa melebihi 3 MB!"
             req.flash('error', error_msg)
-            res.render('panel/tambahDataSiswa', {
+            res.render('panel/siswa/tambahDataSiswa', {
                 id: generateStudentId(),
                 namaLengkap: '',
                 tempatLahir: '',
@@ -98,7 +98,7 @@ app.post('/tambahDataSiswa', (req, res) => {
             if (req.file === null) {
                 let error_msg = 'Input foto profil siswa!'
                 req.flash('error', error_msg)
-                res.render('panel/tambahDataSiswa', {
+                res.render('panel/siswa/tambahDataSiswa', {
                     id: generateStudentId(),
                     namaLengkap: '',
                     tempatLahir: '',
@@ -129,7 +129,7 @@ app.post('/tambahDataSiswa', (req, res) => {
                 dbConnection.con.query('INSERT INTO dataSiswa SET ?', dataSiswa, (err, result) => {
                     if (err) {
                         req.flash('error', err)
-                        res.render('panel/tambahDataSiswa', {
+                        res.render('panel/siswa/tambahDataSiswa', {
                             id: dataSiswa.id,
                             namaLengkap: dataSiswa.namaLengkap,
                             tempatLahir: dataSiswa.tempatLahir,
@@ -144,7 +144,7 @@ app.post('/tambahDataSiswa', (req, res) => {
                         })
                     } else {
                         req.flash('success', 'Data siswa berhasil ditambahkan!')
-                        res.render('panel/tambahDataSiswa', {
+                        res.render('panel/siswa/tambahDataSiswa', {
                             id: generateStudentId(),
                             namaLengkap: '',
                             tempatLahir: '',
@@ -165,16 +165,26 @@ app.post('/tambahDataSiswa', (req, res) => {
 })
 
 app.get('/kelolaDataSiswa', (req, res) => {
-    res.render('panel/kelolaDataSiswa')
+    dbConnection.con.query('SELECT * FROM dataSiswa', (err, rows) => {
+        if (err) {
+            res.render('panel/siswa/kelolaDataSiswa', {
+                listDataSiswa: ''
+            })
+        } else {
+            res.render('panel/siswa/kelolaDataSiswa', {
+                listDataSiswa: rows
+            })
+        }
+    })
 })
 
 // Guru
 app.get('/tambahDataGuru', (req, res) => {
-    res.render('panel/tambahDataGuru')
+    res.render('panel/guru/tambahDataGuru')
 })
 
 app.get('/kelolaDataGuru', (req, res) => {
-    res.render('panel/kelolaDataGuru')
+    res.render('panel/guru/kelolaDataGuru')
 })
 
 module.exports = app

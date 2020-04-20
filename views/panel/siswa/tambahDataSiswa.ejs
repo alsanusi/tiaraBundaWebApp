@@ -1,0 +1,340 @@
+<!-- Include Header -->
+<%- include ../../back-end/layout/header.ejs %>
+
+<body class="">
+    <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
+        <div class="container-fluid">
+            <!-- Toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main"
+                aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Brand -->
+            <a class="navbar-brand pt-0" href="./dashboard">
+                <img src="../back-end/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+            </a>
+            <!-- User -->
+            <ul class="nav align-items-center d-md-none">
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="ni ni-bell-55"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
+                        aria-labelledby="navbar-default_dropdown_1">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <div class="media align-items-center">
+                            <span class="avatar avatar-sm rounded-circle">
+                                <img alt="Image placeholder" src="../back-end/assets/img/theme/team-1-800x800.jpg">
+                            </span>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                        <div class=" dropdown-header noti-title">
+                            <h6 class="text-overflow m-0">Welcome!</h6>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#!" class="dropdown-item">
+                            <i class="ni ni-user-run"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <!-- Collapse -->
+            <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+                <!-- Collapse header -->
+                <div class="navbar-collapse-header d-md-none">
+                    <div class="row">
+                        <div class="col-6 collapse-brand">
+                            <a href="./dashboard">
+                                <img src="../back-end/assets/img/brand/blue.png">
+                            </a>
+                        </div>
+                        <div class="col-6 collapse-close">
+                            <button type="button" class="navbar-toggler" data-toggle="collapse"
+                                data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false"
+                                aria-label="Toggle sidenav">
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Form -->
+                <form class="mt-4 mb-3 d-md-none">
+                    <div class="input-group input-group-rounded input-group-merge">
+                        <input type="search" class="form-control form-control-rounded form-control-prepended"
+                            placeholder="Search" aria-label="Search">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-search"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- Navigation -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class=" nav-link " href="./dashboard"> <i class="ni ni-tv-2 text-primary"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="./tambahDataSiswa">
+                            <i class="ni ni-single-02 text-yellow"></i> Tambah Data Siswa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="./kelolaDataSiswa">
+                            <i class="ni ni-bullet-list-67 text-red"></i> Kelola Data Siswa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/panel/tambahDataGuru">
+                            <i class="ni ni-single-02 text-yellow"></i> Tambah Data Guru
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/panel/kelolaDataGuru">
+                            <i class="ni ni-bullet-list-67 text-red"></i> Kelola Data Guru
+                        </a>
+                    </li>
+                </ul>
+                <!-- Divider -->
+                <hr class="my-3">
+            </div>
+        </div>
+    </nav>
+    <div class="main-content">
+        <!-- Navbar -->
+        <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+            <div class="container-fluid">
+                <!-- Form -->
+                <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+                </form>
+                <!-- User -->
+                <ul class="navbar-nav align-items-center d-none d-md-flex">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <div class="media align-items-center">
+                                <span class="avatar avatar-sm rounded-circle">
+                                    <img alt="Image placeholder" src="../back-end/assets/img/theme/team-4-800x800.jpg">
+                                </span>
+                                <div class="media-body ml-2 d-none d-lg-block">
+                                    <span class="mb-0 text-sm  font-weight-bold">Admin</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                            <div class=" dropdown-header noti-title">
+                                <h6 class="text-overflow m-0">Welcome!</h6>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="#!" class="dropdown-item">
+                                <i class="ni ni-user-run"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <!-- Header -->
+        <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+            style="min-height: 600px; background-image: url(../back-end/assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+            <!-- Mask -->
+            <span class="mask bg-gradient-default opacity-8"></span>
+            <!-- Header container -->
+            <div class="container-fluid d-flex align-items-center">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <h1 class="display-2 text-white">Hi Admin</h1>
+                        <p class="text-white mt-0 mb-5">Masukkan data siswa.</p>
+                        <!-- Error and Success Message -->
+                        <% if(messages.error){ %>
+                        <h4 style="color:#d82436">Data Siswa Gagal Ditambahkan!</h4>
+                        <p><%- messages.error %></p>
+                        <!-- </br> -->
+                        <%} else if(messages.success){ %>
+                        <h4 style="color:#5cb85c">Data Siswa Berhasil Ditambahkan!</h4>
+                        </br>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page content -->
+        <div class="container-fluid mt--7">
+            <div class="row">
+                <div class="col-xl-12 order-xl-1">
+                    <div class="card bg-secondary shadow">
+                        <form name="tambahDataSiswa" action="/panel/tambahDataSiswa" method="POST"
+                            enctype="multipart/form-data">
+                            <div class="card-header bg-white border-0">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h3 class="mb-0">Form Data Siswa</h3>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <button type="submit" class="btn btn-primary notika-btn-primary">Tambah
+                                            Siswa</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <h6 class="heading-small text-muted mb-4">Informasi Siswa.</h6>
+                                    <div class="pl-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-username">Foto
+                                                        Profil</label>
+                                                    <input type="file" class="form-control form-control-alternative"
+                                                        name="fotoProfil" accept="" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-username">ID
+                                                        Siswa</label>
+                                                    <input type="text" class="form-control form-control-alternative"
+                                                        name="id" value="<%= id %>" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-email">Nama
+                                                        Lengkap</label>
+                                                    <input type="text" class="form-control form-control-alternative"
+                                                        name="namaLengkap" placeholder="Nama Lengkap" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-first-name">Tempat
+                                                        Lahir</label>
+                                                    <input type="text" id="input-first-name"
+                                                        class="form-control form-control-alternative" name="tempatLahir"
+                                                        placeholder="Tempat Lahir">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-last-name">Tanggal
+                                                        Lahir</label>
+                                                    <input type="date" id="input-last-name" name="tanggalLahir"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Tanggal Lahir">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label"
+                                                        for="input-first-name">Kelas</label>
+                                                    <input type="text" class="form-control form-control-alternative"
+                                                        name="kelas" placeholder="Kelas" value="<%= kelas %>" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label"
+                                                        for="input-last-name">Semester</label>
+                                                    <input type="text" class="form-control form-control-alternative"
+                                                        name="semester" placeholder="Semester" value="<%= semester %>"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-4" />
+                                    <!-- Address -->
+                                    <h6 class="heading-small text-muted mb-4">Informasi Kontak Siswa.</h6>
+                                    <div class="pl-lg-4">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-address">Alamat</label>
+                                                    <input class="form-control form-control-alternative" name="alamat"
+                                                        placeholder="Alamat" type="text" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-city">Nama Ayah</label>
+                                                    <input type="text" class="form-control form-control-alternative"
+                                                        name="namaAyah" placeholder="Nama Ayah" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-country">Nama
+                                                        Ibu</label>
+                                                    <input type="text" class="form-control form-control-alternative"
+                                                        name="namaIbu" placeholder="Nama Ibu" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-address">Nomor
+                                                        Telefon</label>
+                                                    <input class="form-control form-control-alternative"
+                                                        name="nomorTelefon" placeholder="Nomor Telefon" type="number"
+                                                        required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-4" />
+                                    <!-- Description -->
+                                    <h6 class="heading-small text-muted mb-4">Informasi Lainnya</h6>
+                                    <div class="pl-lg-4">
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <input class="form-control form-control-alternative" placeholder="Status"
+                                                name="status" value="<%= status %>" type="text" readonly>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="row align-items-center justify-content-xl-between">
+                    <div class="col-xl-6">
+                        <div class="copyright text-center text-xl-left text-muted">
+                            &copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1"
+                                target="_blank">Creative Tim</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Include Footer -->
+    <%- include ../../back-end/layout/footer.ejs %>

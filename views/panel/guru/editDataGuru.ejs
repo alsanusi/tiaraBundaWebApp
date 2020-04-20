@@ -1,5 +1,5 @@
 <!-- Include Header -->
-<%- include ../back-end/layout/header.ejs %>
+<%- include ../../back-end/layout/header.ejs %>
 
 <body class="">
     <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
@@ -89,7 +89,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="./tambahDataSiswa">
+                        <a class="nav-link " href="./tambahDataSiswa">
                             <i class="ni ni-single-02 text-yellow"></i> Tambah Data Siswa
                         </a>
                     </li>
@@ -99,7 +99,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="/panel/tambahDataGuru">
+                        <a class="nav-link active" href="/panel/tambahDataGuru">
                             <i class="ni ni-single-02 text-yellow"></i> Tambah Data Guru
                         </a>
                     </li>
@@ -160,14 +160,14 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
                         <h1 class="display-2 text-white">Hi Admin</h1>
-                        <p class="text-white mt-0 mb-5">Masukkan data siswa.</p>
+                        <p class="text-white mt-0 mb-5">Masukkan data guru.</p>
                         <!-- Error and Success Message -->
                         <% if(messages.error){ %>
-                        <h4 style="color:#d82436">Data Siswa Gagal Ditambahkan!</h4>
+                        <h4 style="color:#d82436">Data Guru Gagal Ditambahkan!</h4>
                         <p><%- messages.error %></p>
                         <!-- </br> -->
                         <%} else if(messages.success){ %>
-                        <h4 style="color:#5cb85c">Data Siswa Berhasil Ditambahkan!</h4>
+                        <h4 style="color:#5cb85c">Data Guru Berhasil Ditambahkan!</h4>
                         </br>
                         <% } %>
                     </div>
@@ -179,22 +179,22 @@
             <div class="row">
                 <div class="col-xl-12 order-xl-1">
                     <div class="card bg-secondary shadow">
-                        <form name="tambahDataSiswa" action="/panel/tambahDataSiswa" method="POST"
+                        <form name="tambahDataGuru" action="/panel/tambahDataGuru" method="POST"
                             enctype="multipart/form-data">
                             <div class="card-header bg-white border-0">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h3 class="mb-0">Form Data Siswa</h3>
+                                        <h3 class="mb-0">Form Data Guru</h3>
                                     </div>
                                     <div class="col-4 text-right">
                                         <button type="submit" class="btn btn-primary notika-btn-primary">Tambah
-                                            Siswa</button>
+                                            Guru</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <form>
-                                    <h6 class="heading-small text-muted mb-4">Informasi Siswa.</h6>
+                                    <h6 class="heading-small text-muted mb-4">Informasi Guru.</h6>
                                     <div class="pl-lg-4">
                                         <div class="row">
                                             <div class="col-lg-12">
@@ -210,9 +210,9 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-username">ID
-                                                        Siswa</label>
+                                                        Guru</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="id" value="<%= id %>" readonly>
+                                                        name="id" value="id" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
@@ -244,29 +244,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label"
-                                                        for="input-first-name">Kelas</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="kelas" placeholder="Kelas" value="<%= kelas %>" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label"
-                                                        for="input-last-name">Semester</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="semester" placeholder="Semester" value="<%= semester %>"
-                                                        readonly>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <hr class="my-4" />
                                     <!-- Address -->
-                                    <h6 class="heading-small text-muted mb-4">Informasi Kontak Siswa.</h6>
+                                    <h6 class="heading-small text-muted mb-4">Informasi Kontak Guru.</h6>
                                     <div class="pl-lg-4">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -274,23 +255,6 @@
                                                     <label class="form-control-label" for="input-address">Alamat</label>
                                                     <input class="form-control form-control-alternative" name="alamat"
                                                         placeholder="Alamat" type="text" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city">Nama Ayah</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="namaAyah" placeholder="Nama Ayah" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nama
-                                                        Ibu</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="namaIbu" placeholder="Nama Ibu" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -311,9 +275,9 @@
                                     <h6 class="heading-small text-muted mb-4">Informasi Lainnya</h6>
                                     <div class="pl-lg-4">
                                         <div class="form-group">
-                                            <label>Status</label>
-                                            <input class="form-control form-control-alternative" placeholder="Status"
-                                                name="status" value="<%= status %>" type="text" readonly>
+                                            <label>Mata Pelajaran</label>
+                                            <input class="form-control form-control-alternative"
+                                                placeholder="Mata Pelajaran" name="mataPelajaran" type="text">
                                         </div>
                                     </div>
                                 </form>
@@ -337,4 +301,4 @@
     </div>
 
     <!-- Include Footer -->
-    <%- include ../back-end/layout/footer.ejs %>
+    <%- include ../../back-end/layout/footer.ejs %>
