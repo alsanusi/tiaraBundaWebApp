@@ -196,4 +196,13 @@ app.get('/kelolaDataGuru', (req, res) => {
     res.render('panel/guru/kelolaDataGuru')
 })
 
+// Berita
+app.get('/tambahDataBerita', (req, res) => {
+    res.render('panel/berita/tambahDataBerita')
+})
+
+app.get('/kelolaDataBerita', (req, res) => {
+    res.render('panel/berita/kelolaDataBerita')
+})
+
 module.exports = app
