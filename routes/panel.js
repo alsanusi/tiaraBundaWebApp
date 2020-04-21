@@ -7,18 +7,35 @@ const multer = require('multer')
 const path = require('path')
 // Max File Size
 const maxFileSize = 50 * 1024 * 1204;
-// ImageUpload - Article Image
-const dir = 'views/uploads/siswa'
-let storage = multer.diskStorage({
+// ImageUpload -  Profil Siswa
+const dirProfilSiswa = 'views/uploads/siswa'
+let profilSiswaStorage = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, dir);
+        callback(null, dirProfilSiswa);
     },
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
 });
-let upload = multer({
-    storage: storage,
+let uploadProfilSiswa = multer({
+    storage: profilSiswaStorage,
+    limits: {
+        fileSize: maxFileSize,
+        files: 1
+    }
+});
+// ImageUpload - Berita
+const dirBerita = 'views/uploads/berita'
+let beritaStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, dirBerita);
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+let uploadBerita = multer({
+    storage: beritaStorage,
     limits: {
         fileSize: maxFileSize,
         files: 1
@@ -79,7 +96,7 @@ app.get('/tambahDataSiswa', (req, res) => {
     })
 })
 
-const fotoProfilSiswa = upload.single('fotoProfil')
+const fotoProfilSiswa = uploadProfilSiswa.single('fotoProfil')
 app.post('/tambahDataSiswa', (req, res) => {
     fotoProfilSiswa(req, res, (err) => {
         if (err) {
@@ -198,7 +215,64 @@ app.get('/kelolaDataGuru', (req, res) => {
 
 // Berita
 app.get('/tambahDataBerita', (req, res) => {
-    res.render('panel/berita/tambahDataBerita')
+    res.render('panel/berita/tambahDataBerita', {
+        penulis: adminCredential.username
+    })
+})
+
+const gambarBerita = uploadBerita.single('gambarBerita')
+app.post('/tambahDataBerita', (req, res) => {
+    gambarBerita(req, res, (err) => {
+        if (err) {
+            let error_msg = "Besar gambar berita melebihi 3 MB!"
+            req.flash('error', error_msg)
+            res.render('panel/berita/tambahDataBerita', {
+                judulBerita: '',
+                tanggalUpdate: '',
+                penulis: adminCredential.username,
+                deskripsiBerita: ''
+            })
+        } else {
+            if (req.file === null) {
+                let error_msg = "Input gambar berita!"
+                req.flash('error', error_msg)
+                res.render('panel/berita/tambahDataBerita', {
+                    judulBerita: '',
+                    tanggalUpdate: '',
+                    penulis: adminCredential.username,
+                    deskripsiBerita: ''
+                })
+            } else {
+                let dataBerita = {
+                    gambarBerita: req.file.filename,
+                    judulBerita: req.sanitize("judulBerita").escape().trim(),
+                    tanggalUpdate: req.sanitize("tanggalUpdate").escape().trim(),
+                    deskripsi: req.sanitize("deskripsiBerita").escape().trim(),
+                    penulis: adminCredential.username
+                }
+                dbConnection.con.query("INSERT INTO dataBerita SET ?", dataBerita, (err, result) => {
+                    if (err) {
+                        req.flash('error', err)
+                        res.render('panel/berita/tambahDataBerita', {
+                            judulBerita: dataBerita.gambarBerita,
+                            tanggalUpdate: dataBerita.tanggalUpdate,
+                            penulis: adminCredential.username,
+                            deskripsiBerita: dataBerita.deskripsi
+                        })
+                    } else {
+                        req.flash('success', "Berita berhasil ditambakan!")
+                        res.render('panel/berita/tambahDataBerita', {
+                            gambarBerita: '',
+                            judulBerita: '',
+                            tanggalUpdate: '',
+                            penulis: adminCredential.username,
+                            deskripsiBerita: ''
+                        })
+                    }
+                })
+            }
+        }
+    })
 })
 
 app.get('/kelolaDataBerita', (req, res) => {

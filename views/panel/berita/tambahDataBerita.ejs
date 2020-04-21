@@ -189,7 +189,7 @@
             <div class="row">
                 <div class="col-xl-12 order-xl-1">
                     <div class="card bg-secondary shadow">
-                        <form name="tambahDataGuru" action="/panel/tambahDataGuru" method="POST"
+                        <form name="tambahDataGuru" action="/panel/tambahDataBerita" method="POST"
                             enctype="multipart/form-data">
                             <div class="card-header bg-white border-0">
                                 <div class="row align-items-center">
@@ -233,7 +233,7 @@
                                                         Update</label>
                                                     <input type="date" id="input-first-name"
                                                         class="form-control form-control-alternative"
-                                                        name="tanggalUpdate" placeholder="Tanggal Update">
+                                                        name="tanggalUpdate" placeholder="Tanggal Update" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -242,7 +242,7 @@
                                                         for="input-last-name">Penulis</label>
                                                     <input type="text" id="input-last-name" name="penulis"
                                                         class="form-control form-control-alternative"
-                                                        placeholder="Penulis">
+                                                        placeholder="Penulis" value="<%= penulis %>" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -255,7 +255,8 @@
                                             <label class="form-control-label" for="input-last-name">Deskripsi
                                                 Berita</label>
                                             <textarea rows="4" class="form-control form-control-alternative"
-                                                placeholder="Deskripsi Berita." name="deskripsiBerita"></textarea>
+                                                placeholder="Deskripsi Berita." name="deskripsiBerita"
+                                                required></textarea>
                                         </div>
                                     </div>
                                 </form>
