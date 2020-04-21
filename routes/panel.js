@@ -4,13 +4,12 @@ const app = express()
 // Koneksi Database
 const dbConnection = require('../db_config/db_connection')
 
-// Multer
+// Multer - Upload Gambar
 const multer = require('multer')
 const path = require('path')
-
-// Max File Size
 const maxFileSize = 50 * 1024 * 1204;
-// ImageUpload -  Profil Siswa
+
+// Upload Gambar -  Profil Siswa
 const dirProfilSiswa = 'views/uploads/siswa'
 let profilSiswaStorage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -28,7 +27,7 @@ let uploadProfilSiswa = multer({
     }
 });
 
-// ImageUpload - Berita
+// Upload Gambar - Berita
 const dirBerita = 'views/uploads/berita'
 let beritaStorage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -46,6 +45,7 @@ let uploadBerita = multer({
     }
 });
 
+// Credential Admin
 let adminCredential = {
     username: 'admin',
     password: 'admin'
@@ -58,6 +58,9 @@ const generateIdSiswa = () => {
     day = currentDate.getDate()
     return 'S' + day + uniqueId;
 }
+
+const fotoProfilSiswa = uploadProfilSiswa.single('fotoProfil')
+const gambarBerita = uploadBerita.single('gambarBerita')
 
 const cariDataSiswa = (kelas, semester) => {
     return new Promise((resolve, reject) => {
@@ -100,7 +103,6 @@ app.get('/tambahDataSiswa', (req, res) => {
     })
 })
 
-const fotoProfilSiswa = uploadProfilSiswa.single('fotoProfil')
 app.post('/tambahDataSiswa', (req, res) => {
     fotoProfilSiswa(req, res, (err) => {
         if (err) {
@@ -224,7 +226,6 @@ app.get('/tambahDataBerita', (req, res) => {
     })
 })
 
-const gambarBerita = uploadBerita.single('gambarBerita')
 app.post('/tambahDataBerita', (req, res) => {
     gambarBerita(req, res, (err) => {
         if (err) {
