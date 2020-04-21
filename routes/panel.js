@@ -9,36 +9,23 @@ const multer = require('multer')
 const path = require('path')
 const maxFileSize = 50 * 1024 * 1204;
 
-// Upload Gambar -  Profil Siswa
-const dirProfilSiswa = 'views/uploads/siswa'
-let profilSiswaStorage = multer.diskStorage({
+// Upload Gambar 
+const direktoriGambarBerita = 'views/uploads/berita'
+const direktoriProfilSiswa = 'views/uploads/siswa'
+let storage = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, dirProfilSiswa);
+        if (file.fieldname === 'gambarBerita') {
+            callback(null, direktoriGambarBerita);
+        } else {
+            callback(null, direktoriProfilSiswa);
+        }
     },
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
 });
-let uploadProfilSiswa = multer({
-    storage: profilSiswaStorage,
-    limits: {
-        fileSize: maxFileSize,
-        files: 1
-    }
-});
-
-// Upload Gambar - Berita
-const dirBerita = 'views/uploads/berita'
-let beritaStorage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, dirBerita);
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
-});
-let uploadBerita = multer({
-    storage: beritaStorage,
+let upload = multer({
+    storage: storage,
     limits: {
         fileSize: maxFileSize,
         files: 1
@@ -58,9 +45,6 @@ const generateIdSiswa = () => {
     day = currentDate.getDate()
     return 'S' + day + uniqueId;
 }
-
-const fotoProfilSiswa = uploadProfilSiswa.single('fotoProfil')
-const gambarBerita = uploadBerita.single('gambarBerita')
 
 const cariDataSiswa = (kelas, semester) => {
     return new Promise((resolve, reject) => {
@@ -103,6 +87,7 @@ app.get('/tambahDataSiswa', (req, res) => {
     })
 })
 
+const fotoProfilSiswa = upload.single('fotoProfil')
 app.post('/tambahDataSiswa', (req, res) => {
     fotoProfilSiswa(req, res, (err) => {
         if (err) {
@@ -226,6 +211,7 @@ app.get('/tambahDataBerita', (req, res) => {
     })
 })
 
+const gambarBerita = upload.single('gambarBerita')
 app.post('/tambahDataBerita', (req, res) => {
     gambarBerita(req, res, (err) => {
         if (err) {
