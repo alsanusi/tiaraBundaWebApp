@@ -79,7 +79,7 @@ app.get('/dashboard', (req, res) => {
 
 // Siswa
 app.get('/tambahDataSiswa', (req, res) => {
-    res.render('panel/siswa/tambahDataSiswa', {
+    res.render('panel/admin/siswa/tambahDataSiswa', {
         id: generateIdSiswa(),
         kelas: 1,
         status: 'Siswa',
@@ -93,7 +93,7 @@ app.post('/tambahDataSiswa', (req, res) => {
         if (err) {
             let error_msg = "Besar foto profil siswa melebihi 3 MB!"
             req.flash('error', error_msg)
-            res.render('panel/siswa/tambahDataSiswa', {
+            res.render('panel/admin/siswa/tambahDataSiswa', {
                 id: generateIdSiswa(),
                 namaLengkap: '',
                 tempatLahir: '',
@@ -110,7 +110,7 @@ app.post('/tambahDataSiswa', (req, res) => {
             if (req.file === null) {
                 let error_msg = 'Input foto profil siswa!'
                 req.flash('error', error_msg)
-                res.render('panel/siswa/tambahDataSiswa', {
+                res.render('panel/admin/siswa/tambahDataSiswa', {
                     id: generateIdSiswa(),
                     namaLengkap: '',
                     tempatLahir: '',
@@ -141,7 +141,7 @@ app.post('/tambahDataSiswa', (req, res) => {
                 dbConnection.con.query('INSERT INTO dataSiswa SET ?', dataSiswa, (err, result) => {
                     if (err) {
                         req.flash('error', err)
-                        res.render('panel/siswa/tambahDataSiswa', {
+                        res.render('panel/admin/siswa/tambahDataSiswa', {
                             id: dataSiswa.id,
                             namaLengkap: dataSiswa.namaLengkap,
                             tempatLahir: dataSiswa.tempatLahir,
@@ -156,7 +156,7 @@ app.post('/tambahDataSiswa', (req, res) => {
                         })
                     } else {
                         req.flash('success', 'Data siswa berhasil ditambahkan!')
-                        res.render('panel/siswa/tambahDataSiswa', {
+                        res.render('panel/admin/siswa/tambahDataSiswa', {
                             id: generateIdSiswa(),
                             namaLengkap: '',
                             tempatLahir: '',
@@ -180,7 +180,7 @@ app.post('/cariDataSiswa', async (req, res) => {
     let inputKelas = req.body.kelas;
     let inputSemester = req.body.semester;
     const hasilCariDataSiswa = await cariDataSiswa(inputKelas, inputSemester);
-    res.render('panel/siswa/kelolaDataSiswa', {
+    res.render('panel/admin/siswa/kelolaDataSiswa', {
         kelas: inputKelas,
         semester: inputSemester,
         listDataSiswa: hasilCariDataSiswa
@@ -188,7 +188,7 @@ app.post('/cariDataSiswa', async (req, res) => {
 })
 
 app.get('/kelolaDataSiswa', (req, res) => {
-    res.render('panel/siswa/kelolaDataSiswa', {
+    res.render('panel/admin/siswa/kelolaDataSiswa', {
         listDataSiswa: '',
         kelas: 1,
         semester: 1
@@ -197,16 +197,16 @@ app.get('/kelolaDataSiswa', (req, res) => {
 
 // Guru
 app.get('/tambahDataGuru', (req, res) => {
-    res.render('panel/guru/tambahDataGuru')
+    res.render('panel/admin/guru/tambahDataGuru')
 })
 
 app.get('/kelolaDataGuru', (req, res) => {
-    res.render('panel/guru/kelolaDataGuru')
+    res.render('panel/admin/guru/kelolaDataGuru')
 })
 
 // Berita
 app.get('/tambahDataBerita', (req, res) => {
-    res.render('panel/berita/tambahDataBerita', {
+    res.render('panel/admin/berita/tambahDataBerita', {
         penulis: adminCredential.username
     })
 })
@@ -217,7 +217,7 @@ app.post('/tambahDataBerita', (req, res) => {
         if (err) {
             let error_msg = "Besar gambar berita melebihi 3 MB!"
             req.flash('error', error_msg)
-            res.render('panel/berita/tambahDataBerita', {
+            res.render('panel/admin/berita/tambahDataBerita', {
                 judulBerita: '',
                 tanggalUpdate: '',
                 penulis: adminCredential.username,
@@ -227,7 +227,7 @@ app.post('/tambahDataBerita', (req, res) => {
             if (req.file === null) {
                 let error_msg = "Input gambar berita!"
                 req.flash('error', error_msg)
-                res.render('panel/berita/tambahDataBerita', {
+                res.render('panel/admin/berita/tambahDataBerita', {
                     judulBerita: '',
                     tanggalUpdate: '',
                     penulis: adminCredential.username,
@@ -244,7 +244,7 @@ app.post('/tambahDataBerita', (req, res) => {
                 dbConnection.con.query("INSERT INTO dataBerita SET ?", dataBerita, (err, result) => {
                     if (err) {
                         req.flash('error', err)
-                        res.render('panel/berita/tambahDataBerita', {
+                        res.render('panel/admin/berita/tambahDataBerita', {
                             judulBerita: dataBerita.gambarBerita,
                             tanggalUpdate: dataBerita.tanggalUpdate,
                             penulis: adminCredential.username,
@@ -252,7 +252,7 @@ app.post('/tambahDataBerita', (req, res) => {
                         })
                     } else {
                         req.flash('success', "Berita berhasil ditambakan!")
-                        res.render('panel/berita/tambahDataBerita', {
+                        res.render('panel/admin/berita/tambahDataBerita', {
                             gambarBerita: '',
                             judulBerita: '',
                             tanggalUpdate: '',
@@ -269,11 +269,11 @@ app.post('/tambahDataBerita', (req, res) => {
 app.get('/kelolaDataBerita', (req, res) => {
     dbConnection.con.query("SELECT * FROM dataBerita", (err, rows, field) => {
         if (err) {
-            res.render('panel/berita/kelolaDataBerita', {
+            res.render('panel/admin/berita/kelolaDataBerita', {
                 listBerita: ''
             })
         } else {
-            res.render('panel/berita/kelolaDataBerita', {
+            res.render('panel/admin/berita/kelolaDataBerita', {
                 listBerita: rows
             })
         }
