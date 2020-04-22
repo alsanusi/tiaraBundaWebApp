@@ -267,7 +267,17 @@ app.post('/tambahDataBerita', (req, res) => {
 })
 
 app.get('/kelolaDataBerita', (req, res) => {
-    res.render('panel/berita/kelolaDataBerita')
+    dbConnection.con.query("SELECT * FROM dataBerita", (err, rows, field) => {
+        if (err) {
+            res.render('panel/berita/kelolaDataBerita', {
+                listBerita: ''
+            })
+        } else {
+            res.render('panel/berita/kelolaDataBerita', {
+                listBerita: rows
+            })
+        }
+    })
 })
 
 module.exports = app
