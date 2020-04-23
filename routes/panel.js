@@ -298,6 +298,21 @@ app.get('/kelolaDataBerita', redirectLogin, (req, res) => {
     })
 })
 
+// Kotak Saran
+app.get('/kelolaKotakSaran', redirectLogin, (req, res) => {
+    dbConnection.con.query("SELECT * FROM kotakSARAN", (err, rows, field) => {
+        if (err) {
+            res.render('panel/admin/kotakSaran/kelolaKotakSaran', {
+                listSaran: ''
+            })
+        } else {
+            res.render('panel/admin/kotakSaran/kelolaKotakSaran', {
+                listSaran: rows
+            })
+        }
+    })
+})
+
 app.post('/logout', redirectLogin, (req, res) => {
     req.session.destroy(err => {
         if (err) {
