@@ -34,6 +34,7 @@ let upload = multer({
 
 // Credential Admin
 let adminCredential = {
+    id: '1',
     username: 'admin',
     password: 'admin'
 }
@@ -54,14 +55,32 @@ const cariDataSiswa = (kelas, semester) => {
     })
 }
 
+
+const redirectLogin = (req, res, next) => {
+    if (!req.session.userId) {
+        res.redirect('/panel')
+    } else {
+        next()
+    }
+}
+
+const redirectHome = (req, res, next) => {
+    if (req.session.userId) {
+        res.redirect('/panel/dashboard')
+    } else {
+        next()
+    }
+}
+
 app.get('/', (req, res) => {
     res.render('panel/index')
 })
 
-app.post('/login', (req, res) => {
+app.post('/login', redirectHome, (req, res) => {
     let username = req.body.userName;
     let pass = req.body.userPass;
     if (username === adminCredential.username && pass === adminCredential.password) {
+        req.session.userId = adminCredential.id
         res.redirect('/panel/dashboard')
     } else {
         let error_msg = "Username dan Password Salah!"
@@ -73,12 +92,12 @@ app.post('/login', (req, res) => {
     }
 })
 
-app.get('/dashboard', (req, res) => {
+app.get('/dashboard', redirectLogin, (req, res) => {
     res.render('panel/dashboard')
 })
 
 // Siswa
-app.get('/tambahDataSiswa', (req, res) => {
+app.get('/tambahDataSiswa', redirectLogin, (req, res) => {
     res.render('panel/admin/siswa/tambahDataSiswa', {
         id: generateIdSiswa(),
         kelas: 1,
@@ -88,7 +107,7 @@ app.get('/tambahDataSiswa', (req, res) => {
 })
 
 const fotoProfilSiswa = upload.single('fotoProfil')
-app.post('/tambahDataSiswa', (req, res) => {
+app.post('/tambahDataSiswa', redirectLogin, (req, res) => {
     fotoProfilSiswa(req, res, (err) => {
         if (err) {
             let error_msg = "Besar foto profil siswa melebihi 3 MB!"
@@ -176,7 +195,7 @@ app.post('/tambahDataSiswa', (req, res) => {
     })
 })
 
-app.post('/cariDataSiswa', async (req, res) => {
+app.post('/cariDataSiswa', redirectLogin, async (req, res) => {
     let inputKelas = req.body.kelas;
     let inputSemester = req.body.semester;
     const hasilCariDataSiswa = await cariDataSiswa(inputKelas, inputSemester);
@@ -187,7 +206,7 @@ app.post('/cariDataSiswa', async (req, res) => {
     })
 })
 
-app.get('/kelolaDataSiswa', (req, res) => {
+app.get('/kelolaDataSiswa', redirectLogin, (req, res) => {
     res.render('panel/admin/siswa/kelolaDataSiswa', {
         listDataSiswa: '',
         kelas: 1,
@@ -196,23 +215,23 @@ app.get('/kelolaDataSiswa', (req, res) => {
 })
 
 // Guru
-app.get('/tambahDataGuru', (req, res) => {
+app.get('/tambahDataGuru', redirectLogin, (req, res) => {
     res.render('panel/admin/guru/tambahDataGuru')
 })
 
-app.get('/kelolaDataGuru', (req, res) => {
+app.get('/kelolaDataGuru', redirectLogin, (req, res) => {
     res.render('panel/admin/guru/kelolaDataGuru')
 })
 
 // Berita
-app.get('/tambahDataBerita', (req, res) => {
+app.get('/tambahDataBerita', redirectLogin, (req, res) => {
     res.render('panel/admin/berita/tambahDataBerita', {
         penulis: adminCredential.username
     })
 })
 
 const gambarBerita = upload.single('gambarBerita')
-app.post('/tambahDataBerita', (req, res) => {
+app.post('/tambahDataBerita', redirectLogin, (req, res) => {
     gambarBerita(req, res, (err) => {
         if (err) {
             let error_msg = "Besar gambar berita melebihi 3 MB!"
@@ -266,7 +285,7 @@ app.post('/tambahDataBerita', (req, res) => {
     })
 })
 
-app.get('/kelolaDataBerita', (req, res) => {
+app.get('/kelolaDataBerita', redirectLogin, (req, res) => {
     dbConnection.con.query("SELECT * FROM dataBerita", (err, rows, field) => {
         if (err) {
             res.render('panel/admin/berita/kelolaDataBerita', {
@@ -276,6 +295,17 @@ app.get('/kelolaDataBerita', (req, res) => {
             res.render('panel/admin/berita/kelolaDataBerita', {
                 listBerita: rows
             })
+        }
+    })
+})
+
+app.post('/logout', redirectLogin, (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            res.redirect('panel/dashboard')
+        } else {
+            res.clearCookie('sid')
+            res.redirect('/panel')
         }
     })
 })
