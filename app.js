@@ -45,6 +45,17 @@ app.use(session({
 }))
 app.use(flash())
 
+// Method-Override
+const methodOverride = require('method-override')
+// Custom logic for overriding method
+app.use(methodOverride(function (req, res) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+        var method = req.body._method
+        delete req.body._method
+        return method
+    }
+}))
+
 // Routing
 const indexView = require('./routes/index')
 const panelView = require('./routes/panel')

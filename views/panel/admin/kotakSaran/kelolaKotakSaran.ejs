@@ -11,7 +11,7 @@
             </button>
             <!-- Brand -->
             <a class="navbar-brand pt-0" href="./dashboard">
-                <img src="../assets/back-end/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+                <img src="../../assets/back-end/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
             <!-- User -->
             <ul class="nav align-items-center d-md-none">
@@ -58,7 +58,7 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a href="./dashboard">
-                                <img src="../assets/back-end/assets/img/brand/blue.png">
+                                <img src="../../assets/back-end/assets/img/brand/blue.png">
                             </a>
                         </div>
                         <div class="col-6 collapse-close">
@@ -121,7 +121,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="/panel/kelolaKotakSaran">
+                        <a class="nav-link active" href="/panel/kelolaKotakSaran">
                             <i class="ni ni-bullet-list-67 text-green"></i> Kelola Kotak Saran
                         </a>
                     </li>
@@ -307,7 +307,8 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="#">Detail Saran</a>
+                                                    <a class="dropdown-item"
+                                                        href="/panel/detailSaran/<%= data.id %>">Detail Saran</a>
                                                 </div>
                                             </div>
                                         </td>

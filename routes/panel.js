@@ -313,6 +313,32 @@ app.get('/kelolaKotakSaran', redirectLogin, (req, res) => {
     })
 })
 
+app.get('/detailSaran/(:id)', redirectLogin, (req, res) => {
+    dbConnection.con.query('SELECT * FROM kotakSaran WHERE id = ?', [req.params.id], (err, rows, fields) => {
+        if (err) {
+            res.redirect('/panel/kelolaKotakSaran')
+        } else {
+            res.render('panel/admin/kotakSaran/detailSaran', {
+                id: rows[0].id,
+                namaLengkap: rows[0].namaLengkap,
+                email: rows[0].email,
+                nomorTelefon: rows[0].nomorTelefon,
+                saran: rows[0].saran
+            })
+        }
+    })
+})
+
+app.delete('/detailSaran/(:id)', redirectLogin, (req, res) => {
+    dbConnection.con.query('DELETE FROM kotakSaran WHERE id = ?', req.params.id, (err, rows, fields) => {
+        if (err) {
+            res.redirect('/panel/kelolaKotakSaran')
+        } else {
+            res.redirect('/panel/kelolaKotakSaran')
+        }
+    })
+})
+
 app.post('/logout', redirectLogin, (req, res) => {
     req.session.destroy(err => {
         if (err) {
