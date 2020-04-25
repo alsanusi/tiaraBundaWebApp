@@ -236,6 +236,16 @@ app.get('/editDataSiswa/(:id)', redirectLogin, (req, res) => {
     })
 })
 
+app.delete('/editDataSiswa/(:id)', redirectLogin, (req, res) => {
+    dbConnection.con.query('DELETE FROM dataSiswa WHERE id = ?', req.params.id, (err, rows, fields) => {
+        if (err) {
+            res.redirect('/panel/kelolaDataSiswa')
+        } else {
+            res.redirect('/panel/kelolaDataSiswa')
+        }
+    })
+})
+
 // Guru
 app.get('/tambahDataGuru', redirectLogin, (req, res) => {
     res.render('panel/admin/guru/tambahDataGuru')

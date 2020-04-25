@@ -370,8 +370,19 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                     <a class="dropdown-item"
-                                                        href="/panel/editDataSiswa/<%= data.id %>">Edit Data Siswa</a>
-                                                    <a class="dropdown-item" href="#">Hapus Data Siswa</a>
+                                                        href="/panel/editDataSiswa/<%= data.id %>">Edit Data
+                                                        Siswa</a>
+                                                    <form action="/panel/editDataSiswa/<%= data.id %>" method="POST">
+                                                        <form method="post" action="/panel/editDataSiswa/<%= data.id %>"
+                                                            style="float:right">
+                                                            <button type="submit" name="delete" value='Delete'
+                                                                onClick="return confirm('Hapus Data Siswa <%= data.namaLengkap %> ?')"
+                                                                class="btn"
+                                                                style="background-color: unset; width: 100%; text-align: left; color: #f5365c;">Hapus
+                                                                Data Siswa</button>
+                                                            <input type="hidden" name="_method" value="DELETE" />
+                                                        </form>
+                                                    </form>
                                                     <a class="dropdown-item" href="#">Konversi Alumni</a>
                                                 </div>
                                             </div>
