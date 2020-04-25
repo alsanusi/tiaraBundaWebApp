@@ -213,6 +213,29 @@ app.get('/kelolaDataSiswa', redirectLogin, (req, res) => {
     })
 })
 
+app.get('/editDataSiswa/(:id)', redirectLogin, (req, res) => {
+    dbConnection.con.query('SELECT * FROM dataSiswa WHERE id = ?', [req.params.id], (err, rows, fields) => {
+        let data = rows[0];
+        if (err) {
+            res.redirect('/panel/kelolaDataSiswa')
+        } else {
+            res.render('panel/admin/siswa/editDataSiswa', {
+                id: data.id,
+                namaLengkap: data.namaLengkap,
+                tempatLahir: data.tempatLahir,
+                tanggalLahir: data.tanggalLahir,
+                kelas: data.kelas,
+                semester: data.semester,
+                alamat: data.alamat,
+                namaAyah: data.namaAyah,
+                namaIbu: data.namaIbu,
+                nomorTelefon: data.nomorTelefon,
+                status: data.status
+            })
+        }
+    })
+})
+
 // Guru
 app.get('/tambahDataGuru', redirectLogin, (req, res) => {
     res.render('panel/admin/guru/tambahDataGuru')
