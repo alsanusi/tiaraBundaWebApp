@@ -317,7 +317,18 @@
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                     <a class="dropdown-item"
                                                         href="/panel/editDataBerita/<%= data.id %>">Edit Berita</a>
-                                                    <a class="dropdown-item" href="#">Hapus Berita</a>
+                                                    <form action="/panel/editDataBerita/<%= data.id %>" method="POST">
+                                                        <form method="POST"
+                                                            action="/panel/editDataBerita/<%= data.id %>"
+                                                            style="float:right">
+                                                            <button type="submit" name="delete" value='Delete'
+                                                                onClick="return confirm('Hapus Data Siswa <%= data.judulBerita %> ?')"
+                                                                class="btn"
+                                                                style="background-color: unset; width: 100%; text-align: left; color: #f5365c;">Hapus
+                                                                Berita </button>
+                                                            <input type="hidden" name="_method" value="DELETE" />
+                                                        </form>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>

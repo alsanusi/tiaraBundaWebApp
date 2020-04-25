@@ -213,38 +213,38 @@ app.get('/kelolaDataSiswa', redirectLogin, (req, res) => {
     })
 })
 
-app.get('/editDataSiswa/(:id)', redirectLogin, (req, res) => {
-    dbConnection.con.query('SELECT * FROM dataSiswa WHERE id = ?', [req.params.id], (err, rows, fields) => {
-        let data = rows[0];
-        if (err) {
-            res.redirect('/panel/kelolaDataSiswa')
-        } else {
-            res.render('panel/admin/siswa/editDataSiswa', {
-                id: data.id,
-                namaLengkap: data.namaLengkap,
-                tempatLahir: data.tempatLahir,
-                tanggalLahir: data.tanggalLahir,
-                kelas: data.kelas,
-                semester: data.semester,
-                alamat: data.alamat,
-                namaAyah: data.namaAyah,
-                namaIbu: data.namaIbu,
-                nomorTelefon: data.nomorTelefon,
-                status: data.status
-            })
-        }
+app.route('/editDataSiswa/(:id)', redirectLogin)
+    .get((req, res) => {
+        dbConnection.con.query('SELECT * FROM dataSiswa WHERE id = ?', [req.params.id], (err, rows, fields) => {
+            let data = rows[0];
+            if (err) {
+                res.redirect('/panel/kelolaDataSiswa')
+            } else {
+                res.render('panel/admin/siswa/editDataSiswa', {
+                    id: data.id,
+                    namaLengkap: data.namaLengkap,
+                    tempatLahir: data.tempatLahir,
+                    tanggalLahir: data.tanggalLahir,
+                    kelas: data.kelas,
+                    semester: data.semester,
+                    alamat: data.alamat,
+                    namaAyah: data.namaAyah,
+                    namaIbu: data.namaIbu,
+                    nomorTelefon: data.nomorTelefon,
+                    status: data.status
+                })
+            }
+        })
     })
-})
-
-app.delete('/editDataSiswa/(:id)', redirectLogin, (req, res) => {
-    dbConnection.con.query('DELETE FROM dataSiswa WHERE id = ?', req.params.id, (err, rows, fields) => {
-        if (err) {
-            res.redirect('/panel/kelolaDataSiswa')
-        } else {
-            res.redirect('/panel/kelolaDataSiswa')
-        }
+    .delete((req, res) => {
+        dbConnection.con.query('DELETE FROM dataSiswa WHERE id = ?', req.params.id, (err, rows, fields) => {
+            if (err) {
+                res.redirect('/panel/kelolaDataSiswa')
+            } else {
+                res.redirect('/panel/kelolaDataSiswa')
+            }
+        })
     })
-})
 
 // Guru
 app.get('/tambahDataGuru', redirectLogin, (req, res) => {
@@ -331,22 +331,32 @@ app.get('/kelolaDataBerita', redirectLogin, (req, res) => {
     })
 })
 
-app.get('/editDataBerita/(:id)', redirectLogin, (req, res) => {
-    dbConnection.con.query('SELECT * FROM dataBerita WHERE id = ?', [req.params.id], (err, rows, fields) => {
-        let data = rows[0]
-        if (err) {
-            res.redirect('/panel/kelolaDataBerita')
-        } else {
-            res.render('panel/admin/berita/editDataBerita', {
-                id: data.id,
-                judulBerita: data.judulBerita,
-                tanggalUpdate: data.tanggalUpdate,
-                deskripsi: data.deskripsi,
-                penulis: data.penulis
-            })
-        }
+app.route('/editDataBerita/(:id)', redirectLogin)
+    .get((req, res) => {
+        dbConnection.con.query('SELECT * FROM dataBerita WHERE id = ?', [req.params.id], (err, rows, fields) => {
+            let data = rows[0]
+            if (err) {
+                res.redirect('/panel/kelolaDataBerita')
+            } else {
+                res.render('panel/admin/berita/editDataBerita', {
+                    id: data.id,
+                    judulBerita: data.judulBerita,
+                    tanggalUpdate: data.tanggalUpdate,
+                    deskripsi: data.deskripsi,
+                    penulis: data.penulis
+                })
+            }
+        })
     })
-})
+    .delete((req, res) => {
+        dbConnection.con.query('DELETE FROM dataBerita WHERE id = ?', req.params.id, (err, rows, fields) => {
+            if (err) {
+                res.redirect('/panel/kelolaDataBerita')
+            } else {
+                res.redirect('/panel/kelolaDataBerita')
+            }
+        })
+    })
 
 // Kotak Saran
 app.get('/kelolaKotakSaran', redirectLogin, (req, res) => {
