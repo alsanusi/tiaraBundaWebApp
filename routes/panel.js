@@ -321,6 +321,23 @@ app.get('/kelolaDataBerita', redirectLogin, (req, res) => {
     })
 })
 
+app.get('/editDataBerita/(:id)', redirectLogin, (req, res) => {
+    dbConnection.con.query('SELECT * FROM dataBerita WHERE id = ?', [req.params.id], (err, rows, fields) => {
+        let data = rows[0]
+        if (err) {
+            res.redirect('/panel/kelolaDataBerita')
+        } else {
+            res.render('panel/admin/berita/editDataBerita', {
+                id: data.id,
+                judulBerita: data.judulBerita,
+                tanggalUpdate: data.tanggalUpdate,
+                deskripsi: data.deskripsi,
+                penulis: data.penulis
+            })
+        }
+    })
+})
+
 // Kotak Saran
 app.get('/kelolaKotakSaran', redirectLogin, (req, res) => {
     dbConnection.con.query("SELECT * FROM kotakSARAN", (err, rows, field) => {

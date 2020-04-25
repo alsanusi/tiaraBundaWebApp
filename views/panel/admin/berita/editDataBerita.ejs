@@ -11,7 +11,7 @@
             </button>
             <!-- Brand -->
             <a class="navbar-brand pt-0" href="./dashboard">
-                <img src="../assets/back-end/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+                <img src="../../assets/back-end/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
             <!-- User -->
             <ul class="nav align-items-center d-md-none">
@@ -34,7 +34,7 @@
                         <div class="media align-items-center">
                             <span class="avatar avatar-sm rounded-circle">
                                 <img alt="Image placeholder"
-                                    src="../assets/back-end/assets/img/theme/team-1-800x800.jpg">
+                                    src="../../assets/back-end/assets/img/theme/team-1-800x800.jpg">
                             </span>
                         </div>
                     </a>
@@ -58,7 +58,7 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a href="./dashboard">
-                                <img src="../assets/back-end/assets/img/brand/blue.png">
+                                <img src="../../assets/back-end/assets/img/brand/blue.png">
                             </a>
                         </div>
                         <div class="col-6 collapse-close">
@@ -146,7 +146,7 @@
                             <div class="media align-items-center">
                                 <span class="avatar avatar-sm rounded-circle">
                                     <img alt="Image placeholder"
-                                        src="../assets/back-end/assets/img/theme/team-4-800x800.jpg">
+                                        src="../../assets/back-end/assets/img/theme/team-4-800x800.jpg">
                                 </span>
                                 <div class="media-body ml-2 d-none d-lg-block">
                                     <span class="mb-0 text-sm  font-weight-bold">Admin</span>
@@ -171,7 +171,7 @@
         <!-- End Navbar -->
         <!-- Header -->
         <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-            style="min-height: 600px; background-image: url(../assets/back-end/assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+            style="min-height: 600px; background-image: url(../../assets/back-end/assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
             <!-- Mask -->
             <span class="mask bg-gradient-default opacity-8"></span>
             <!-- Header container -->
@@ -179,7 +179,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
                         <h1 class="display-2 text-white">Hi Admin</h1>
-                        <p class="text-white mt-0 mb-5">Masukkan berita.</p>
+                        <p class="text-white mt-0 mb-5">Update berita.</p>
                         <!-- Error and Success Message -->
                         <% if(messages.error){ %>
                         <h4 style="color:#d82436">Berita Gagal Ditambahkan!</h4>
@@ -198,15 +198,14 @@
             <div class="row">
                 <div class="col-xl-12 order-xl-1">
                     <div class="card bg-secondary shadow">
-                        <form name="tambahDataGuru" action="/panel/tambahDataGuru" method="POST"
-                            enctype="multipart/form-data">
+                        <form name="tambahDataGuru" action="/panel/tambahDataGuru" method="POST">
                             <div class="card-header bg-white border-0">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h3 class="mb-0">Form Berita</h3>
+                                        <h3 class="mb-0">Form Update Berita</h3>
                                     </div>
                                     <div class="col-4 text-right">
-                                        <button type="submit" class="btn btn-primary notika-btn-primary">Tambah
+                                        <button type="submit" class="btn btn-primary notika-btn-primary">Update
                                             Berita</button>
                                     </div>
                                 </div>
@@ -218,20 +217,11 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <label class="form-control-label"
-                                                        for="input-username">Gambar</label>
-                                                    <input type="file" class="form-control form-control-alternative"
-                                                        name="gambarBerita" accept="" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
                                                     <label class="form-control-label" for="input-email">Judul
                                                         Berita</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="judulBerita" placeholder="Judul Berita" required>
+                                                        name="judulBerita" placeholder="Judul Berita"
+                                                        value="<%= judulBerita %>" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -242,7 +232,8 @@
                                                         Update</label>
                                                     <input type="date" id="input-first-name"
                                                         class="form-control form-control-alternative"
-                                                        name="tanggalUpdate" placeholder="Tanggal Update">
+                                                        name="tanggalUpdate" placeholder="Tanggal Update"
+                                                        value="<%= tanggalUpdate %>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -251,7 +242,7 @@
                                                         for="input-last-name">Penulis</label>
                                                     <input type="text" id="input-last-name" name="penulis"
                                                         class="form-control form-control-alternative"
-                                                        placeholder="Penulis">
+                                                        placeholder="Penulis" value="<%= penulis %>">
                                                 </div>
                                             </div>
                                         </div>
@@ -264,7 +255,8 @@
                                             <label class="form-control-label" for="input-last-name">Deskripsi
                                                 Berita</label>
                                             <textarea rows="4" class="form-control form-control-alternative"
-                                                placeholder="Deskripsi Berita." name="deskripsiBerita"></textarea>
+                                                placeholder="Deskripsi Berita."
+                                                name="deskripsiBerita"><%= deskripsi %></textarea>
                                         </div>
                                     </div>
                                 </form>
