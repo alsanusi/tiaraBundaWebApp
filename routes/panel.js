@@ -236,6 +236,21 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
             }
         })
     })
+    .put((req, res) => {
+        let dataSiswa = {
+            id: req.sanitize('id').escape().trim(),
+            namaLengkap: req.sanitize('namaLengkap').escape().trim(),
+            tempatLahir: req.sanitize('tempatLahir').escape().trim(),
+            tanggalLahir: req.sanitize('tanggalLahir').escape().trim(),
+            kelas: req.sanitize('kelas').escape().trim(),
+            semester: req.sanitize('semester').escape().trim(),
+            alamat: req.sanitize('alamat').escape().trim(),
+            namaAyah: req.sanitize('namaAyah').escape().trim(),
+            namaIbu: req.sanitize('namaIbu').escape().trim(),
+            nomorTelefon: req.sanitize('nomorTelefon').escape().trim(),
+            status: req.sanitize('status').escape().trim()
+        }
+    })
     .delete((req, res) => {
         dbConnection.con.query('DELETE FROM dataSiswa WHERE id = ?', req.params.id, (err, rows, fields) => {
             if (err) {
