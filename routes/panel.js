@@ -383,6 +383,29 @@ app.route('/editDataBerita/(:id)', redirectLogin)
             }
         })
     })
+    .put((req, res) => {
+        let dataBerita = {
+            id: req.params.id,
+            judulBerita: req.sanitize('judulBerita').escape().trim(),
+            tanggalUpdate: req.sanitize('tanggalUpdate').escape().trim(),
+            deskripsi: req.sanitize('deskripsiBerita').escape().trim(),
+            penulis: req.sanitize('penulis').escape().trim()
+        }
+        dbConnection.con.query("UPDATE dataBerita SET ? WHERE id = ?", [dataBerita, req.params.id], (err, rows) => {
+            if (err) {
+                req.flash('error', err)
+                res.render('panel/admin/berita/editDataBerita', {
+                    id: req.params.id,
+                    judulBerita: dataBerita.judulBerita,
+                    tanggalUpdate: dataBerita.tanggalUpdate,
+                    deskripsi: dataBerita.deskripsi,
+                    penulis: dataBerita.penulis
+                })
+            } else {
+                res.redirect('/panel/kelolaDataBerita')
+            }
+        })
+    })
     .delete((req, res) => {
         dbConnection.con.query('DELETE FROM dataBerita WHERE id = ?', req.params.id, (err, rows, fields) => {
             if (err) {

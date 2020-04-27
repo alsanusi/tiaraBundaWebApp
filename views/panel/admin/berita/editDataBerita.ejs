@@ -198,7 +198,7 @@
             <div class="row">
                 <div class="col-xl-12 order-xl-1">
                     <div class="card bg-secondary shadow">
-                        <form name="tambahDataGuru" action="/panel/tambahDataGuru" method="POST">
+                        <form name="tambahDataGuru" action="/panel/editDataBerita/<%= id %>" method="POST">
                             <div class="card-header bg-white border-0">
                                 <div class="row align-items-center">
                                     <div class="col-8">
@@ -207,6 +207,7 @@
                                     <div class="col-4 text-right">
                                         <button type="submit" class="btn btn-primary notika-btn-primary">Update
                                             Berita</button>
+                                        <input type="hidden" name="_method" value="PUT" />
                                     </div>
                                 </div>
                             </div>
