@@ -221,7 +221,7 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
                 res.redirect('/panel/kelolaDataSiswa')
             } else {
                 res.render('panel/admin/siswa/editDataSiswa', {
-                    id: data.id,
+                    id: req.params.id,
                     namaLengkap: data.namaLengkap,
                     tempatLahir: data.tempatLahir,
                     tanggalLahir: data.tanggalLahir,
@@ -238,7 +238,7 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
     })
     .put((req, res) => {
         let dataSiswa = {
-            id: req.sanitize('id').escape().trim(),
+            id: req.params.id,
             namaLengkap: req.sanitize('namaLengkap').escape().trim(),
             tempatLahir: req.sanitize('tempatLahir').escape().trim(),
             tanggalLahir: req.sanitize('tanggalLahir').escape().trim(),
@@ -250,6 +250,26 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
             nomorTelefon: req.sanitize('nomorTelefon').escape().trim(),
             status: req.sanitize('status').escape().trim()
         }
+        dbConnection.con.query("UPDATE dataSiswa SET ? WHERE id = ?", [dataSiswa, req.params.id], (err, rows) => {
+            if (err) {
+                req.flash('error', err)
+                res.render('panel/admin/siswa/editDataSiswa', {
+                    id: req.params.id,
+                    namaLengkap: dataSiswa.namaLengkap,
+                    tempatLahir: dataSiswa.tempatLahir,
+                    tanggalLahir: dataSiswa.tanggalLahir,
+                    kelas: dataSiswa.kelas,
+                    semester: dataSiswa.semester,
+                    alamat: dataSiswa.alamat,
+                    namaAyah: dataSiswa.namaAyah,
+                    namaIbu: dataSiswa.namaIbu,
+                    nomorTelefon: dataSiswa.nomorTelefon,
+                    status: dataSiswa.status
+                })
+            } else {
+                res.redirect('/panel/kelolaDataSiswa')
+            }
+        })
     })
     .delete((req, res) => {
         dbConnection.con.query('DELETE FROM dataSiswa WHERE id = ?', req.params.id, (err, rows, fields) => {
