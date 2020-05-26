@@ -8,12 +8,36 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
+
 app.get('/blog', (req, res) => {
-    res.render('blog')
+    dbConnection.con.query("SELECT * FROM dataBerita", (err, rows, field) => {
+        if (err) {
+            res.render('blog', {
+                listBerita: ''
+            })
+        } else {
+            res.render('blog', {
+                listBerita: rows
+            })
+        }
+    })
 })
 
-app.get('/blog-detail', (req, res) => {
-    res.render('blog-detail')
+app.get('/blog-detail/(:id)', (req, res) => {
+    dbConnection.con.query("SELECT * FROM dataBerita WHERE id= ?", [req.params.id], (err, rows, field) => {
+        if (err) {
+            throw err
+        } else {
+            res.render('blog-detail', {
+                id: rows[0].id,
+                gambarBerita: rows[0].gambarBerita,
+                judulBerita: rows[0].judulBerita,
+                tanggalUpdate: rows[0].tanggalUpdate,
+                deskripsi: rows[0].deskripsi,
+                penulis: rows[0].penulis,
+            })
+        }
+    })
 })
 
 app.route('/kotakSaran')
