@@ -58,14 +58,6 @@ const generateIdGuru = () => {
     return 'G' + day + uniqueId;
 }
 
-const generateIdKelas = () => {
-    let uniqueId, currentDate, day;
-    uniqueId = Math.floor(Math.random() * 1000);
-    currentDate = new Date();
-    day = currentDate.getDate()
-    return 'K' + day + uniqueId;
-}
-
 const cariDataSiswa = (kelas, semester) => {
     return new Promise((resolve, reject) => {
         dbConnection.con.query('SELECT * FROM dataSiswa WHERE kelas = ? AND semester = ?', [kelas, semester], (err, rows) => {
@@ -77,6 +69,14 @@ const cariDataSiswa = (kelas, semester) => {
 const listDataGuru = () => {
     return new Promise((resolve, reject) => {
         dbConnection.con.query('SELECT id, namaLengkap FROM dataGuru', (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const cariDataGuru = (id) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT namaLengkap FROM dataGuru WHERE id = ?', [id], (err, rows) => {
             err ? reject(err) : resolve(rows)
         })
     })
@@ -466,40 +466,58 @@ app.route('/editDataGuru/(:id)', redirectLogin)
     })
 
 // Kelas
-app.route('/tambahDataKelas', redirectLogin)
-    .get(async (req, res) => {
-        const hasilListDataGuru = await listDataGuru();
-        res.render('panel/admin/kelas/tambahDataKelas', {
-            listDataGuru: hasilListDataGuru,
-            id: generateIdKelas()
+app.get('/kelolaDataKelas', redirectLogin, (req, res) => {
+    dbConnection.con.query("SELECT * FROM dataKelas", (err, rows, field) => {
+        if (err) {
+            res.render('panel/admin/kelas/kelolaDataKelas', {
+                listKelas: ''
+            })
+        } else {
+            res.render('panel/admin/kelas/kelolaDataKelas', {
+                listKelas: rows
+            })
+        }
+    })
+})
+
+app.route('/editDataKelas/(:id)', redirectLogin)
+    .get((req, res) => {
+        dbConnection.con.query('SELECT * FROM dataKelas WHERE id = ?', [req.params.id], async (err, rows, fields) => {
+            let data = rows[0];
+            const hasilListDataGuru = await listDataGuru();
+            const hasilDataGuru = await cariDataGuru(data.idGuru)
+            if (err) {
+                res.redirect('/panel/kelolaDataKelas')
+            } else {
+                res.render('panel/admin/kelas/editDataKelas', {
+                    id: req.params.id,
+                    kelas: data.kelas,
+                    semester: data.semester,
+                    idGuru: data.idGuru,
+                    namaGuru: hasilDataGuru[0].namaLengkap,
+                    listDataGuru: hasilListDataGuru
+                })
+            }
         })
     })
-    .post(async (req, res) => {
-        const hasilListDataGuru = await listDataGuru();
-        let datakelas = {
-            id: generateIdKelas(),
-            tahunAjaran: req.sanitize("tahunAjaran").escape().trim(),
-            kelas: req.sanitize("kelas").escape().trim(),
-            namaKelas: req.sanitize("namaKelas").escape().trim(),
-            idGuru: req.sanitize("idGuru").escape().trim()
+    .put((req, res) => {
+        let dataKelas = {
+            id: req.params.id,
+            kelas: req.sanitize('kelas').escape().trim(),
+            semester: req.sanitize('semester').escape().trim(),
+            idGuru: req.sanitize('idGuru').escape().trim(),
         }
-        dbConnection.con.query("INSERT INTO dataKelas SET ?", datakelas, (err, result) => {
+        dbConnection.con.query("UPDATE dataKelas SET ? WHERE id = ?", [dataKelas, req.params.id], (err, rows) => {
             if (err) {
                 req.flash('error', err)
-                res.render("panel/admin/kelas/tambahDataKelas", {
-                    id: generateIdKelas(),
-                    listDataGuru: hasilListDataGuru,
-                    tahunAjaran: datakelas.tahunAjaran,
-                    kelas: datakelas.kelas,
-                    namaKelas: datakelas.namaKelas,
-                    idGuru: datakelas.idGuru
+                res.render('panel/admin/kelas/editDataKelas', {
+                    id: req.params.id,
+                    kelas: dataKelas.kelas,
+                    semester: dataKelas.semester,
+                    idGuru: dataKelas.idGuru,
                 })
             } else {
-                req.flash('success', "Data Kelas berhasil ditambakan!")
-                res.render('panel/admin/kelas/tambahDataKelas', {
-                    listDataGuru: hasilListDataGuru,
-                    id: generateIdKelas()
-                })
+                res.redirect('/panel/kelolaDataKelas')
             }
         })
     })

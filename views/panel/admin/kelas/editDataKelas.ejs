@@ -11,7 +11,7 @@
             </button>
             <!-- Brand -->
             <a class="navbar-brand pt-0" href="./dashboard">
-                <img src="../assets/back-end/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+                <img src="../../assets/back-end/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
             <!-- User -->
             <ul class="nav align-items-center d-md-none">
@@ -34,7 +34,7 @@
                         <div class="media align-items-center">
                             <span class="avatar avatar-sm rounded-circle">
                                 <img alt="Image placeholder"
-                                    src="../assets/back-end/assets/img/theme/team-1-800x800.jpg">
+                                    src="../../assets/back-end/assets/img/theme/team-1-800x800.jpg">
                             </span>
                         </div>
                     </a>
@@ -58,7 +58,7 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a href="./dashboard">
-                                <img src="../assets/back-end/assets/img/brand/blue.png">
+                                <img src="../../assets/back-end/assets/img/brand/blue.png">
                             </a>
                         </div>
                         <div class="col-6 collapse-close">
@@ -110,9 +110,9 @@
                             <i class="ni ni-bullet-list-67 text-yellow"></i> Kelola Data Guru
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/panel/tambahDataKelas">
-                            <i class="ni ni-single-copy-04 text-purple"></i> Tambah Data Kelas
+                    <li class="nav-item active">
+                        <a class="nav-link " href="/panel/kelolaDataKelas">
+                            <i class="ni ni-single-copy-04 text-purple"></i> Kelola Data Kelas
                         </a>
                     </li>
                     <li class="nav-item">
@@ -120,7 +120,7 @@
                             <i class="ni ni-single-copy-04 text-blue"></i> Tambah Berita
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item ">
                         <a class="nav-link " href="/panel/kelolaDataBerita">
                             <i class="ni ni-bullet-list-67 text-blue"></i> Kelola Berita
                         </a>
@@ -151,7 +151,7 @@
                             <div class="media align-items-center">
                                 <span class="avatar avatar-sm rounded-circle">
                                     <img alt="Image placeholder"
-                                        src="../assets/back-end/assets/img/theme/team-4-800x800.jpg">
+                                        src="../../assets/back-end/assets/img/theme/team-4-800x800.jpg">
                                 </span>
                                 <div class="media-body ml-2 d-none d-lg-block">
                                     <span class="mb-0 text-sm  font-weight-bold">Admin</span>
@@ -176,7 +176,7 @@
         <!-- End Navbar -->
         <!-- Header -->
         <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-            style="min-height: 600px; background-image: url(../assets/back-end/assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+            style="min-height: 600px; background-image: url(../../assets/back-end/assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
             <!-- Mask -->
             <span class="mask bg-gradient-default opacity-8"></span>
             <!-- Header container -->
@@ -184,14 +184,14 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
                         <h1 class="display-2 text-white">Hi Admin</h1>
-                        <p class="text-white mt-0 mb-5">Masukkan data kelas.</p>
+                        <p class="text-white mt-0 mb-5">Update Data Kelas.</p>
                         <!-- Error and Success Message -->
                         <% if(messages.error){ %>
-                        <h4 style="color:#d82436">Data Kelas Gagal Ditambahkan!</h4>
+                        <h4 style="color:#d82436">Data Kelas Gagal Diupdate!</h4>
                         <p><%- messages.error %></p>
                         <!-- </br> -->
                         <%} else if(messages.success){ %>
-                        <h4 style="color:#5cb85c">Data Kelas Berhasil Ditambahkan!</h4>
+                        <h4 style="color:#5cb85c">Data Kelas Berhasil Diupdate!</h4>
                         </br>
                         <% } %>
                     </div>
@@ -203,27 +203,28 @@
             <div class="row">
                 <div class="col-xl-12 order-xl-1">
                     <div class="card bg-secondary shadow">
-                        <form action="/panel/tambahDataKelas" method="POST">
+                        <form name="tambahDataGuru" action="/panel/editDataKelas/<%= id %>" method="POST">
                             <div class="card-header bg-white border-0">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h3 class="mb-0">Form Data Kelas</h3>
+                                        <h3 class="mb-0">Form Update Data Kelas</h3>
                                     </div>
                                     <div class="col-4 text-right">
-                                        <button type="submit" class="btn btn-primary notika-btn-primary">Tambah
+                                        <button type="submit" class="btn btn-primary notika-btn-primary">Update
                                             Kelas</button>
+                                        <input type="hidden" name="_method" value="PUT" />
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <form>
-                                    <h6 class="heading-small text-muted mb-4">Informasi Kelas.</h6>
+                                    <h6 class="heading-small text-muted mb-4">Header Berita.</h6>
                                     <div class="pl-lg-4">
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-email">ID
-                                                        kelas</label>
+                                                        Kelas</label>
                                                     <input type="text" class="form-control form-control-alternative"
                                                         name="id" placeholder="ID Kelas" value="<%= id %>" readonly>
                                                 </div>
@@ -232,10 +233,11 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <label class="form-control-label" for="input-email">Tahun
-                                                        Ajaran</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="tahunAjaran" placeholder="Tahun Ajaran" required>
+                                                    <label class="form-control-label"
+                                                        for="input-last-name">Kelas</label>
+                                                    <input type="text" id="input-last-name" name="kelas"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Kelas" value="<%= kelas %>" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -243,35 +245,24 @@
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label"
-                                                        for="input-first-name">Kelas</label>
-                                                    <input type="text" id="input-first-name"
-                                                        class="form-control form-control-alternative" name="kelas"
-                                                        placeholder="Kelas">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-first-name">Nama
-                                                        Kelas</label>
-                                                    <input type="text" id="input-first-name"
-                                                        class="form-control form-control-alternative" name="namaKelas"
-                                                        placeholder="Nama Kelas">
+                                                        for="input-last-name">Semester</label>
+                                                    <input type="text" id="input-last-name" name="semester"
+                                                        class="form-control form-control-alternative"
+                                                        placeholder="Semester" value="<%= semester %>" readonly>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <hr class="my-4" />
-                                    <!-- Address -->
-                                    <h6 class="heading-small text-muted mb-4">Informasi Guru Dikelas Bersangkutan.</h6>
+                                    <!-- Description -->
+                                    <h6 class="heading-small text-muted mb-4">Guru Penanggung Jawab Kelas</h6>
                                     <div class="pl-lg-4">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <label class="form-control-label" for="input-address">Guru</label>
+                                                    <label class="form-control-label" for="input-last-name">Guru</label>
                                                     <select class="form-control" name="idGuru">
-                                                        <option disabled selected>Pilih Guru</option>
+                                                        <option value="<%= idGuru %>" selected><%= namaGuru %></option>
                                                         <% if(listDataGuru) { %>
                                                         <% listDataGuru.forEach((data, i) => { %>
                                                         <option value="<%= data.id %>"><%= data.namaLengkap %></option>
