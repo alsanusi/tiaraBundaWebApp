@@ -221,7 +221,7 @@
                                                     <label class="form-control-label" for="input-username">Foto
                                                         Profil</label>
                                                     <input type="file" class="form-control form-control-alternative"
-                                                        name="fotoProfil" accept="" required>
+                                                        name="fotoProfilGuru" accept="" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -231,7 +231,7 @@
                                                     <label class="form-control-label" for="input-username">ID
                                                         Guru</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="id" value="id" readonly>
+                                                        name="id" value="<%= id %>" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
@@ -263,6 +263,33 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-first-name">Jenis
+                                                        Kelamin</label>
+                                                    <select class="form-control" name="jenisKelamin">
+                                                        <option disabled selected>Pilih Jenis Kelamin</option>
+                                                        <option value="Pria">Pria</option>
+                                                        <option value="Wanita">Wanita</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label"
+                                                        for="input-last-name">Agama</label>
+                                                    <select class="form-control" name="agama">
+                                                        <option disabled selected>Pilih Agama</option>
+                                                        <option value="Islam">Islam</option>
+                                                        <option value="Kristen Protestan">Kristen Protestan</option>
+                                                        <option value="Kristen Katolik">Kristen Katolik</option>
+                                                        <option value="Hindu">Hindu</option>
+                                                        <option value="Buddha">Buddha</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <hr class="my-4" />
                                     <!-- Address -->
@@ -287,16 +314,6 @@
                                                         required>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <hr class="my-4" />
-                                    <!-- Description -->
-                                    <h6 class="heading-small text-muted mb-4">Informasi Lainnya</h6>
-                                    <div class="pl-lg-4">
-                                        <div class="form-group">
-                                            <label>Mata Pelajaran</label>
-                                            <input class="form-control form-control-alternative"
-                                                placeholder="Mata Pelajaran" name="mataPelajaran" type="text">
                                         </div>
                                     </div>
                                 </form>

@@ -12,10 +12,13 @@ const maxFileSize = 50 * 1024 * 1204;
 // Upload Gambar 
 const direktoriGambarBerita = 'views/uploads/berita'
 const direktoriProfilSiswa = 'views/uploads/siswa'
+const direktoriProfilGuru = 'views/uploads/guru'
 let storage = multer.diskStorage({
     destination: function (req, file, callback) {
         if (file.fieldname === 'gambarBerita') {
             callback(null, direktoriGambarBerita);
+        } else if (file.fieldname === 'fotoProfilGuru') {
+            callback(null, direktoriProfilGuru);
         } else {
             callback(null, direktoriProfilSiswa);
         }
@@ -45,6 +48,14 @@ const generateIdSiswa = () => {
     currentDate = new Date();
     day = currentDate.getDate()
     return 'S' + day + uniqueId;
+}
+
+const generateIdGuru = () => {
+    let uniqueId, currentDate, day;
+    uniqueId = Math.floor(Math.random() * 1000);
+    currentDate = new Date();
+    day = currentDate.getDate()
+    return 'G' + day + uniqueId;
 }
 
 const cariDataSiswa = (kelas, semester) => {
@@ -101,9 +112,7 @@ app.route('/tambahDataSIswa', redirectLogin)
     .get((req, res) => {
         res.render('panel/admin/siswa/tambahDataSiswa', {
             id: generateIdSiswa(),
-            kelas: 1,
-            status: 'Siswa',
-            semester: 1
+            status: 'Siswa'
         })
     })
     .post((req, res) => {
@@ -116,13 +125,14 @@ app.route('/tambahDataSIswa', redirectLogin)
                     namaLengkap: '',
                     tempatLahir: '',
                     tanggalLahir: '',
-                    kelas: 1,
-                    semester: 1,
                     alamat: '',
                     namaAyah: '',
                     namaIbu: '',
                     nomorTelefon: '',
-                    status: 'Siswa'
+                    status: 'Siswa',
+                    agama: '',
+                    jenisKelamin: '',
+                    tahunAngkatan: ''
                 })
             } else {
                 if (req.file === null) {
@@ -133,13 +143,14 @@ app.route('/tambahDataSIswa', redirectLogin)
                         namaLengkap: '',
                         tempatLahir: '',
                         tanggalLahir: '',
-                        kelas: 1,
-                        semester: 1,
                         alamat: '',
                         namaAyah: '',
                         namaIbu: '',
                         nomorTelefon: '',
-                        status: 'Siswa'
+                        status: 'Siswa',
+                        agama: '',
+                        jenisKelamin: '',
+                        tahunAngkatan: ''
                     })
                 } else {
                     let dataSiswa = {
@@ -148,13 +159,14 @@ app.route('/tambahDataSIswa', redirectLogin)
                         namaLengkap: req.sanitize('namaLengkap').escape().trim(),
                         tempatLahir: req.sanitize('tempatLahir').escape().trim(),
                         tanggalLahir: req.sanitize('tanggalLahir').escape().trim(),
-                        kelas: 1,
-                        semester: 1,
                         alamat: req.sanitize('alamat').escape().trim(),
                         namaAyah: req.sanitize('namaAyah').escape().trim(),
                         namaIbu: req.sanitize('namaIbu').escape().trim(),
                         nomorTelefon: req.sanitize('nomorTelefon').escape().trim(),
-                        status: 'Siswa'
+                        status: 'Siswa',
+                        agama: req.sanitize('agama').escape().trim(),
+                        jenisKelamin: req.sanitize('jenisKelamin').escape().trim(),
+                        tahunAngkatan: req.sanitize('tahunAngkatan').escape().trim()
                     }
                     dbConnection.con.query('INSERT INTO dataSiswa SET ?', dataSiswa, (err, result) => {
                         if (err) {
@@ -164,13 +176,14 @@ app.route('/tambahDataSIswa', redirectLogin)
                                 namaLengkap: dataSiswa.namaLengkap,
                                 tempatLahir: dataSiswa.tempatLahir,
                                 tanggalLahir: dataSiswa.tanggalLahir,
-                                kelas: dataSiswa.kelas,
-                                semester: dataSiswa.semester,
                                 alamat: dataSiswa.alamat,
                                 namaAyah: dataSiswa.namaAyah,
                                 namaIbu: dataSiswa.namaIbu,
                                 nomorTelefon: dataSiswa.nomorTelefon,
-                                status: dataSiswa.status
+                                status: dataSiswa.status,
+                                agama: dataSiswa.agama,
+                                jenisKelamin: dataSiswa.jenisKelamin,
+                                tahunAngkatan: dataSiswa.tahunAngkatan
                             })
                         } else {
                             req.flash('success', 'Data siswa berhasil ditambahkan!')
@@ -179,13 +192,14 @@ app.route('/tambahDataSIswa', redirectLogin)
                                 namaLengkap: '',
                                 tempatLahir: '',
                                 tanggalLahir: '',
-                                kelas: 1,
-                                semester: 1,
                                 alamat: '',
                                 namaAyah: '',
                                 namaIbu: '',
                                 nomorTelefon: '',
-                                status: 'Siswa'
+                                status: 'Siswa',
+                                agama: '',
+                                jenisKelamin: '',
+                                tahunAngkatan: ''
                             })
                         }
                     })
@@ -282,13 +296,111 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
     })
 
 // Guru
-app.get('/tambahDataGuru', redirectLogin, (req, res) => {
-    res.render('panel/admin/guru/tambahDataGuru')
-})
+const fotoProfilGuru = upload.single("fotoProfilGuru")
+app.route('/tambahDataGuru', redirectLogin)
+    .get((req, res) => {
+        res.render('panel/admin/guru/tambahDataGuru', {
+            id: generateIdGuru(),
+        })
+    })
+    .post((req, res) => {
+        fotoProfilGuru(req, res, (err) => {
+            if (err) {
+                console.log(err)
+                let error_msg = "Besar foto profil guru melebihi 3 MB!"
+                req.flash('error', error_msg)
+                res.render('panel/admin/guru/tambahDataGuru', {
+                    id: generateIdGuru(),
+                    namaLengkap: '',
+                    tempatLahir: '',
+                    tanggalLahir: '',
+                    alamat: '',
+                    jenisKelamin: '',
+                    agama: '',
+                    nomorTelefon: ''
+                })
+            } else {
+                if (req.file === null) {
+                    let error_msg = 'Input foto profil guru!'
+                    req.flash('error', error_msg)
+                    res.render('panel/admin/guru/tambahDataGuru', {
+                        id: generateIdGuru(),
+                        namaLengkap: '',
+                        tempatLahir: '',
+                        tanggalLahir: '',
+                        alamat: '',
+                        nomorTelefon: '',
+                        jenisKelamin: '',
+                        agama: ''
+                    })
+                } else {
+                    let dataGuru = {
+                        id: generateIdGuru(),
+                        fotoProfil: req.file.filename,
+                        namaLengkap: req.sanitize('namaLengkap').escape().trim(),
+                        tempatLahir: req.sanitize('tempatLahir').escape().trim(),
+                        tanggalLahir: req.sanitize('tanggalLahir').escape().trim(),
+                        alamat: req.sanitize('alamat').escape().trim(),
+                        nomorTelefon: req.sanitize('nomorTelefon').escape().trim(),
+                        jenisKelamin: req.sanitize('jenisKelamin').escape().trim(),
+                        agama: req.sanitize('agama').escape().trim(),
+                    }
+                    dbConnection.con.query("INSERT INTO dataGuru SET ?", dataGuru, (err, result) => {
+                        if (err) {
+                            req.flash('error', err)
+                            res.render('panel/admin/guru/tambahDataGuru', {
+                                id: dataGuru.id,
+                                namaLengkap: dataGuru.namaLengkap,
+                                tempatLahir: dataGuru.tempatLahir,
+                                tanggalLahir: dataGuru.tanggalLahir,
+                                alamat: dataGuru.alamat,
+                                nomorTelefon: dataGuru.nomorTelefon,
+                                jenisKelamin: dataGuru.jenisKelamin,
+                                agama: dataGuru.agama
+                            })
+                        } else {
+                            req.flash('success', 'Data guru berhasil ditambahkan!')
+                            res.render('panel/admin/guru/tambahDataGuru', {
+                                id: generateIdGuru(),
+                                namaLengkap: '',
+                                tempatLahir: '',
+                                tanggalLahir: '',
+                                alamat: '',
+                                nomorTelefon: '',
+                                jenisKelamin: '',
+                                agama: ''
+                            })
+                        }
+                    })
+                }
+            }
+        })
+    })
 
 app.get('/kelolaDataGuru', redirectLogin, (req, res) => {
-    res.render('panel/admin/guru/kelolaDataGuru')
+    dbConnection.con.query("SELECT * FROM dataGuru", (err, rows, field) => {
+        if (err) {
+            res.render('panel/admin/guru/kelolaDataGuru', {
+                listGuru: ''
+            })
+        } else {
+            res.render('panel/admin/guru/kelolaDataGuru', {
+                listGuru: rows
+            })
+        }
+    })
 })
+
+app.route('/editDataGuru/(:id)', redirectLogin)
+    .delete((req, res) => {
+        dbConnection.con.query('DELETE FROM dataGuru WHERE id = ?', req.params.id, (err, rows, fields) => {
+            if (err) {
+                res.redirect('/panel/kelolaDataGuru')
+            } else {
+                res.redirect('/panel/kelolaDataGuru')
+            }
+        })
+    })
 
 // Berita
 const gambarBerita = upload.single('gambarBerita')

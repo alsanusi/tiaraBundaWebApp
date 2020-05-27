@@ -266,19 +266,27 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label class="form-control-label"
-                                                        for="input-first-name">Kelas</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="kelas" placeholder="Kelas" value="<%= kelas %>" readonly>
+                                                    <label class="form-control-label" for="input-first-name">Jenis
+                                                        Kelamin</label>
+                                                    <select class="form-control" name="jenisKelamin">
+                                                        <option disabled selected>Pilih Jenis Kelamin</option>
+                                                        <option value="Pria">Pria</option>
+                                                        <option value="Wanita">Wanita</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label"
-                                                        for="input-last-name">Semester</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="semester" placeholder="Semester" value="<%= semester %>"
-                                                        readonly>
+                                                        for="input-last-name">Agama</label>
+                                                    <select class="form-control" name="agama">
+                                                        <option disabled selected>Pilih Agama</option>
+                                                        <option value="Islam">Islam</option>
+                                                        <option value="Kristen Protestan">Kristen Protestan</option>
+                                                        <option value="Kristen Katolik">Kristen Katolik</option>
+                                                        <option value="Hindu">Hindu</option>
+                                                        <option value="Buddha">Buddha</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -329,10 +337,25 @@
                                     <!-- Description -->
                                     <h6 class="heading-small text-muted mb-4">Informasi Lainnya</h6>
                                     <div class="pl-lg-4">
-                                        <div class="form-group">
-                                            <label>Status</label>
-                                            <input class="form-control form-control-alternative" placeholder="Status"
-                                                name="status" value="<%= status %>" type="text" readonly>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-address">Status</label>
+                                                    <input class="form-control form-control-alternative"
+                                                        placeholder="Status" name="status" value="<%= status %>"
+                                                        type="text" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-address">Tahun
+                                                        Angkatan</label>
+                                                    <input class="form-control form-control-alternative"
+                                                        placeholder="Tahun Angkatan" name="tahunAngkatan" type="text">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
