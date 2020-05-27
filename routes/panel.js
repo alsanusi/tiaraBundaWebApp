@@ -449,6 +449,12 @@ app.route('/editDataGuru/(:id)', redirectLogin)
         })
     })
 
+// Kelas
+app.route('/tambahDataKelas', redirectLogin)
+    .get((req, res) => {
+        res.render('panel/admin/kelas/tambahDataKelas')
+    })
+
 // Berita
 const gambarBerita = upload.single('gambarBerita')
 app.route('/tambahDataBerita', redirectLogin)

@@ -11,7 +11,7 @@
             </button>
             <!-- Brand -->
             <a class="navbar-brand pt-0" href="./dashboard">
-                <img src="../../assets/back-end/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+                <img src="../assets/back-end/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
             <!-- User -->
             <ul class="nav align-items-center d-md-none">
@@ -34,7 +34,7 @@
                         <div class="media align-items-center">
                             <span class="avatar avatar-sm rounded-circle">
                                 <img alt="Image placeholder"
-                                    src="../../assets/back-end/assets/img/theme/team-1-800x800.jpg">
+                                    src="../assets/back-end/assets/img/theme/team-1-800x800.jpg">
                             </span>
                         </div>
                     </a>
@@ -58,7 +58,7 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a href="./dashboard">
-                                <img src="../../assets/back-end/assets/img/brand/blue.png">
+                                <img src="../assets/back-end/assets/img/brand/blue.png">
                             </a>
                         </div>
                         <div class="col-6 collapse-close">
@@ -86,32 +86,32 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class=" nav-link " href="/panel/dashboard"> <i class="ni ni-tv-2 text-primary"></i>
+                        <a class=" nav-link " href="./dashboard"> <i class="ni ni-tv-2 text-primary"></i>
                             Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="/panel/tambahDataSiswa">
-                            <i class="ni ni-single-02 text-yellow"></i> Tambah Data Siswa
+                        <a class="nav-link " href="./tambahDataSiswa">
+                            <i class="ni ni-single-02 text-red"></i> Tambah Data Siswa
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/panel/kelolaDataSiswa">
-                            <i class="ni ni-bullet-list-67 text-yellow"></i> Kelola Data Siswa
+                        <a class="nav-link " href="./kelolaDataSiswa">
+                            <i class="ni ni-bullet-list-67 text-red"></i> Kelola Data Siswa
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="/panel/tambahDataGuru">
-                            <i class="ni ni-single-02 text-red"></i> Tambah Data Guru
+                            <i class="ni ni-single-02 text-yellow"></i> Tambah Data Guru
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="/panel/kelolaDataGuru">
-                            <i class="ni ni-bullet-list-67 text-red"></i> Kelola Data Guru
+                            <i class="ni ni-bullet-list-67 text-yellow"></i> Kelola Data Guru
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="/panel/tambahDataKelas">
+                        <a class="nav-link active" href="/panel/tambahDataKelas">
                             <i class="ni ni-single-copy-04 text-purple"></i> Tambah Data Kelas
                         </a>
                     </li>
@@ -151,7 +151,7 @@
                             <div class="media align-items-center">
                                 <span class="avatar avatar-sm rounded-circle">
                                     <img alt="Image placeholder"
-                                        src="../../assets/back-end/assets/img/theme/team-4-800x800.jpg">
+                                        src="../assets/back-end/assets/img/theme/team-4-800x800.jpg">
                                 </span>
                                 <div class="media-body ml-2 d-none d-lg-block">
                                     <span class="mb-0 text-sm  font-weight-bold">Admin</span>
@@ -176,7 +176,7 @@
         <!-- End Navbar -->
         <!-- Header -->
         <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-            style="min-height: 600px; background-image: url(../../assets/back-end/assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+            style="min-height: 600px; background-image: url(../assets/back-end/assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
             <!-- Mask -->
             <span class="mask bg-gradient-default opacity-8"></span>
             <!-- Header container -->
@@ -184,14 +184,14 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
                         <h1 class="display-2 text-white">Hi Admin</h1>
-                        <p class="text-white mt-0 mb-5">Masukkan data siswa.</p>
+                        <p class="text-white mt-0 mb-5">Masukkan data guru.</p>
                         <!-- Error and Success Message -->
                         <% if(messages.error){ %>
-                        <h4 style="color:#d82436">Data Siswa Gagal Ditambahkan!</h4>
+                        <h4 style="color:#d82436">Data Guru Gagal Ditambahkan!</h4>
                         <p><%- messages.error %></p>
                         <!-- </br> -->
                         <%} else if(messages.success){ %>
-                        <h4 style="color:#5cb85c">Data Siswa Berhasil Ditambahkan!</h4>
+                        <h4 style="color:#5cb85c">Data Guru Berhasil Ditambahkan!</h4>
                         </br>
                         <% } %>
                     </div>
@@ -203,30 +203,40 @@
             <div class="row">
                 <div class="col-xl-12 order-xl-1">
                     <div class="card bg-secondary shadow">
-                        <form action="/panel/editDataSiswa/<%= id %>" method="POST">
+                        <form name="tambahDataGuru" action="/panel/tambahDataGuru" method="POST"
+                            enctype="multipart/form-data">
                             <div class="card-header bg-white border-0">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h3 class="mb-0">Form Update Data Siswa</h3>
+                                        <h3 class="mb-0">Form Data Guru</h3>
                                     </div>
                                     <div class="col-4 text-right">
-                                        <button type="submit" class="btn btn-primary notika-btn-primary">Update Data
-                                            Siswa</button>
-                                        <input type="hidden" name="_method" value="PUT" />
+                                        <button type="submit" class="btn btn-primary notika-btn-primary">Tambah
+                                            Guru</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <form>
-                                    <h6 class="heading-small text-muted mb-4">Informasi Siswa.</h6>
+                                    <h6 class="heading-small text-muted mb-4">Informasi Guru.</h6>
                                     <div class="pl-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-username">Foto
+                                                        Profil</label>
+                                                    <input type="file" class="form-control form-control-alternative"
+                                                        name="fotoProfil" accept="" required>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-username">ID
-                                                        Siswa</label>
+                                                        Guru</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="id" value="<%= id %>" readonly>
+                                                        name="id" value="id" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
@@ -234,8 +244,7 @@
                                                     <label class="form-control-label" for="input-email">Nama
                                                         Lengkap</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="namaLengkap" placeholder="Nama Lengkap"
-                                                        value="<%= namaLengkap %>" readonly>
+                                                        name="namaLengkap" placeholder="Nama Lengkap" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -246,7 +255,7 @@
                                                         Lahir</label>
                                                     <input type="text" id="input-first-name"
                                                         class="form-control form-control-alternative" name="tempatLahir"
-                                                        value="<%= tempatLahir %>" placeholder="Tempat Lahir" readonly>
+                                                        placeholder="Tempat Lahir">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -255,60 +264,21 @@
                                                         Lahir</label>
                                                     <input type="date" id="input-last-name" name="tanggalLahir"
                                                         class="form-control form-control-alternative"
-                                                        value="<%= tanggalLahir %>" placeholder="Tanggal Lahir"
-                                                        readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label"
-                                                        for="input-first-name">Kelas</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="kelas" placeholder="Kelas" value="<%= kelas %>" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label"
-                                                        for="input-last-name">Semester</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="semester" placeholder="Semester" value="<%= semester %>"
-                                                        readonly>
+                                                        placeholder="Tanggal Lahir">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <hr class="my-4" />
                                     <!-- Address -->
-                                    <h6 class="heading-small text-muted mb-4">Informasi Kontak Siswa.</h6>
+                                    <h6 class="heading-small text-muted mb-4">Informasi Kontak Guru.</h6>
                                     <div class="pl-lg-4">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-address">Alamat</label>
                                                     <input class="form-control form-control-alternative" name="alamat"
-                                                        placeholder="Alamat" type="text" value="<%= alamat %>" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city">Nama Ayah</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="namaAyah" placeholder="Nama Ayah" value="<%= namaAyah %>"
-                                                        required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nama
-                                                        Ibu</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="namaIbu" placeholder="Nama Ibu" value="<%= namaIbu %>"
-                                                        required>
+                                                        placeholder="Alamat" type="text" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -319,7 +289,7 @@
                                                         Telefon</label>
                                                     <input class="form-control form-control-alternative"
                                                         name="nomorTelefon" placeholder="Nomor Telefon" type="number"
-                                                        value="<%= nomorTelefon %>" required>
+                                                        required>
                                                 </div>
                                             </div>
                                         </div>
@@ -329,9 +299,9 @@
                                     <h6 class="heading-small text-muted mb-4">Informasi Lainnya</h6>
                                     <div class="pl-lg-4">
                                         <div class="form-group">
-                                            <label>Status</label>
-                                            <input class="form-control form-control-alternative" placeholder="Status"
-                                                name="status" value="<%= status %>" type="text" readonly>
+                                            <label>Mata Pelajaran</label>
+                                            <input class="form-control form-control-alternative"
+                                                placeholder="Mata Pelajaran" name="mataPelajaran" type="text">
                                         </div>
                                     </div>
                                 </form>
