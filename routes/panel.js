@@ -58,9 +58,25 @@ const generateIdGuru = () => {
     return 'G' + day + uniqueId;
 }
 
+const generateIdKelas = () => {
+    let uniqueId, currentDate, day;
+    uniqueId = Math.floor(Math.random() * 1000);
+    currentDate = new Date();
+    day = currentDate.getDate()
+    return 'K' + day + uniqueId;
+}
+
 const cariDataSiswa = (kelas, semester) => {
     return new Promise((resolve, reject) => {
         dbConnection.con.query('SELECT * FROM dataSiswa WHERE kelas = ? AND semester = ?', [kelas, semester], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const listDataGuru = () => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT id, namaLengkap FROM dataGuru', (err, rows) => {
             err ? reject(err) : resolve(rows)
         })
     })
@@ -451,8 +467,41 @@ app.route('/editDataGuru/(:id)', redirectLogin)
 
 // Kelas
 app.route('/tambahDataKelas', redirectLogin)
-    .get((req, res) => {
-        res.render('panel/admin/kelas/tambahDataKelas')
+    .get(async (req, res) => {
+        const hasilListDataGuru = await listDataGuru();
+        res.render('panel/admin/kelas/tambahDataKelas', {
+            listDataGuru: hasilListDataGuru,
+            id: generateIdKelas()
+        })
+    })
+    .post(async (req, res) => {
+        const hasilListDataGuru = await listDataGuru();
+        let datakelas = {
+            id: generateIdKelas(),
+            tahunAjaran: req.sanitize("tahunAjaran").escape().trim(),
+            kelas: req.sanitize("kelas").escape().trim(),
+            namaKelas: req.sanitize("namaKelas").escape().trim(),
+            idGuru: req.sanitize("idGuru").escape().trim()
+        }
+        dbConnection.con.query("INSERT INTO dataKelas SET ?", datakelas, (err, result) => {
+            if (err) {
+                req.flash('error', err)
+                res.render("panel/admin/kelas/tambahDataKelas", {
+                    id: generateIdKelas(),
+                    listDataGuru: hasilListDataGuru,
+                    tahunAjaran: datakelas.tahunAjaran,
+                    kelas: datakelas.kelas,
+                    namaKelas: datakelas.namaKelas,
+                    idGuru: datakelas.idGuru
+                })
+            } else {
+                req.flash('success', "Data Kelas berhasil ditambakan!")
+                res.render('panel/admin/kelas/tambahDataKelas', {
+                    listDataGuru: hasilListDataGuru,
+                    id: generateIdKelas()
+                })
+            }
+        })
     })
 
 // Berita
