@@ -306,7 +306,6 @@ app.route('/tambahDataGuru', redirectLogin)
     .post((req, res) => {
         fotoProfilGuru(req, res, (err) => {
             if (err) {
-                console.log(err)
                 let error_msg = "Besar foto profil guru melebihi 3 MB!"
                 req.flash('error', error_msg)
                 res.render('panel/admin/guru/tambahDataGuru', {
@@ -392,6 +391,54 @@ app.get('/kelolaDataGuru', redirectLogin, (req, res) => {
 })
 
 app.route('/editDataGuru/(:id)', redirectLogin)
+    .get((req, res) => {
+        dbConnection.con.query('SELECT * FROM dataGuru WHERE id = ?', [req.params.id], (err, rows, fields) => {
+            let data = rows[0];
+            if (err) {
+                res.redirect('/panel/kelolaDataGuru')
+            } else {
+                res.render('panel/admin/guru/editDataGuru', {
+                    id: req.params.id,
+                    namaLengkap: data.namaLengkap,
+                    tempatLahir: data.tempatLahir,
+                    tanggalLahir: data.tanggalLahir,
+                    jenisKelamin: data.jenisKelamin,
+                    agama: data.agama,
+                    alamat: data.alamat,
+                    nomorTelefon: data.nomorTelefon
+                })
+            }
+        })
+    })
+    .put((req, res) => {
+        let dataGuru = {
+            id: req.params.id,
+            namaLengkap: req.sanitize('namaLengkap').escape().trim(),
+            tempatLahir: req.sanitize('tempatLahir').escape().trim(),
+            tanggalLahir: req.sanitize('tanggalLahir').escape().trim(),
+            alamat: req.sanitize('alamat').escape().trim(),
+            nomorTelefon: req.sanitize('nomorTelefon').escape().trim(),
+            jenisKelamin: req.sanitize('jenisKelamin').escape().trim(),
+            agama: req.sanitize('agama').escape().trim()
+        }
+        dbConnection.con.query("UPDATE dataGuru SET ? WHERE id = ?", [dataGuru, req.params.id], (err, rows) => {
+            if (err) {
+                req.flash('error', err)
+                res.render('panel/admin/guru/editDataGuru', {
+                    id: req.params.id,
+                    namaLengkap: dataGuru.namaLengkap,
+                    tempatLahir: dataGuru.tempatLahir,
+                    tanggalLahir: dataGuru.tanggalLahir,
+                    jenisKelamin: dataGuru.jenisKelamin,
+                    agama: dataGuru.agama,
+                    alamat: dataGuru.alamat,
+                    nomorTelefon: dataGuru.nomorTelefon
+                })
+            } else {
+                res.redirect('/panel/kelolaDataGuru')
+            }
+        })
+    })
     .delete((req, res) => {
         dbConnection.con.query('DELETE FROM dataGuru WHERE id = ?', req.params.id, (err, rows, fields) => {
             if (err) {
