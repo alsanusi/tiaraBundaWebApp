@@ -332,7 +332,9 @@ app.route('/tambahDataGuru', redirectLogin)
                     alamat: '',
                     jenisKelamin: '',
                     agama: '',
-                    nomorTelefon: ''
+                    nomorTelefon: '',
+                    email: '',
+                    password: ''
                 })
             } else {
                 if (req.file === null) {
@@ -346,7 +348,9 @@ app.route('/tambahDataGuru', redirectLogin)
                         alamat: '',
                         nomorTelefon: '',
                         jenisKelamin: '',
-                        agama: ''
+                        agama: '',
+                        email: '',
+                        password: ''
                     })
                 } else {
                     let dataGuru = {
@@ -359,6 +363,8 @@ app.route('/tambahDataGuru', redirectLogin)
                         nomorTelefon: req.sanitize('nomorTelefon').escape().trim(),
                         jenisKelamin: req.sanitize('jenisKelamin').escape().trim(),
                         agama: req.sanitize('agama').escape().trim(),
+                        email: req.sanitize('email').escape().trim(),
+                        password: req.sanitize('password').escape().trim()
                     }
                     dbConnection.con.query("INSERT INTO dataGuru SET ?", dataGuru, (err, result) => {
                         if (err) {
@@ -371,7 +377,9 @@ app.route('/tambahDataGuru', redirectLogin)
                                 alamat: dataGuru.alamat,
                                 nomorTelefon: dataGuru.nomorTelefon,
                                 jenisKelamin: dataGuru.jenisKelamin,
-                                agama: dataGuru.agama
+                                agama: dataGuru.agama,
+                                email: dataGuru.email,
+                                password: dataGuru.password
                             })
                         } else {
                             req.flash('success', 'Data guru berhasil ditambahkan!')
@@ -383,7 +391,9 @@ app.route('/tambahDataGuru', redirectLogin)
                                 alamat: '',
                                 nomorTelefon: '',
                                 jenisKelamin: '',
-                                agama: ''
+                                agama: '',
+                                email: '',
+                                password: ''
                             })
                         }
                     })
@@ -421,7 +431,9 @@ app.route('/editDataGuru/(:id)', redirectLogin)
                     jenisKelamin: data.jenisKelamin,
                     agama: data.agama,
                     alamat: data.alamat,
-                    nomorTelefon: data.nomorTelefon
+                    nomorTelefon: data.nomorTelefon,
+                    email: data.email,
+                    password: data.password
                 })
             }
         })
@@ -435,7 +447,10 @@ app.route('/editDataGuru/(:id)', redirectLogin)
             alamat: req.sanitize('alamat').escape().trim(),
             nomorTelefon: req.sanitize('nomorTelefon').escape().trim(),
             jenisKelamin: req.sanitize('jenisKelamin').escape().trim(),
-            agama: req.sanitize('agama').escape().trim()
+            agama: req.sanitize('agama').escape().trim(),
+            email: req.sanitize('email').escape().trim(),
+            password: req.sanitize('password').escape().trim()
+
         }
         dbConnection.con.query("UPDATE dataGuru SET ? WHERE id = ?", [dataGuru, req.params.id], (err, rows) => {
             if (err) {
@@ -448,7 +463,9 @@ app.route('/editDataGuru/(:id)', redirectLogin)
                     jenisKelamin: dataGuru.jenisKelamin,
                     agama: dataGuru.agama,
                     alamat: dataGuru.alamat,
-                    nomorTelefon: dataGuru.nomorTelefon
+                    nomorTelefon: dataGuru.nomorTelefon,
+                    email: dataGuru.email,
+                    password: dataGuru.password
                 })
             } else {
                 res.redirect('/panel/kelolaDataGuru')
