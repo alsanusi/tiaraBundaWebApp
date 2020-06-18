@@ -8,7 +8,6 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
-
 app.get('/blog', (req, res) => {
     dbConnection.con.query("SELECT * FROM dataBerita", (err, rows, field) => {
         if (err) {
