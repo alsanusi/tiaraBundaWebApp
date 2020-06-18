@@ -71,13 +71,14 @@
                             <div class="text-center text-muted mb-4">
                                 <h3>Login Form</h3>
                             </div>
-                            <form action="/panel/login" method="POST">
+                            <form action="/guru/login" method="POST">
                                 <div class="form-group mb-3">
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                         </div>
-                                        <input class="form-control" placeholder="Username" name="userName" required>
+                                        <input class="form-control" type="email" placeholder="Email" name="email"
+                                            required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -85,7 +86,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                         </div>
-                                        <input class="form-control" placeholder="Password" name="userPass"
+                                        <input class="form-control" placeholder="Password" name="password"
                                             type="password" required>
                                     </div>
                                 </div>
