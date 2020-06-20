@@ -165,26 +165,54 @@
             <div class="row">
                 <div class="col">
                     <div class="card shadow">
-                        <div class="card-header bg-white border-0">
-                            <div class="row align-items-center" style="margin-bottom: 20px;">
-                                <div class="col-12">
-                                    <h3 class="mb-0">Masukkan Tanggal</h3>
+                        <form name="cariDataSiswa" action="/guru/pilihanMapel" method="POST">
+                            <div class="card-header bg-white border-0">
+                                <div class="row align-items-center" style="margin-bottom: 20px;">
+                                    <div class="col-12">
+                                        <h3 class="mb-0">Masukkan Tanggal</h3>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row align-items-center">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-last-name">Tanggal
-                                            Pelajaran</label>
-                                        <input type="date" id="tanggalPelajaran" name="tanggalPelajaran"
-                                            class="form-control form-control-alternative" disabled>
-                                        <script>
-                                            document.getElementById('tanggalPelajaran').valueAsDate = new Date();
-                                        </script>
+                                <div class="row align-items-center">
+                                    <div class="col-5">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-last-name">Tanggal
+                                                Pelajaran</label>
+                                            <input type="date" id="tanggalPelajaran" name="tanggalPelajaran"
+                                                class="form-control form-control-alternative" disabled>
+                                            <script>
+                                                document.getElementById('tanggalPelajaran').valueAsDate = new Date();
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-last-name">Mata
+                                                Pelajaran</label>
+                                            <select class="form-control" name="mapel">
+                                                <optgroup label="SELECTED">
+                                                    <option value="<%= mapelGuru %>"><%= mapelGuru %></option>
+                                                </optgroup>
+                                                <optgroup label="OPSI">
+                                                    <option value="PKN">PKN</option>
+                                                    <option value="Matematika">Matematika</option>
+                                                    <option value="IPS">IPS</option>
+                                                    <option value="Agama">Agama</option>
+                                                    <option value="IPA">IPA</option>
+                                                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                                                    <option value="Bahasa Inggris">Bahasa Inggris</option>
+                                                    <option value="Penjaskes">Penjaskes</option>
+                                                    <option value="Seni Budaya">Seni Budaya</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 text-center">
+                                        <button type="submit" class="btn btn-primary notika-btn-primary">Mulai
+                                            Absensi</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -296,8 +324,7 @@
                 <div class="row align-items-center justify-content-xl-between">
                     <div class="col-xl-6">
                         <div class="copyright text-center text-xl-left text-muted">
-                            &copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1"
-                                target="_blank">Creative Tim</a>
+                            &copy; 2020 <a class="font-weight-bold ml-1">Tiara Bunda</a>
                         </div>
                     </div>
                 </div>

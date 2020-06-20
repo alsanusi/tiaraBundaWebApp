@@ -3,7 +3,7 @@ const app = express()
 
 // Koneksi Database
 const dbConnection = require('../db_config/db_connection')
-let idGuru, kelasGuru;
+let idGuru, kelasGuru, mapelGuru;
 
 const todayDate = () => {
     let date = new Date();
@@ -137,33 +137,70 @@ app.get('/kelolaJadwal', redirectLogin, (req, res) => {
 })
 
 app.get('/absensiSiswa', redirectLogin, (req, res) => {
-    dbConnection.con.query("SELECT * FROM dataKelasSiswa WHERE kelas = ?", [kelasGuru], (err, rows, field) => {
-        if (err) {
-            res.render('guru/absensiSiswa', {
-                listSiswa: ''
+    res.render('guru/absensiSiswa', {
+        listSiswa: '',
+        mapelGuru: ''
+    })
+})
+
+app.route('/pilihanMapel', redirectLogin)
+    .get((req, res) => {
+        if (mapelGuru) {
+            dbConnection.con.query("SELECT * FROM dataKelasSiswa WHERE kelas = ?", [kelasGuru], (err, rows, field) => {
+                if (err) {
+                    res.render('guru/absensiSiswa', {
+                        listSiswa: ''
+                    })
+                } else {
+                    res.render('guru/absensiSiswa', {
+                        listSiswa: rows,
+                        mapelGuru: mapelGuru
+                    })
+                }
             })
         } else {
             res.render('guru/absensiSiswa', {
-                listSiswa: rows
+                listSiswa: ''
             })
         }
     })
-})
+    .post((req, res) => {
+        mapelGuru = req.sanitize('mapel').escape().trim()
+        if (mapelGuru) {
+            dbConnection.con.query("SELECT * FROM dataKelasSiswa WHERE kelas = ?", [kelasGuru], (err, rows, field) => {
+                if (err) {
+                    res.render('guru/absensiSiswa', {
+                        listSiswa: ''
+                    })
+                } else {
+                    res.render('guru/absensiSiswa', {
+                        listSiswa: rows,
+                        mapelGuru: mapelGuru
+                    })
+                }
+            })
+        } else {
+            res.render('guru/absensiSiswa', {
+                listSiswa: ''
+            })
+        }
+    })
 
 app.post('/absensiSiswa', redirectLogin, (req, res) => {
     let dataAbsensi = {
         tanggal: todayDate(),
         idSiswa: req.sanitize('idSiswa').escape().trim(),
         status: req.sanitize('status').escape().trim(),
+        mataPelajaran: mapelGuru,
         idGuru: idGuru
     }
     dbConnection.con.query("INSERT INTO dataKehadiran SET ?", dataAbsensi, (err, result) => {
         if (err) {
             req.flash('error', err)
-            res.redirect('absensiSiswa')
+            res.redirect('pilihanMapel')
         } else {
             req.flash('success', "Siswa berhasil diabsen!")
-            res.redirect('absensiSiswa')
+            res.redirect('pilihanMapel')
         }
     })
 })
