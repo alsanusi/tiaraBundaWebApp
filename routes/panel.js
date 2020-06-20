@@ -148,7 +148,6 @@ app.route('/tambahDataSIswa', redirectLogin)
                     status: 'Siswa',
                     agama: '',
                     jenisKelamin: '',
-                    tahunAngkatan: ''
                 })
             } else {
                 if (req.file === null) {
@@ -166,7 +165,6 @@ app.route('/tambahDataSIswa', redirectLogin)
                         status: 'Siswa',
                         agama: '',
                         jenisKelamin: '',
-                        tahunAngkatan: ''
                     })
                 } else {
                     let dataSiswa = {
@@ -182,7 +180,11 @@ app.route('/tambahDataSIswa', redirectLogin)
                         status: 'Siswa',
                         agama: req.sanitize('agama').escape().trim(),
                         jenisKelamin: req.sanitize('jenisKelamin').escape().trim(),
-                        tahunAngkatan: req.sanitize('tahunAngkatan').escape().trim()
+                    }
+                    let kelasSiswa = {
+                        idSiswa: generateIdSiswa(),
+                        namaSiswa: req.sanitize('namaLengkap').escape().trim(),
+                        kelas: req.sanitize('idKelas').escape().trim(),
                     }
                     dbConnection.con.query('INSERT INTO dataSiswa SET ?', dataSiswa, (err, result) => {
                         if (err) {
@@ -199,23 +201,40 @@ app.route('/tambahDataSIswa', redirectLogin)
                                 status: dataSiswa.status,
                                 agama: dataSiswa.agama,
                                 jenisKelamin: dataSiswa.jenisKelamin,
-                                tahunAngkatan: dataSiswa.tahunAngkatan
                             })
                         } else {
-                            req.flash('success', 'Data siswa berhasil ditambahkan!')
-                            res.render('panel/admin/siswa/tambahDataSiswa', {
-                                id: generateIdSiswa(),
-                                namaLengkap: '',
-                                tempatLahir: '',
-                                tanggalLahir: '',
-                                alamat: '',
-                                namaAyah: '',
-                                namaIbu: '',
-                                nomorTelefon: '',
-                                status: 'Siswa',
-                                agama: '',
-                                jenisKelamin: '',
-                                tahunAngkatan: ''
+                            dbConnection.con.query('INSERT INTO dataKelasSiswa SET ?', kelasSiswa, (err, result) => {
+                                if (err) {
+                                    req.flash('error', err)
+                                    res.render('panel/admin/siswa/tambahDataSiswa', {
+                                        id: dataSiswa.id,
+                                        namaLengkap: dataSiswa.namaLengkap,
+                                        tempatLahir: dataSiswa.tempatLahir,
+                                        tanggalLahir: dataSiswa.tanggalLahir,
+                                        alamat: dataSiswa.alamat,
+                                        namaAyah: dataSiswa.namaAyah,
+                                        namaIbu: dataSiswa.namaIbu,
+                                        nomorTelefon: dataSiswa.nomorTelefon,
+                                        status: dataSiswa.status,
+                                        agama: dataSiswa.agama,
+                                        jenisKelamin: dataSiswa.jenisKelamin,
+                                    })
+                                } else {
+                                    req.flash('success', 'Data siswa berhasil ditambahkan!')
+                                    res.render('panel/admin/siswa/tambahDataSiswa', {
+                                        id: generateIdSiswa(),
+                                        namaLengkap: '',
+                                        tempatLahir: '',
+                                        tanggalLahir: '',
+                                        alamat: '',
+                                        namaAyah: '',
+                                        namaIbu: '',
+                                        nomorTelefon: '',
+                                        status: 'Siswa',
+                                        agama: '',
+                                        jenisKelamin: '',
+                                    })
+                                }
                             })
                         }
                     })

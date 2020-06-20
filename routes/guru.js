@@ -3,7 +3,18 @@ const app = express()
 
 // Koneksi Database
 const dbConnection = require('../db_config/db_connection')
-let idGuru;
+let idGuru, kelasGuru;
+
+const todayDate = () => {
+    let date = new Date();
+    let dd = date.getDate();
+    let mm = date.getMonth() + 1;
+    let yyyy = date.getFullYear();
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+
+    return dd + '/' + mm + '/' + yyyy;
+}
 
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
@@ -29,12 +40,21 @@ const checkDataGuru = (email, pass) => {
     })
 }
 
+const checkKelasGuru = (idGuru) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query("SELECT kelas FROM dataKelas WHERE idGuru = ?", [idGuru], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
 app.get('/', (req, res) => {
     res.render('guru/index')
 })
 
 app.post('/login', redirectHome, async (req, res) => {
     const checkHasilDataGuru = await checkDataGuru(req.body.email, req.body.password)
+    const checkHasilKelasGuru = await checkKelasGuru(checkHasilDataGuru[0].id)
 
     if (checkHasilDataGuru.length === 0) {
         let error_msg = "Username dan Password Salah!"
@@ -46,6 +66,7 @@ app.post('/login', redirectHome, async (req, res) => {
     } else {
         req.session.userId = checkHasilDataGuru[0].id
         idGuru = checkHasilDataGuru[0].id
+        kelasGuru = checkHasilKelasGuru[0].kelas
         res.redirect('dashboard')
     }
 })
@@ -113,6 +134,38 @@ app.get('/dashboard', redirectLogin, (req, res) => {
 
 app.get('/kelolaJadwal', redirectLogin, (req, res) => {
     res.render('guru/jadwalPelajaran')
+})
+
+app.get('/absensiSiswa', redirectLogin, (req, res) => {
+    dbConnection.con.query("SELECT * FROM dataKelasSiswa WHERE kelas = ?", [kelasGuru], (err, rows, field) => {
+        if (err) {
+            res.render('guru/absensiSiswa', {
+                listSiswa: ''
+            })
+        } else {
+            res.render('guru/absensiSiswa', {
+                listSiswa: rows
+            })
+        }
+    })
+})
+
+app.post('/absensiSiswa', redirectLogin, (req, res) => {
+    let dataAbsensi = {
+        tanggal: todayDate(),
+        idSiswa: req.sanitize('idSiswa').escape().trim(),
+        status: req.sanitize('status').escape().trim(),
+        idGuru: idGuru
+    }
+    dbConnection.con.query("INSERT INTO dataKehadiran SET ?", dataAbsensi, (err, result) => {
+        if (err) {
+            req.flash('error', err)
+            res.redirect('absensiSiswa')
+        } else {
+            req.flash('success', "Siswa berhasil diabsen!")
+            res.redirect('absensiSiswa')
+        }
+    })
 })
 
 app.post('/logout', redirectLogin, (req, res) => {
