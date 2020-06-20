@@ -212,13 +212,34 @@ app.post('/absensiSiswa', redirectLogin, (req, res) => {
     })
 })
 
-app.get('/kelolaAbsensi', redirectLogin, (req, res) => {
-    res.render('guru/kelolaAbsensiSiswa', {
-        listSiswa: '',
-        pilihanTanggal: '',
-        mapelGuru: ''
+app.route('/kelolaAbsensi', redirectLogin)
+    .get((req, res) => {
+        res.render('guru/kelolaAbsensiSiswa', {
+            listSiswa: '',
+            pilihanTanggal: '',
+            mapelGuru: ''
+        })
     })
-})
+    .put((req, res) => {
+        let dataAbsensi = {
+            tanggal: pilihanTanggal,
+            id: req.sanitize('id').escape().trim(),
+            idSiswa: req.sanitize('idSiswa').escape().trim(),
+            status: req.sanitize('status').escape().trim(),
+            namaSiswa: req.sanitize('namaSiswa').escape().trim(),
+            mataPelajaran: mapelGuru,
+            idGuru: idGuru
+        }
+        dbConnection.con.query("UPDATE dataKehadiran SET ? WHERE id = ?", [dataAbsensi, dataAbsensi.id], (err, rows) => {
+            if (err) {
+                req.flash('error', err)
+                res.redirect('detailAbsensi')
+            } else {
+                req.flash('success', "Data absen siswa berhasil diupdate!")
+                res.redirect('detailAbsensi')
+            }
+        })
+    })
 
 app.post('/cariAbsensi', redirectLogin, (req, res) => {
     let tanggal, mataPelajaran;
@@ -261,24 +282,9 @@ app.get('/detailAbsensi', redirectLogin, (req, res) => {
     })
 })
 
-app.put('/kelolaAbsensi', redirectLogin, (req, res) => {
-    let dataAbsensi = {
-        tanggal: pilihanTanggal,
-        id: req.sanitize('id').escape().trim(),
-        idSiswa: req.sanitize('idSiswa').escape().trim(),
-        status: req.sanitize('status').escape().trim(),
-        namaSiswa: req.sanitize('namaSiswa').escape().trim(),
-        mataPelajaran: mapelGuru,
-        idGuru: idGuru
-    }
-    dbConnection.con.query("UPDATE dataKehadiran SET ? WHERE id = ?", [dataAbsensi, dataAbsensi.id], (err, rows) => {
-        if (err) {
-            req.flash('error', err)
-            res.redirect('detailAbsensi')
-        } else {
-            req.flash('success', "Data absen siswa berhasil diupdate!")
-            res.redirect('detailAbsensi')
-        }
+app.get('/kelolaDataSiswa', redirectLogin, (req, res) => {
+    res.render('guru/kelolaDataSiswa', {
+        listSiswa: ''
     })
 })
 

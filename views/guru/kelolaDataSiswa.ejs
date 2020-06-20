@@ -106,12 +106,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="kelolaAbsensi">
+                        <a class="nav-link " href="kelolaAbsensi">
                             <i class="ni ni-single-copy-04 text-yellow"></i> Kelola Absensi Siswa
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="kelolaDataSiswa">
+                        <a class="nav-link active" href="kelolaDataSiswa">
                             <i class="ni ni-single-copy-04 text-orange"></i> Kelola Data Siswa
                         </a>
                     </li>
@@ -175,7 +175,7 @@
             <div class="row">
                 <div class="col">
                     <div class="card shadow">
-                        <form name="cariDataSiswa" action="/guru/cariAbsensi" method="POST">
+                        <form name="cariDataSiswa" action="/guru/pilihanMapel" method="POST">
                             <div class="card-header bg-white border-0">
                                 <div class="row align-items-center" style="margin-bottom: 20px;">
                                     <div class="col-12">
@@ -188,7 +188,7 @@
                                             <label class="form-control-label" for="input-last-name">Tanggal
                                                 Pelajaran</label>
                                             <input type="date" id="tanggalPelajaran" name="tanggalPelajaran"
-                                                value="<%=  %>" class="form-control form-control-alternative">
+                                                class="form-control form-control-alternative" disabled>
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
@@ -196,25 +196,20 @@
                                             <label class="form-control-label" for="input-last-name">Mata
                                                 Pelajaran</label>
                                             <select class="form-control" name="mapel">
-                                                <optgroup label="SELECTED">
-                                                    <option value="<%= mapelGuru %>"><%= mapelGuru %></option>
-                                                </optgroup>
-                                                <optgroup label="OPSI">
-                                                    <option value="PKN">PKN</option>
-                                                    <option value="Matematika">Matematika</option>
-                                                    <option value="IPS">IPS</option>
-                                                    <option value="Agama">Agama</option>
-                                                    <option value="IPA">IPA</option>
-                                                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                                                    <option value="Bahasa Inggris">Bahasa Inggris</option>
-                                                    <option value="Penjaskes">Penjaskes</option>
-                                                    <option value="Seni Budaya">Seni Budaya</option>
-                                                </optgroup>
+                                                <option value="PKN">PKN</option>
+                                                <option value="Matematika">Matematika</option>
+                                                <option value="IPS">IPS</option>
+                                                <option value="Agama">Agama</option>
+                                                <option value="IPA">IPA</option>
+                                                <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                                                <option value="Bahasa Inggris">Bahasa Inggris</option>
+                                                <option value="Penjaskes">Penjaskes</option>
+                                                <option value="Seni Budaya">Seni Budaya</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-2 text-center">
-                                        <button type="submit" class="btn btn-primary notika-btn-primary">Cari
+                                        <button type="submit" class="btn btn-primary notika-btn-primary">Mulai
                                             Absensi</button>
                                     </div>
                                 </div>
@@ -233,12 +228,12 @@
                             <!-- Error and Success Message -->
                             <% if(messages.error){ %>
                             <br />
-                            <h4 style="color:#d82436">Absensi siswa gagal diupdate!</h4>
+                            <h4 style="color:#d82436">Siswa gagal diabsen!</h4>
                             <p><%- messages.error %></p>
                             <!-- </br> -->
                             <%} else if(messages.success){ %>
                             <br />
-                            <h4 style="color:#5cb85c">Absensi siswa berhasil diupdate!</h4>
+                            <h4 style="color:#5cb85c">Siswa berhasil diabsen!</h4>
                             <% } %>
                         </div>
                         <div class="table-responsive">
@@ -282,15 +277,8 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <form action="/guru/kelolaAbsensi" method="POST">
+                                            <form name="cariDataSiswa" action="/guru/absensiSiswa" method="POST">
                                                 <div style="display: none">
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <input class="form-control form-control-alternative"
-                                                                placeholder="Id" name="id" value="<%= data.id %>"
-                                                                type="text" readonly>
-                                                        </div>
-                                                    </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <input class="form-control form-control-alternative"
@@ -310,25 +298,16 @@
                                                     <div class="col-lg-7">
                                                         <div class="form-group">
                                                             <select class="form-control" name="status">
-                                                                <optgroup label="SELECTED">
-                                                                    <option value="<%= data.status %>">
-                                                                        <%= data.status %>
-                                                                    </option>
-                                                                </optgroup>
-                                                                <optgroup label="OPSI">
-                                                                    <option value="Hadir">Hadir</option>
-                                                                    <option value="Sakit">Sakit</option>
-                                                                    <option value="Izin">Izin</option>
-                                                                </optgroup>
+                                                                <option value="Hadir">Hadir</option>
+                                                                <option value="Sakit">Sakit</option>
+                                                                <option value="Izin">Izin</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-5 text-right">
                                                         <button type="submit"
-                                                            class="btn btn-primary notika-btn-primary">Update
-                                                            Absen</button>
+                                                            class="btn btn-primary notika-btn-primary">Absen</button>
                                                     </div>
-                                                    <input type="hidden" name="_method" value="PUT" />
                                                 </div>
                                             </form>
                                         </td>
