@@ -182,7 +182,7 @@ app.route('/tambahDataSIswa', redirectLogin)
                         jenisKelamin: req.sanitize('jenisKelamin').escape().trim(),
                     }
                     let kelasSiswa = {
-                        idSiswa: generateIdSiswa(),
+                        idSiswa: dataSiswa.id,
                         namaSiswa: req.sanitize('namaLengkap').escape().trim(),
                         kelas: req.sanitize('idKelas').escape().trim(),
                     }

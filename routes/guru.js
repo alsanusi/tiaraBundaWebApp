@@ -283,8 +283,67 @@ app.get('/detailAbsensi', redirectLogin, (req, res) => {
 })
 
 app.get('/kelolaDataSiswa', redirectLogin, (req, res) => {
-    res.render('guru/kelolaDataSiswa', {
-        listSiswa: ''
+    dbConnection.con.query("SELECT * FROM dataKelasSiswa WHERE kelas = ?", [kelasGuru], (err, rows, field) => {
+        if (err) {
+            res.render('guru/kelolaDataSiswa', {
+                listSiswa: '',
+            })
+        } else {
+            res.render('guru/kelolaDataSiswa', {
+                listSiswa: rows,
+            })
+        }
+    })
+})
+
+app.get('/kelolaDataSiswa/(:id)', redirectLogin, (req, res) => {
+    dbConnection.con.query('SELECT * FROM dataSiswa WHERE id = ?', [req.params.id], (err, rows, fields) => {
+        let data = rows[0];
+        if (err) {
+            console.log(err)
+            res.redirect('kelolaDataSiswa')
+        } else {
+            res.render('guru/detailDataSiswa', {
+                id: req.params.id,
+                namaLengkap: data.namaLengkap,
+                tempatLahir: data.tempatLahir,
+                tanggalLahir: data.tanggalLahir,
+                kelas: kelasGuru,
+                alamat: data.alamat,
+                namaAyah: data.namaAyah,
+                namaIbu: data.namaIbu,
+                nomorTelefon: data.nomorTelefon,
+                status: data.status
+            })
+        }
+    })
+})
+
+app.post('/kelolaDataSiswa/(:id)', redirectLogin, (req, res) => {
+    let dataNilaiSiswa = {
+        idGuru: idGuru,
+        idSiswa: req.params.id,
+        namaSiswa: req.sanitize('namaLengkap').escape().trim(),
+        catatanSiswa: req.sanitize('catatanSiswa').escape().trim(),
+        pkn: req.sanitize('pkn').escape().trim(),
+        matematika: req.sanitize('matematika').escape().trim(),
+        ips: req.sanitize('ips').escape().trim(),
+        agama: req.sanitize('agama').escape().trim(),
+        ipa: req.sanitize('ipa').escape().trim(),
+        bahasaIndonesia: req.sanitize('bahasaIndonesia').escape().trim(),
+        bahasaInggris: req.sanitize('bahasaInggris').escape().trim(),
+        penjaskes: req.sanitize('penjaskes').escape().trim(),
+        seniBudaya: req.sanitize('seniBudaya').escape().trim(),
+        catatanSiswa: req.sanitize('catatanSiswa').escape().trim(),
+    }
+    dbConnection.con.query("INSERT INTO dataNilai SET ?", [dataNilaiSiswa], (err, rows) => {
+        if (err) {
+            req.flash('error', err)
+            console.log(err)
+            res.redirect('/guru/kelolaDataSiswa')
+        } else {
+            res.redirect('/guru/kelolaDataSiswa')
+        }
     })
 })
 
