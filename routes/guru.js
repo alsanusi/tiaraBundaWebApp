@@ -3,7 +3,7 @@ const app = express()
 
 // Koneksi Database
 const dbConnection = require('../db_config/db_connection')
-let idGuru, kelasGuru, mapelGuru;
+let idGuru, kelasGuru, mapelGuru, pilihanTanggal;
 
 const todayDate = () => {
     let date = new Date();
@@ -13,7 +13,7 @@ const todayDate = () => {
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
 
-    return dd + '/' + mm + '/' + yyyy;
+    return yyyy + '-' + mm + '-' + dd;
 }
 
 const redirectLogin = (req, res, next) => {
@@ -191,6 +191,7 @@ app.post('/absensiSiswa', redirectLogin, (req, res) => {
         tanggal: todayDate(),
         idSiswa: req.sanitize('idSiswa').escape().trim(),
         status: req.sanitize('status').escape().trim(),
+        namaSiswa: req.sanitize('namaSiswa').escape().trim(),
         mataPelajaran: mapelGuru,
         idGuru: idGuru
     }
@@ -201,6 +202,76 @@ app.post('/absensiSiswa', redirectLogin, (req, res) => {
         } else {
             req.flash('success', "Siswa berhasil diabsen!")
             res.redirect('pilihanMapel')
+        }
+    })
+})
+
+app.get('/kelolaAbsensi', redirectLogin, (req, res) => {
+    res.render('guru/kelolaAbsensiSiswa', {
+        listSiswa: '',
+        pilihanTanggal: '',
+        mapelGuru: ''
+    })
+})
+
+app.post('/cariAbsensi', redirectLogin, (req, res) => {
+    let tanggal, mataPelajaran;
+    tanggal = req.sanitize('tanggalPelajaran').escape().trim();
+    mataPelajaran = req.sanitize('mapel').escape().trim();
+    mapelGuru = mataPelajaran
+    pilihanTanggal = tanggal
+    dbConnection.con.query("SELECT * FROM dataKehadiran WHERE tanggal = ? AND mataPelajaran = ?", [tanggal, mataPelajaran], (err, rows, field) => {
+        if (err) {
+            res.render('guru/kelolaAbsensiSiswa', {
+                listSiswa: '',
+                pilihanTanggal: '',
+                mapelGuru: ''
+            })
+        } else {
+            res.render('guru/kelolaAbsensiSiswa', {
+                listSiswa: rows,
+                pilihanTanggal: pilihanTanggal,
+                mapelGuru: mapelGuru
+            })
+        }
+    })
+})
+
+app.get('/detailAbsensi', redirectLogin, (req, res) => {
+    dbConnection.con.query("SELECT * FROM dataKehadiran WHERE tanggal = ? AND mataPelajaran = ?", [pilihanTanggal, mapelGuru], (err, rows, field) => {
+        if (err) {
+            res.render('guru/kelolaAbsensiSiswa', {
+                listSiswa: '',
+                pilihanTanggal: '',
+                mapelGuru: ''
+            })
+        } else {
+            res.render('guru/kelolaAbsensiSiswa', {
+                listSiswa: rows,
+                pilihanTanggal: pilihanTanggal,
+                mapelGuru: mapelGuru
+            })
+        }
+    })
+})
+
+app.put('/kelolaAbsensi', redirectLogin, (req, res) => {
+    let dataAbsensi = {
+        tanggal: pilihanTanggal,
+        id: req.sanitize('id').escape().trim(),
+        idSiswa: req.sanitize('idSiswa').escape().trim(),
+        status: req.sanitize('status').escape().trim(),
+        namaSiswa: req.sanitize('namaSiswa').escape().trim(),
+        mataPelajaran: mapelGuru,
+        idGuru: idGuru
+    }
+    dbConnection.con.query("UPDATE dataKehadiran SET ? WHERE id = ?", [dataAbsensi, dataAbsensi.id], (err, rows) => {
+        if (err) {
+            req.flash('error', err)
+            res.redirect('detailAbsensi')
+        } else {
+            req.flash('success', "Data absen siswa berhasil diupdate!")
+            res.redirect('detailAbsensi')
         }
     })
 })
