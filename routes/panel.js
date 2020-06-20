@@ -482,6 +482,11 @@ app.route('/editDataGuru/(:id)', redirectLogin)
         })
     })
 
+// Jadwal
+app.get('/kelolaJadwal', redirectLogin, (req, res) => {
+    res.render('panel/admin/jadwalPelajaran/kelolaJadwal')
+})
+
 // Kelas
 app.get('/kelolaDataKelas', redirectLogin, (req, res) => {
     dbConnection.con.query("SELECT * FROM dataKelas", (err, rows, field) => {
