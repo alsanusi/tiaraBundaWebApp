@@ -111,6 +111,10 @@ app.get('/dashboard', redirectLogin, (req, res) => {
     res.render('guru/dashboard')
 })
 
+app.get('/kelolaJadwal', redirectLogin, (req, res) => {
+    res.render('guru/jadwalPelajaran')
+})
+
 app.post('/logout', redirectLogin, (req, res) => {
     req.session.destroy(err => {
         if (err) {
