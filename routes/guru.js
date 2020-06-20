@@ -139,6 +139,7 @@ app.get('/kelolaJadwal', redirectLogin, (req, res) => {
 app.get('/absensiSiswa', redirectLogin, (req, res) => {
     res.render('guru/absensiSiswa', {
         listSiswa: '',
+        pilihanTanggal: todayDate(),
         mapelGuru: ''
     })
 })
@@ -170,18 +171,23 @@ app.route('/pilihanMapel', redirectLogin)
             dbConnection.con.query("SELECT * FROM dataKelasSiswa WHERE kelas = ?", [kelasGuru], (err, rows, field) => {
                 if (err) {
                     res.render('guru/absensiSiswa', {
-                        listSiswa: ''
+                        listSiswa: '',
+                        mapelGuru: '',
+                        pilihanTanggal: ''
                     })
                 } else {
                     res.render('guru/absensiSiswa', {
                         listSiswa: rows,
-                        mapelGuru: mapelGuru
+                        mapelGuru: mapelGuru,
+                        pilihanTanggal: todayDate(),
                     })
                 }
             })
         } else {
             res.render('guru/absensiSiswa', {
-                listSiswa: ''
+                listSiswa: '',
+                mapelGuru: '',
+                pilihanTanggal: todayDate(),
             })
         }
     })
