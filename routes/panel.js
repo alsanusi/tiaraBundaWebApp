@@ -66,6 +66,46 @@ const cariDataSiswa = (kelas) => {
     })
 }
 
+const checkTotalSiswa = () => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT * FROM dataSiswa', (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const checkTotalGuru = () => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT * FROM dataGuru', (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const checkTotalBerita = () => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT * FROM dataBerita', (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const checkTotalSaran = () => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT * FROM kotakSaran', (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const updatedDataSiswa = () => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT * FROM dataSiswa ORDER BY id DESC LIMIT 5', (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
 const listDataGuru = () => {
     return new Promise((resolve, reject) => {
         dbConnection.con.query('SELECT id, namaLengkap FROM dataGuru', (err, rows) => {
@@ -118,8 +158,19 @@ app.post('/login', redirectHome, (req, res) => {
     }
 })
 
-app.get('/dashboard', redirectLogin, (req, res) => {
-    res.render('panel/dashboard')
+app.get('/dashboard', redirectLogin, async (req, res) => {
+    const hasilCheckTotalSiswa = await checkTotalSiswa()
+    const hasilCheckTotalGuru = await checkTotalGuru()
+    const hasilCheckTotalBerita = await checkTotalBerita()
+    const hasilCheckTotalSaran = await checkTotalSaran()
+    const hasilUpdatedDataSiswa = await updatedDataSiswa()
+    res.render('panel/dashboard', {
+        totalSiswa: hasilCheckTotalSiswa ? hasilCheckTotalSiswa.length : 0,
+        totalGuru: hasilCheckTotalGuru ? hasilCheckTotalGuru.length : 0,
+        totalBerita: hasilCheckTotalBerita ? hasilCheckTotalBerita.length : 0,
+        totalSaran: hasilCheckTotalSaran ? hasilCheckTotalSaran.length : 0,
+        listDataSiswa: hasilUpdatedDataSiswa ? hasilUpdatedDataSiswa : []
+    })
 })
 
 // Siswa
