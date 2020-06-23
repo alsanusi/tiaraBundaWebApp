@@ -154,18 +154,21 @@ app.route('/pilihanMapel', redirectLogin)
             dbConnection.con.query("SELECT * FROM dataKelasSiswa WHERE kelas = ?", [kelasGuru], (err, rows, field) => {
                 if (err) {
                     res.render('guru/absensiSiswa', {
-                        listSiswa: ''
+                        listSiswa: '',
+                        pilihanTanggal: ''
                     })
                 } else {
                     res.render('guru/absensiSiswa', {
                         listSiswa: rows,
-                        mapelGuru: mapelGuru
+                        mapelGuru: mapelGuru,
+                        pilihanTanggal: todayDate()
                     })
                 }
             })
         } else {
             res.render('guru/absensiSiswa', {
-                listSiswa: ''
+                listSiswa: '',
+                pilihanTanggal: ''
             })
         }
     })

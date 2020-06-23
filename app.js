@@ -60,9 +60,11 @@ app.use(methodOverride(function (req, res) {
 const indexView = require('./routes/index')
 const panelView = require('./routes/panel')
 const guruView = require('./routes/guru')
+const siswaView = require('./routes/siswa')
 app.use('/', indexView)
 app.use('/panel', panelView)
 app.use('/guru', guruView)
+app.use('/siswa', siswaView)
 
 app.listen(3000, () => {
     console.log('Server running at port 3000: http://127.0.0.1:3000')
