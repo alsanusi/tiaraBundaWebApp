@@ -58,9 +58,9 @@ const generateIdGuru = () => {
     return 'G' + day + uniqueId;
 }
 
-const cariDataSiswa = (kelas, semester) => {
+const cariDataSiswa = (kelas) => {
     return new Promise((resolve, reject) => {
-        dbConnection.con.query('SELECT * FROM dataSiswa WHERE kelas = ? AND semester = ?', [kelas, semester], (err, rows) => {
+        dbConnection.con.query('SELECT * FROM dataKelasSiswa WHERE kelas = ?', [kelas], (err, rows) => {
             err ? reject(err) : resolve(rows)
         })
     })
@@ -264,12 +264,10 @@ app.route('/tambahDataSIswa', redirectLogin)
 
 app.post('/cariDataSiswa', redirectLogin, async (req, res) => {
     let inputKelas = req.body.kelas;
-    let inputSemester = req.body.semester;
-    const hasilCariDataSiswa = await cariDataSiswa(inputKelas, inputSemester);
+    const hasilCariDataSiswa = await cariDataSiswa(inputKelas);
     res.render('panel/admin/siswa/kelolaDataSiswa', {
         kelas: inputKelas,
-        semester: inputSemester,
-        listDataSiswa: hasilCariDataSiswa
+        listDataSiswa: hasilCariDataSiswa ? hasilCariDataSiswa : []
     })
 })
 
@@ -277,7 +275,6 @@ app.get('/kelolaDataSiswa', redirectLogin, (req, res) => {
     res.render('panel/admin/siswa/kelolaDataSiswa', {
         listDataSiswa: '',
         kelas: 1,
-        semester: 1
     })
 })
 
@@ -293,8 +290,8 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
                     namaLengkap: data.namaLengkap,
                     tempatLahir: data.tempatLahir,
                     tanggalLahir: data.tanggalLahir,
-                    kelas: data.kelas,
-                    semester: data.semester,
+                    jenisKelamin: data.jenisKelamin,
+                    agama: data.agama,
                     alamat: data.alamat,
                     namaAyah: data.namaAyah,
                     namaIbu: data.namaIbu,
@@ -307,33 +304,13 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
     .put((req, res) => {
         let dataSiswa = {
             id: req.params.id,
-            namaLengkap: req.sanitize('namaLengkap').escape().trim(),
-            tempatLahir: req.sanitize('tempatLahir').escape().trim(),
-            tanggalLahir: req.sanitize('tanggalLahir').escape().trim(),
-            kelas: req.sanitize('kelas').escape().trim(),
-            semester: req.sanitize('semester').escape().trim(),
             alamat: req.sanitize('alamat').escape().trim(),
-            namaAyah: req.sanitize('namaAyah').escape().trim(),
-            namaIbu: req.sanitize('namaIbu').escape().trim(),
             nomorTelefon: req.sanitize('nomorTelefon').escape().trim(),
-            status: req.sanitize('status').escape().trim()
         }
         dbConnection.con.query("UPDATE dataSiswa SET ? WHERE id = ?", [dataSiswa, req.params.id], (err, rows) => {
             if (err) {
                 req.flash('error', err)
-                res.render('panel/admin/siswa/editDataSiswa', {
-                    id: req.params.id,
-                    namaLengkap: dataSiswa.namaLengkap,
-                    tempatLahir: dataSiswa.tempatLahir,
-                    tanggalLahir: dataSiswa.tanggalLahir,
-                    kelas: dataSiswa.kelas,
-                    semester: dataSiswa.semester,
-                    alamat: dataSiswa.alamat,
-                    namaAyah: dataSiswa.namaAyah,
-                    namaIbu: dataSiswa.namaIbu,
-                    nomorTelefon: dataSiswa.nomorTelefon,
-                    status: dataSiswa.status
-                })
+                res.redirect('/panel/kelolaDataSiswa')
             } else {
                 res.redirect('/panel/kelolaDataSiswa')
             }
