@@ -3,7 +3,7 @@ const app = express()
 
 // Koneksi Database
 const dbConnection = require('../db_config/db_connection')
-let idSiswa, namaSiswa;
+let idSiswa, namaSiswa, kelasSiswa, idGuru;
 
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
@@ -56,6 +56,30 @@ const checkSakitSiswa = (idSiswa) => {
 const checkNilaiSiswa = (idSiswa) => {
     return new Promise((resolve, reject) => {
         dbConnection.con.query("SELECT * FROM dataNilai WHERE idSiswa = ?", [idSiswa], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const checkWaliKelasSiswa = (kelas) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query("SELECT * FROM dataKelas WHERE kelas = ?", [kelas], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const checkDetailWaliKelasSiswa = (idGuru) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query("SELECT * FROM dataGuru WHERE id = ?", [idGuru], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const checkKelasSiswa = (idSiswa) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query("SELECT * FROM dataKelasSiswa WHERE idSiswa = ?", [idSiswa], (err, rows) => {
             err ? reject(err) : resolve(rows)
         })
     })
@@ -116,6 +140,53 @@ app.get('/absensiSiswa', redirectLogin, (req, res) => {
                 listSiswa: rows,
                 namaSiswa: namaSiswa ? namaSiswa : "Siswa"
             })
+        }
+    })
+})
+
+app.get('/profilSiswa', redirectLogin, async (req, res) => {
+    const hasilCheckKelasSiswa = await checkKelasSiswa(idSiswa)
+    kelasSiswa = hasilCheckKelasSiswa[0].kelas
+    const hasilCheckWaliKelasSiswa = await checkWaliKelasSiswa(kelasSiswa)
+    idGuru = hasilCheckWaliKelasSiswa[0].idGuru
+    const hasilCheckDetailWaliKelasSiswa = await checkDetailWaliKelasSiswa(idGuru)
+    dbConnection.con.query('SELECT * FROM dataSiswa WHERE id = ?', [idSiswa], (err, rows, fields) => {
+        let data = rows[0];
+        if (err) {
+            res.redirect('dashboard')
+        } else {
+            res.render('siswa/profilSiswa', {
+                namaSiswa: namaSiswa ? namaSiswa : "Siswa",
+                kelas: hasilCheckKelasSiswa ? hasilCheckKelasSiswa[0].kelas : "-",
+                waliKelas: hasilCheckDetailWaliKelasSiswa ? hasilCheckDetailWaliKelasSiswa[0].namaLengkap : "-",
+                id: idSiswa,
+                namaLengkap: data.namaLengkap,
+                tempatLahir: data.tempatLahir,
+                tanggalLahir: data.tanggalLahir,
+                agama: data.agama,
+                alamat: data.alamat,
+                namaAyah: data.namaAyah,
+                jenisKelamin: data.jenisKelamin,
+                namaIbu: data.namaIbu,
+                nomorTelefon: data.nomorTelefon,
+                status: data.status
+            })
+        }
+    })
+})
+
+app.put('/profilSiswa', redirectLogin, (req, res) => {
+    let dataSiswa = {
+        id: idSiswa,
+        alamat: req.sanitize('alamat').escape().trim(),
+        nomorTelefon: req.sanitize('nomorTelefon').escape().trim(),
+    }
+    dbConnection.con.query("UPDATE dataSiswa SET ? WHERE id = ?", [dataSiswa, idSiswa], (err, rows) => {
+        if (err) {
+            req.flash('error', err)
+            res.redirect('profilSiswa')
+        } else {
+            res.redirect('profilSiswa')
         }
     })
 })
