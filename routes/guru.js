@@ -26,7 +26,7 @@ const redirectLogin = (req, res, next) => {
 
 const redirectHome = (req, res, next) => {
     if (req.session.userId) {
-        res.redirect('dashboard')
+        res.redirect('kelolaJadwal')
     } else {
         next()
     }
@@ -75,7 +75,7 @@ app.post('/login', redirectHome, async (req, res) => {
         req.session.userId = checkHasilDataGuru[0].id
         idGuru = checkHasilDataGuru[0].id
         kelasGuru = checkHasilKelasGuru[0].kelas
-        res.redirect('dashboard')
+        res.redirect('kelolaJadwal')
     }
 })
 
@@ -135,10 +135,6 @@ app.route('/profil', redirectLogin)
             }
         })
     })
-
-app.get('/dashboard', redirectLogin, (req, res) => {
-    res.render('guru/dashboard')
-})
 
 app.get('/kelolaJadwal', redirectLogin, (req, res) => {
     res.render('guru/jadwalPelajaran')
