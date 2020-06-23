@@ -3,7 +3,7 @@ const app = express()
 
 // Koneksi Database
 const dbConnection = require('../db_config/db_connection')
-let idSiswa, namaSiswa, kelasSiswa, idGuru;
+let idSiswa, namaSiswa, kelasSiswa, idGuru, namaGuru;
 
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
@@ -112,13 +112,23 @@ app.get('/dashboard', redirectLogin, async (req, res) => {
     const hasilCheckIzinSiswa = await checkIzinSiswa(idSiswa)
     const hasilCheckSakitSiswa = await checkSakitSiswa(idSiswa)
     const hasilCheckNilaiSiswa = await checkNilaiSiswa(idSiswa)
+    const hasilCheckKelasSiswa = await checkKelasSiswa(idSiswa)
+    kelasSiswa = hasilCheckKelasSiswa[0].kelas
+    const hasilCheckWaliKelasSiswa = await checkWaliKelasSiswa(kelasSiswa)
+    idGuru = hasilCheckWaliKelasSiswa[0].idGuru
+    const hasilCheckDetailWaliKelasSiswa = await checkDetailWaliKelasSiswa(idGuru)
+    namaGuru = hasilCheckDetailWaliKelasSiswa[0].namaLengkap
 
     res.render('siswa/dashboard', {
         namaSiswa: namaSiswa ? namaSiswa : "Siswa",
         totalHadir: hasilCheckHadirSiswa ? hasilCheckHadirSiswa.length : 0,
         totalIzin: hasilCheckIzinSiswa ? hasilCheckIzinSiswa.length : 0,
         totalSakit: hasilCheckSakitSiswa ? hasilCheckSakitSiswa.length : 0,
-        listNilaiSiswa: hasilCheckNilaiSiswa ? hasilCheckNilaiSiswa : []
+        listNilaiSiswa: hasilCheckNilaiSiswa ? hasilCheckNilaiSiswa : [],
+        idGuru: idGuru ? idGuru : "-",
+        namaGuru: namaGuru ? namaGuru : "-",
+        nomorTelefonGuru: hasilCheckDetailWaliKelasSiswa ? hasilCheckDetailWaliKelasSiswa[0].nomorTelefon : "-",
+        emailGuru: hasilCheckDetailWaliKelasSiswa ? hasilCheckDetailWaliKelasSiswa[0].email : "-"
     })
 })
 
@@ -144,12 +154,7 @@ app.get('/absensiSiswa', redirectLogin, (req, res) => {
     })
 })
 
-app.get('/profilSiswa', redirectLogin, async (req, res) => {
-    const hasilCheckKelasSiswa = await checkKelasSiswa(idSiswa)
-    kelasSiswa = hasilCheckKelasSiswa[0].kelas
-    const hasilCheckWaliKelasSiswa = await checkWaliKelasSiswa(kelasSiswa)
-    idGuru = hasilCheckWaliKelasSiswa[0].idGuru
-    const hasilCheckDetailWaliKelasSiswa = await checkDetailWaliKelasSiswa(idGuru)
+app.get('/profilSiswa', redirectLogin, (req, res) => {
     dbConnection.con.query('SELECT * FROM dataSiswa WHERE id = ?', [idSiswa], (err, rows, fields) => {
         let data = rows[0];
         if (err) {
@@ -157,8 +162,8 @@ app.get('/profilSiswa', redirectLogin, async (req, res) => {
         } else {
             res.render('siswa/profilSiswa', {
                 namaSiswa: namaSiswa ? namaSiswa : "Siswa",
-                kelas: hasilCheckKelasSiswa ? hasilCheckKelasSiswa[0].kelas : "-",
-                waliKelas: hasilCheckDetailWaliKelasSiswa ? hasilCheckDetailWaliKelasSiswa[0].namaLengkap : "-",
+                kelas: kelasSiswa ? kelasSiswa : "-",
+                waliKelas: namaGuru ? namaGuru : "-",
                 id: idSiswa,
                 namaLengkap: data.namaLengkap,
                 tempatLahir: data.tempatLahir,
