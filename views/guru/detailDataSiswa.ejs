@@ -197,7 +197,7 @@
                                     <div class="col-4 text-right">
                                         <button type="submit" class="btn btn-primary notika-btn-primary">Update Data
                                             Siswa</button>
-                                        <input type="hidden" name="_method" value="POST" />
+                                        <input type="hidden" name="_method" value="PUT" />
                                     </div>
                                 </div>
                             </div>
@@ -309,7 +309,8 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-city">PKN</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="pkn" placeholder="Nilai PKN">
+                                                        name="pkn" placeholder="Nilai PKN" value="<%= pkn %>"
+                                                        type="number">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -317,7 +318,8 @@
                                                     <label class="form-control-label"
                                                         for="input-country">Matematika</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="matematika" placeholder="Nilai Matematika">
+                                                        name="matematika" placeholder="Nilai Matematika"
+                                                        value="<%= matematika %>" type="number">
                                                 </div>
                                             </div>
                                         </div>
@@ -326,14 +328,16 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-city">IPS</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="ips" placeholder="Nilai IPS">
+                                                        name="ips" placeholder="Nilai IPS" value="<%= ips %>"
+                                                        type="number">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-country">Agama</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="agama" placeholder="Nilai Agama">
+                                                        name="agama" placeholder="Nilai Agama" value="<%= agama %>"
+                                                        type="number">
                                                 </div>
                                             </div>
                                         </div>
@@ -342,7 +346,8 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-city">IPA</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="ipa" placeholder="Nilai IPA">
+                                                        name="ipa" placeholder="Nilai IPA" value="<%= ipa %>"
+                                                        type="number">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -350,7 +355,8 @@
                                                     <label class="form-control-label" for="input-country">Bahasa
                                                         Indonesia</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="bahasaIndonesia" placeholder="Nilai Bahasa Indonesia">
+                                                        name="bahasaIndonesia" placeholder="Nilai Bahasa Indonesia"
+                                                        value="<%= bahasaIndonesia %>" type="number">
                                                 </div>
                                             </div>
                                         </div>
@@ -360,7 +366,8 @@
                                                     <label class="form-control-label" for="input-city">Bahasa
                                                         Inggris</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="bahasaInggris" placeholder="Nilai Bahasa Inggris">
+                                                        name="bahasaInggris" placeholder="Nilai Bahasa Inggris"
+                                                        value="<%= bahasaInggris %>" type="number">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -368,7 +375,8 @@
                                                     <label class="form-control-label"
                                                         for="input-country">Penjaskes</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="penjaskes" placeholder="Nilai Penjaskes">
+                                                        name="penjaskes" placeholder="Nilai Penjaskes"
+                                                        value="<%= penjaskes %>" type="number">
                                                 </div>
                                             </div>
                                         </div>
@@ -378,7 +386,8 @@
                                                     <label class="form-control-label" for="input-city">Seni
                                                         Budaya</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="seniBudaya" placeholder="Nilai Seni Budaya">
+                                                        name="seniBudaya" placeholder="Nilai Seni Budaya"
+                                                        value="<%= seniBudaya %>" type="number">
                                                 </div>
                                             </div>
                                         </div>
@@ -391,7 +400,8 @@
                                             <label class="form-control-label" for="input-last-name">Catatan
                                                 Siswa</label>
                                             <textarea rows="4" class="form-control form-control-alternative"
-                                                placeholder="Catatan Siswa" name="catatanSiswa"></textarea>
+                                                placeholder="Catatan Siswa"
+                                                name="catatanSiswa"><%= catatanSiswa %></textarea>
                                         </div>
                                     </div>
                                 </form>

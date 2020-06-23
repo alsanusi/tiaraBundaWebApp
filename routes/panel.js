@@ -220,19 +220,38 @@ app.route('/tambahDataSIswa', redirectLogin)
                                         jenisKelamin: dataSiswa.jenisKelamin,
                                     })
                                 } else {
-                                    req.flash('success', 'Data siswa berhasil ditambahkan!')
-                                    res.render('panel/admin/siswa/tambahDataSiswa', {
-                                        id: generateIdSiswa(),
-                                        namaLengkap: '',
-                                        tempatLahir: '',
-                                        tanggalLahir: '',
-                                        alamat: '',
-                                        namaAyah: '',
-                                        namaIbu: '',
-                                        nomorTelefon: '',
-                                        status: 'Siswa',
-                                        agama: '',
-                                        jenisKelamin: '',
+                                    dbConnection.con.query('INSERT INTO dataNilai SET ?', kelasSiswa, (err, result) => {
+                                        if (err) {
+                                            req.flash('error', err)
+                                            res.render('panel/admin/siswa/tambahDataSiswa', {
+                                                id: dataSiswa.id,
+                                                namaLengkap: dataSiswa.namaLengkap,
+                                                tempatLahir: dataSiswa.tempatLahir,
+                                                tanggalLahir: dataSiswa.tanggalLahir,
+                                                alamat: dataSiswa.alamat,
+                                                namaAyah: dataSiswa.namaAyah,
+                                                namaIbu: dataSiswa.namaIbu,
+                                                nomorTelefon: dataSiswa.nomorTelefon,
+                                                status: dataSiswa.status,
+                                                agama: dataSiswa.agama,
+                                                jenisKelamin: dataSiswa.jenisKelamin,
+                                            })
+                                        } else {
+                                            req.flash('success', 'Data siswa berhasil ditambahkan!')
+                                            res.render('panel/admin/siswa/tambahDataSiswa', {
+                                                id: generateIdSiswa(),
+                                                namaLengkap: '',
+                                                tempatLahir: '',
+                                                tanggalLahir: '',
+                                                alamat: '',
+                                                namaAyah: '',
+                                                namaIbu: '',
+                                                nomorTelefon: '',
+                                                status: 'Siswa',
+                                                agama: '',
+                                                jenisKelamin: '',
+                                            })
+                                        }
                                     })
                                 }
                             })

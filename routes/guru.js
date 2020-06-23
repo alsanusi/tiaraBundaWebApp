@@ -3,7 +3,7 @@ const app = express()
 
 // Koneksi Database
 const dbConnection = require('../db_config/db_connection')
-let idGuru, kelasGuru, mapelGuru, pilihanTanggal;
+let idGuru, kelasGuru, mapelGuru, pilihanTanggal, idNilaiSiswa;
 
 const todayDate = () => {
     let date = new Date();
@@ -35,6 +35,14 @@ const redirectHome = (req, res, next) => {
 const checkDataGuru = (email, pass) => {
     return new Promise((resolve, reject) => {
         dbConnection.con.query("SELECT * FROM dataGuru WHERE email = ? AND password = ?", [email, pass], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const checkNilaiSiswa = (idSiswa) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query("SELECT * FROM dataNilai WHERE idSiswa = ?", [idSiswa], (err, rows) => {
             err ? reject(err) : resolve(rows)
         })
     })
@@ -296,11 +304,13 @@ app.get('/kelolaDataSiswa', redirectLogin, (req, res) => {
     })
 })
 
-app.get('/kelolaDataSiswa/(:id)', redirectLogin, (req, res) => {
+app.get('/kelolaDataSiswa/(:id)', redirectLogin, async (req, res) => {
+    const hasilCheckNilaiSiswa = await checkNilaiSiswa(req.params.id)
+    let nilaiSiswa = hasilCheckNilaiSiswa[0]
     dbConnection.con.query('SELECT * FROM dataSiswa WHERE id = ?', [req.params.id], (err, rows, fields) => {
+        idNilaiSiswa = nilaiSiswa.id
         let data = rows[0];
         if (err) {
-            console.log(err)
             res.redirect('kelolaDataSiswa')
         } else {
             res.render('guru/detailDataSiswa', {
@@ -313,13 +323,23 @@ app.get('/kelolaDataSiswa/(:id)', redirectLogin, (req, res) => {
                 namaAyah: data.namaAyah,
                 namaIbu: data.namaIbu,
                 nomorTelefon: data.nomorTelefon,
-                status: data.status
+                status: data.status,
+                pkn: nilaiSiswa.pkn ? nilaiSiswa.pkn : 0,
+                matematika: nilaiSiswa.matematika ? nilaiSiswa.matematika : 0,
+                ips: nilaiSiswa.ips ? nilaiSiswa.ips : 0,
+                agama: nilaiSiswa.agama ? nilaiSiswa.agama : 0,
+                ipa: nilaiSiswa.ipa ? nilaiSiswa.ipa : 0,
+                bahasaIndonesia: nilaiSiswa.bahasaIndonesia ? nilaiSiswa.bahasaIndonesia : 0,
+                bahasaInggris: nilaiSiswa.bahasaInggris ? nilaiSiswa.bahasaInggris : 0,
+                penjaskes: nilaiSiswa.penjaskes ? nilaiSiswa.penjaskes : 0,
+                seniBudaya: nilaiSiswa.seniBudaya ? nilaiSiswa.seniBudaya : 0,
+                catatanSiswa: nilaiSiswa.catatanSiswa ? nilaiSiswa.catatanSiswa : "-",
             })
         }
     })
 })
 
-app.post('/kelolaDataSiswa/(:id)', redirectLogin, (req, res) => {
+app.put('/kelolaDataSiswa/(:id)', redirectLogin, (req, res) => {
     let dataNilaiSiswa = {
         idGuru: idGuru,
         idSiswa: req.params.id,
@@ -335,11 +355,11 @@ app.post('/kelolaDataSiswa/(:id)', redirectLogin, (req, res) => {
         penjaskes: req.sanitize('penjaskes').escape().trim(),
         seniBudaya: req.sanitize('seniBudaya').escape().trim(),
         catatanSiswa: req.sanitize('catatanSiswa').escape().trim(),
+        kelas: kelasGuru
     }
-    dbConnection.con.query("INSERT INTO dataNilai SET ?", [dataNilaiSiswa], (err, rows) => {
+    dbConnection.con.query("UPDATE dataNilai SET ? WHERE id = ?", [dataNilaiSiswa, idNilaiSiswa], (err, rows) => {
         if (err) {
             req.flash('error', err)
-            console.log(err)
             res.redirect('/guru/kelolaDataSiswa')
         } else {
             res.redirect('/guru/kelolaDataSiswa')
