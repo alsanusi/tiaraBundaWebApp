@@ -53,6 +53,14 @@ const checkSakitSiswa = (idSiswa) => {
     })
 }
 
+const checkAlfaSiswa = (idSiswa) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query("SELECT * FROM dataKehadiran WHERE idSiswa = ? AND status ='Alfa'", [idSiswa], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
 const checkNilaiSiswa = (idSiswa) => {
     return new Promise((resolve, reject) => {
         dbConnection.con.query("SELECT * FROM dataNilai WHERE idSiswa = ?", [idSiswa], (err, rows) => {
@@ -112,6 +120,7 @@ app.get('/dashboard', redirectLogin, async (req, res) => {
     const hasilCheckIzinSiswa = await checkIzinSiswa(idSiswa)
     const hasilCheckSakitSiswa = await checkSakitSiswa(idSiswa)
     const hasilCheckNilaiSiswa = await checkNilaiSiswa(idSiswa)
+    const hasilCheckAlfaSiswa = await checkAlfaSiswa(idSiswa)
     const hasilCheckKelasSiswa = await checkKelasSiswa(idSiswa)
     kelasSiswa = hasilCheckKelasSiswa[0].kelas
     const hasilCheckWaliKelasSiswa = await checkWaliKelasSiswa(kelasSiswa)
@@ -124,6 +133,7 @@ app.get('/dashboard', redirectLogin, async (req, res) => {
         totalHadir: hasilCheckHadirSiswa ? hasilCheckHadirSiswa.length : 0,
         totalIzin: hasilCheckIzinSiswa ? hasilCheckIzinSiswa.length : 0,
         totalSakit: hasilCheckSakitSiswa ? hasilCheckSakitSiswa.length : 0,
+        totalAlfa: hasilCheckAlfaSiswa ? hasilCheckAlfaSiswa.length : 0,
         listNilaiSiswa: hasilCheckNilaiSiswa ? hasilCheckNilaiSiswa : [],
         idGuru: idGuru ? idGuru : "-",
         namaGuru: namaGuru ? namaGuru : "-",
