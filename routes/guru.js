@@ -88,6 +88,7 @@ app.route('/profil', redirectLogin)
             } else {
                 res.render('guru/profil', {
                     id: data.id,
+                    fotoProfil: data.fotoProfil,
                     namaLengkap: data.namaLengkap,
                     tempatLahir: data.tempatLahir,
                     tanggalLahir: data.tanggalLahir,
@@ -104,22 +105,17 @@ app.route('/profil', redirectLogin)
     .put((req, res) => {
         let dataGuru = {
             id: idGuru,
-            namaLengkap: req.sanitize('namaLengkap').escape().trim(),
-            tempatLahir: req.sanitize('tempatLahir').escape().trim(),
-            tanggalLahir: req.sanitize('tanggalLahir').escape().trim(),
             alamat: req.sanitize('alamat').escape().trim(),
             nomorTelefon: req.sanitize('nomorTelefon').escape().trim(),
-            jenisKelamin: req.sanitize('jenisKelamin').escape().trim(),
-            agama: req.sanitize('agama').escape().trim(),
             email: req.sanitize('email').escape().trim(),
             password: req.sanitize('password').escape().trim()
-
         }
         dbConnection.con.query("UPDATE dataGuru SET ? WHERE id = ?", [dataGuru, idGuru], (err, rows) => {
             if (err) {
                 req.flash('error', err)
                 res.render('guru/profil', {
                     id: idGuru,
+                    fotoProfil: data.fotoProfil,
                     namaLengkap: dataGuru.namaLengkap,
                     tempatLahir: dataGuru.tempatLahir,
                     tanggalLahir: dataGuru.tanggalLahir,
@@ -314,6 +310,7 @@ app.get('/kelolaDataSiswa/(:id)', redirectLogin, async (req, res) => {
         } else {
             res.render('guru/detailDataSiswa', {
                 id: req.params.id,
+                fotoProfil: data.fotoProfil,
                 namaLengkap: data.namaLengkap,
                 tempatLahir: data.tempatLahir,
                 tanggalLahir: data.tanggalLahir,

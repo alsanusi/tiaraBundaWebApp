@@ -86,27 +86,27 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link " href="kelolaJadwal">
+                        <a class="nav-link " href="/guru/kelolaJadwal">
                             <i class="ni ni-single-copy-04 text-black"></i> Jadwal Pelajaran
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="profil">
+                        <a class="nav-link " href="/guru/profil">
                             <i class="ni ni-single-02 text-red"></i> Profil Guru
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="absensiSiswa">
+                        <a class="nav-link " href="/guru/absensiSiswa">
                             <i class="ni ni-single-copy-04 text-purple"></i> Absensi Siswa
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="kelolaAbsensi">
+                        <a class="nav-link " href="/guru/kelolaAbsensi">
                             <i class="ni ni-single-copy-04 text-yellow"></i> Kelola Absensi Siswa
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="kelolaDataSiswa">
+                        <a class="nav-link active" href="/guru/kelolaDataSiswa">
                             <i class="ni ni-single-copy-04 text-orange"></i> Kelola Data Siswa
                         </a>
                     </li>
@@ -181,7 +181,25 @@
         <!-- Page content -->
         <div class="container-fluid mt--7">
             <div class="row">
-                <div class="col-xl-12 order-xl-1">
+                <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                    <div class="card card-profile shadow">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-3 order-lg-2">
+                                <div class="card-profile-image">
+                                    <img src="../../uploads/siswa/<%= fotoProfil %>" class="rounded-circle">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pt-md-4">
+                            <div class="text-center" style="margin-top: 130px;">
+                                <h3>
+                                    <%= namaLengkap %>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8 order-xl-1">
                     <div class="card bg-secondary shadow">
                         <form action="/guru/kelolaDataSiswa/<%= id %>" method="POST">
                             <div class="card-header bg-white border-0">

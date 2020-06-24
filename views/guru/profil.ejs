@@ -180,7 +180,27 @@
         <!-- Page content -->
         <div class="container-fluid mt--7">
             <div class="row">
-                <div class="col-xl-12 order-xl-1">
+                <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                    <div class="card card-profile shadow">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-3 order-lg-2">
+                                <div class="card-profile-image">
+                                    <a href="#">
+                                        <img src="../uploads/guru/<%= fotoProfil %>" class="rounded-circle">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pt-md-4">
+                            <div class="text-center" style="margin-top: 130px;">
+                                <h3>
+                                    <%= namaLengkap %>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8 order-xl-1">
                     <div class="card bg-secondary shadow">
                         <form action="/guru/profil" method="POST">
                             <div class="card-header bg-white border-0">
@@ -214,7 +234,7 @@
                                                         Lengkap</label>
                                                     <input type="text" class="form-control form-control-alternative"
                                                         name="namaLengkap" placeholder="Nama Lengkap"
-                                                        value="<%= namaLengkap %>" required>
+                                                        value="<%= namaLengkap %>" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -225,7 +245,7 @@
                                                         Lahir</label>
                                                     <input type="text" class="form-control form-control-alternative"
                                                         name="tempatLahir" value="<%= tempatLahir %>"
-                                                        placeholder="Tempat Lahir">
+                                                        placeholder="Tempat Lahir" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -234,7 +254,8 @@
                                                         Lahir</label>
                                                     <input type="date" name="tanggalLahir"
                                                         class="form-control form-control-alternative"
-                                                        value="<%= tanggalLahir %>" placeholder="Tanggal Lahir">
+                                                        value="<%= tanggalLahir %>" placeholder="Tanggal Lahir"
+                                                        readonly>
                                                 </div>
                                             </div>
                                         </div>
