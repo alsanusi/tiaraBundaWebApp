@@ -106,6 +106,30 @@ const updatedDataSiswa = () => {
     })
 }
 
+const updatedDataGuru = () => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT * FROM dataGuru ORDER BY id DESC LIMIT 5', (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const updatedDataBerita = () => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT * FROM dataBerita ORDER BY id DESC LIMIT 5', (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const updatedDataKotakSaran = () => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT * FROM kotakSaran ORDER BY id DESC LIMIT 5', (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
 const listDataGuru = () => {
     return new Promise((resolve, reject) => {
         dbConnection.con.query('SELECT id, namaLengkap FROM dataGuru', (err, rows) => {
@@ -164,12 +188,18 @@ app.get('/dashboard', redirectLogin, async (req, res) => {
     const hasilCheckTotalBerita = await checkTotalBerita()
     const hasilCheckTotalSaran = await checkTotalSaran()
     const hasilUpdatedDataSiswa = await updatedDataSiswa()
+    const hasilUpdatedDataGuru = await updatedDataGuru()
+    const hasilUpdatedDataBerita = await updatedDataBerita()
+    const hasilUpdatedDataKotakSaran = await updatedDataKotakSaran()
     res.render('panel/dashboard', {
         totalSiswa: hasilCheckTotalSiswa ? hasilCheckTotalSiswa.length : 0,
         totalGuru: hasilCheckTotalGuru ? hasilCheckTotalGuru.length : 0,
         totalBerita: hasilCheckTotalBerita ? hasilCheckTotalBerita.length : 0,
         totalSaran: hasilCheckTotalSaran ? hasilCheckTotalSaran.length : 0,
-        listDataSiswa: hasilUpdatedDataSiswa ? hasilUpdatedDataSiswa : []
+        listDataSiswa: hasilUpdatedDataSiswa ? hasilUpdatedDataSiswa : [],
+        listDataGuru: hasilUpdatedDataGuru ? hasilUpdatedDataGuru : [],
+        listDataBerita: hasilUpdatedDataBerita ? hasilUpdatedDataBerita : [],
+        listDataKotakSaran: hasilUpdatedDataKotakSaran ? hasilUpdatedDataKotakSaran : []
     })
 })
 
@@ -338,6 +368,7 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
             } else {
                 res.render('panel/admin/siswa/editDataSiswa', {
                     id: req.params.id,
+                    fotoProfil: data.fotoProfil,
                     namaLengkap: data.namaLengkap,
                     tempatLahir: data.tempatLahir,
                     tanggalLahir: data.tanggalLahir,
@@ -491,6 +522,7 @@ app.route('/editDataGuru/(:id)', redirectLogin)
             } else {
                 res.render('panel/admin/guru/editDataGuru', {
                     id: req.params.id,
+                    fotoProfil: data.fotoProfil,
                     namaLengkap: data.namaLengkap,
                     tempatLahir: data.tempatLahir,
                     tanggalLahir: data.tanggalLahir,
@@ -521,18 +553,7 @@ app.route('/editDataGuru/(:id)', redirectLogin)
         dbConnection.con.query("UPDATE dataGuru SET ? WHERE id = ?", [dataGuru, req.params.id], (err, rows) => {
             if (err) {
                 req.flash('error', err)
-                res.render('panel/admin/guru/editDataGuru', {
-                    id: req.params.id,
-                    namaLengkap: dataGuru.namaLengkap,
-                    tempatLahir: dataGuru.tempatLahir,
-                    tanggalLahir: dataGuru.tanggalLahir,
-                    jenisKelamin: dataGuru.jenisKelamin,
-                    agama: dataGuru.agama,
-                    alamat: dataGuru.alamat,
-                    nomorTelefon: dataGuru.nomorTelefon,
-                    email: dataGuru.email,
-                    password: dataGuru.password
-                })
+                res.redirect('/panel/kelolaDataGuru')
             } else {
                 res.redirect('/panel/kelolaDataGuru')
             }
@@ -580,7 +601,6 @@ app.route('/editDataKelas/(:id)', redirectLogin)
                 res.render('panel/admin/kelas/editDataKelas', {
                     id: req.params.id,
                     kelas: data.kelas,
-                    semester: data.semester,
                     idGuru: data.idGuru,
                     namaGuru: hasilDataGuru[0].namaLengkap,
                     listDataGuru: hasilListDataGuru
@@ -592,7 +612,6 @@ app.route('/editDataKelas/(:id)', redirectLogin)
         let dataKelas = {
             id: req.params.id,
             kelas: req.sanitize('kelas').escape().trim(),
-            semester: req.sanitize('semester').escape().trim(),
             idGuru: req.sanitize('idGuru').escape().trim(),
         }
         dbConnection.con.query("UPDATE dataKelas SET ? WHERE id = ?", [dataKelas, req.params.id], (err, rows) => {
@@ -601,7 +620,6 @@ app.route('/editDataKelas/(:id)', redirectLogin)
                 res.render('panel/admin/kelas/editDataKelas', {
                     id: req.params.id,
                     kelas: dataKelas.kelas,
-                    semester: dataKelas.semester,
                     idGuru: dataKelas.idGuru,
                 })
             } else {

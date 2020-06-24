@@ -206,7 +206,25 @@
         <!-- Page content -->
         <div class="container-fluid mt--7">
             <div class="row">
-                <div class="col-xl-12 order-xl-1">
+                <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                    <div class="card card-profile shadow">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-3 order-lg-2">
+                                <div class="card-profile-image">
+                                    <img src="../../uploads/siswa/<%= fotoProfil %>" class="rounded-circle">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pt-md-4">
+                            <div class="text-center" style="margin-top: 130px;">
+                                <h3>
+                                    <%= namaLengkap %>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8 order-xl-1">
                     <div class="card bg-secondary shadow">
                         <form action="/panel/editDataSiswa/<%= id %>" method="POST">
                             <div class="card-header bg-white border-0">
@@ -268,10 +286,11 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label class="form-control-label"
-                                                        for="input-first-name">Jenis Kelamin</label>
+                                                    <label class="form-control-label" for="input-first-name">Jenis
+                                                        Kelamin</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="jenisKelamin" placeholder="Jenis Kelamin" value="<%= jenisKelamin %>" readonly>
+                                                        name="jenisKelamin" placeholder="Jenis Kelamin"
+                                                        value="<%= jenisKelamin %>" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -279,8 +298,7 @@
                                                     <label class="form-control-label"
                                                         for="input-last-name">Agama</label>
                                                     <input type="text" class="form-control form-control-alternative"
-                                                        name="agama" placeholder="Agama" value="<%= agama %>"
-                                                        readonly>
+                                                        name="agama" placeholder="Agama" value="<%= agama %>" readonly>
                                                 </div>
                                             </div>
                                         </div>

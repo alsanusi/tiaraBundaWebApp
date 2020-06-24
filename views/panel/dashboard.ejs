@@ -276,7 +276,7 @@
                         <div class="card-header border-0">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h3 class="mb-0">List Siswa Terbaru</h3>
+                                    <h3 class="mb-0">Siswa Terbaru</h3>
                                 </div>
                             </div>
                         </div>
@@ -310,6 +310,148 @@
                                         </td>
                                         <td>
                                             <%= data.nomorTelefon %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 50px;">
+                <div class="col-xl-12 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="mb-0">Guru Terbaru</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <!-- Projects table -->
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Nama Guru</th>
+                                        <th scope="col">Alamat</th>
+                                        <th scope="col">Nomor Telefon</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if(listDataGuru) { %>
+                                    <% listDataGuru.forEach((data, i) => { %>
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="media align-items-center">
+                                                <a href="#" class="avatar rounded-circle mr-3">
+                                                    <img alt="Image placeholder"
+                                                        src="../uploads/guru/<%= data.fotoProfil %>">
+                                                </a>
+                                                <div class="media-body">
+                                                    <span class="mb-0 text-sm"><%= data.namaLengkap %></span>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <td>
+                                            <%= data.alamat %>
+                                        </td>
+                                        <td>
+                                            <%= data.nomorTelefon %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 50px;">
+                <div class="col-xl-12 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="mb-0">Berita Terbaru</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <!-- Projects table -->
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Judul</th>
+                                        <th scope="col">Tanggal Post</th>
+                                        <th scope="col">Penulis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if(listDataBerita) { %>
+                                    <% listDataBerita.forEach((data, i) => { %>
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="media align-items-center">
+                                                <a href="#" class="avatar rounded-circle mr-3">
+                                                    <img alt="Image placeholder"
+                                                        src="../uploads/berita/<%= data.gambarBerita %>">
+                                                </a>
+                                                <div class="media-body">
+                                                    <span class="mb-0 text-sm"><%= data.judulBerita %></span>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <td>
+                                            <%= data.tanggalUpdate %>
+                                        </td>
+                                        <td>
+                                            <%= data.penulis %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 50px;">
+                <div class="col-xl-12 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="mb-0">Kotak Saran Terbaru</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <!-- Projects table -->
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Nama Lengkap</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Saran</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if(listDataKotakSaran) { %>
+                                    <% listDataKotakSaran.forEach((data, i) => { %>
+                                    <tr>
+                                        <td>
+                                            <%= data.namaLengkap %>
+                                        </td>
+                                        <td>
+                                            <%= data.email %>
+                                        </td>
+                                        <td>
+                                            <%= data.saran %>
                                         </td>
                                     </tr>
                                     <% }) %>

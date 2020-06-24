@@ -246,17 +246,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label"
-                                                        for="input-last-name">Semester</label>
-                                                    <input type="text" id="input-last-name" name="semester"
-                                                        class="form-control form-control-alternative"
-                                                        placeholder="Semester" value="<%= semester %>" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <hr class="my-4" />
                                     <!-- Description -->
@@ -267,12 +256,18 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-last-name">Guru</label>
                                                     <select class="form-control" name="idGuru">
-                                                        <option value="<%= idGuru %>" selected><%= namaGuru %></option>
-                                                        <% if(listDataGuru) { %>
-                                                        <% listDataGuru.forEach((data, i) => { %>
-                                                        <option value="<%= data.id %>"><%= data.namaLengkap %></option>
-                                                        <% }) %>
-                                                        <% } %>
+                                                        <optgroup label="SELECTED">
+                                                            <option value="<%= idGuru %>" selected><%= namaGuru %>
+                                                            </option>
+                                                        </optgroup>
+                                                        <optgroup label="OPSI">
+                                                            <% if(listDataGuru) { %>
+                                                            <% listDataGuru.forEach((data, i) => { %>
+                                                            <option value="<%= data.id %>"><%= data.namaLengkap %>
+                                                            </option>
+                                                            <% }) %>
+                                                            <% } %>
+                                                        </optgroup>
                                                     </select>
                                                 </div>
                                             </div>
