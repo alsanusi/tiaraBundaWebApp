@@ -166,6 +166,7 @@ app.get('/profilSiswa', redirectLogin, (req, res) => {
                 waliKelas: namaGuru ? namaGuru : "-",
                 id: idSiswa,
                 namaLengkap: data.namaLengkap,
+                fotoProfil: data.fotoProfil,
                 tempatLahir: data.tempatLahir,
                 tanggalLahir: data.tanggalLahir,
                 agama: data.agama,
