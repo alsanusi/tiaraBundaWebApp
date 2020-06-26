@@ -185,7 +185,6 @@ app.get('/profilSiswa', redirectLogin, (req, res) => {
                 jenisKelamin: data.jenisKelamin,
                 namaIbu: data.namaIbu,
                 nomorTelefon: data.nomorTelefon,
-                status: data.status
             })
         }
     })

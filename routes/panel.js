@@ -226,7 +226,6 @@ app.route('/tambahDataSIswa', redirectLogin)
                     namaAyah: '',
                     namaIbu: '',
                     nomorTelefon: '',
-                    status: 'Siswa',
                     agama: '',
                     jenisKelamin: '',
                 })
@@ -243,7 +242,6 @@ app.route('/tambahDataSIswa', redirectLogin)
                         namaAyah: '',
                         namaIbu: '',
                         nomorTelefon: '',
-                        status: 'Siswa',
                         agama: '',
                         jenisKelamin: '',
                     })
@@ -258,7 +256,6 @@ app.route('/tambahDataSIswa', redirectLogin)
                         namaAyah: req.sanitize('namaAyah').escape().trim(),
                         namaIbu: req.sanitize('namaIbu').escape().trim(),
                         nomorTelefon: req.sanitize('nomorTelefon').escape().trim(),
-                        status: 'Siswa',
                         agama: req.sanitize('agama').escape().trim(),
                         jenisKelamin: req.sanitize('jenisKelamin').escape().trim(),
                     }
@@ -279,7 +276,6 @@ app.route('/tambahDataSIswa', redirectLogin)
                                 namaAyah: dataSiswa.namaAyah,
                                 namaIbu: dataSiswa.namaIbu,
                                 nomorTelefon: dataSiswa.nomorTelefon,
-                                status: dataSiswa.status,
                                 agama: dataSiswa.agama,
                                 jenisKelamin: dataSiswa.jenisKelamin,
                             })
@@ -296,7 +292,6 @@ app.route('/tambahDataSIswa', redirectLogin)
                                         namaAyah: dataSiswa.namaAyah,
                                         namaIbu: dataSiswa.namaIbu,
                                         nomorTelefon: dataSiswa.nomorTelefon,
-                                        status: dataSiswa.status,
                                         agama: dataSiswa.agama,
                                         jenisKelamin: dataSiswa.jenisKelamin,
                                     })
@@ -313,7 +308,6 @@ app.route('/tambahDataSIswa', redirectLogin)
                                                 namaAyah: dataSiswa.namaAyah,
                                                 namaIbu: dataSiswa.namaIbu,
                                                 nomorTelefon: dataSiswa.nomorTelefon,
-                                                status: dataSiswa.status,
                                                 agama: dataSiswa.agama,
                                                 jenisKelamin: dataSiswa.jenisKelamin,
                                             })
@@ -328,7 +322,6 @@ app.route('/tambahDataSIswa', redirectLogin)
                                                 namaAyah: '',
                                                 namaIbu: '',
                                                 nomorTelefon: '',
-                                                status: 'Siswa',
                                                 agama: '',
                                                 jenisKelamin: '',
                                             })
@@ -378,7 +371,6 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
                     namaAyah: data.namaAyah,
                     namaIbu: data.namaIbu,
                     nomorTelefon: data.nomorTelefon,
-                    status: data.status
                 })
             }
         })
