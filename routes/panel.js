@@ -146,6 +146,34 @@ const cariDataGuru = (id) => {
     })
 }
 
+let objectKelas = [{
+        kelas: 1
+    },
+    {
+        kelas: 2
+    },
+    {
+        kelas: 3
+    },
+    {
+        kelas: 4
+    },
+    {
+        kelas: 5
+    },
+    {
+        kelas: 6
+    },
+]
+
+const checkDataKelas = () => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT kelas FROM dataKelas', (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
         res.redirect('/panel')
@@ -205,7 +233,7 @@ app.get('/dashboard', redirectLogin, async (req, res) => {
 
 // Siswa
 const fotoProfilSiswa = upload.single('fotoProfil')
-app.route('/tambahDataSIswa', redirectLogin)
+app.route('/tambahDataSIswa', redirectLogin, )
     .get((req, res) => {
         res.render('panel/admin/siswa/tambahDataSiswa', {
             id: generateIdSiswa(),
@@ -403,12 +431,17 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
 // Guru
 const fotoProfilGuru = upload.single("fotoProfilGuru")
 app.route('/tambahDataGuru', redirectLogin)
-    .get((req, res) => {
+    .get(async (req, res) => {
+        const hasilCheckDataKelas = await checkDataKelas()
+        let filterKelasTersedia = objectKelas.filter(elm => !hasilCheckDataKelas.map(elm => JSON.stringify(elm)).includes(JSON.stringify(elm)));
         res.render('panel/admin/guru/tambahDataGuru', {
             id: generateIdGuru(),
+            kelas: filterKelasTersedia
         })
     })
-    .post((req, res) => {
+    .post(async (req, res) => {
+        const hasilCheckDataKelas = await checkDataKelas()
+        let filterKelasTersedia = objectKelas.filter(elm => !hasilCheckDataKelas.map(elm => JSON.stringify(elm)).includes(JSON.stringify(elm)));
         fotoProfilGuru(req, res, (err) => {
             if (err) {
                 let error_msg = "Besar foto profil guru melebihi 3 MB!"
@@ -423,7 +456,8 @@ app.route('/tambahDataGuru', redirectLogin)
                     agama: '',
                     nomorTelefon: '',
                     email: '',
-                    password: ''
+                    password: '',
+                    kelas: filterKelasTersedia
                 })
             } else {
                 if (req.file === null) {
@@ -439,7 +473,8 @@ app.route('/tambahDataGuru', redirectLogin)
                         jenisKelamin: '',
                         agama: '',
                         email: '',
-                        password: ''
+                        password: '',
+                        kelas: filterKelasTersedia
                     })
                 } else {
                     let dataGuru = {
@@ -455,6 +490,10 @@ app.route('/tambahDataGuru', redirectLogin)
                         email: req.sanitize('email').escape().trim(),
                         password: req.sanitize('password').escape().trim()
                     }
+                    let dataKelas = {
+                        kelas: req.sanitize('kelas').escape().trim(),
+                        idGuru: dataGuru.id,
+                    }
                     dbConnection.con.query("INSERT INTO dataGuru SET ?", dataGuru, (err, result) => {
                         if (err) {
                             req.flash('error', err)
@@ -468,21 +507,42 @@ app.route('/tambahDataGuru', redirectLogin)
                                 jenisKelamin: dataGuru.jenisKelamin,
                                 agama: dataGuru.agama,
                                 email: dataGuru.email,
-                                password: dataGuru.password
+                                password: dataGuru.password,
+                                kelas: filterKelasTersedia
                             })
                         } else {
-                            req.flash('success', 'Data guru berhasil ditambahkan!')
-                            res.render('panel/admin/guru/tambahDataGuru', {
-                                id: generateIdGuru(),
-                                namaLengkap: '',
-                                tempatLahir: '',
-                                tanggalLahir: '',
-                                alamat: '',
-                                nomorTelefon: '',
-                                jenisKelamin: '',
-                                agama: '',
-                                email: '',
-                                password: ''
+                            dbConnection.con.query("INSERT INTO dataKelas SET ?", dataKelas, (err, result) => {
+                                if (err) {
+                                    req.flash('error', err)
+                                    res.render('panel/admin/guru/tambahDataGuru', {
+                                        id: dataGuru.id,
+                                        namaLengkap: dataGuru.namaLengkap,
+                                        tempatLahir: dataGuru.tempatLahir,
+                                        tanggalLahir: dataGuru.tanggalLahir,
+                                        alamat: dataGuru.alamat,
+                                        nomorTelefon: dataGuru.nomorTelefon,
+                                        jenisKelamin: dataGuru.jenisKelamin,
+                                        agama: dataGuru.agama,
+                                        email: dataGuru.email,
+                                        password: dataGuru.password,
+                                        kelas: filterKelasTersedia
+                                    })
+                                } else {
+                                    req.flash('success', 'Data guru berhasil ditambahkan!')
+                                    res.render('panel/admin/guru/tambahDataGuru', {
+                                        id: generateIdGuru(),
+                                        namaLengkap: '',
+                                        tempatLahir: '',
+                                        tanggalLahir: '',
+                                        alamat: '',
+                                        nomorTelefon: '',
+                                        jenisKelamin: '',
+                                        agama: '',
+                                        email: '',
+                                        password: '',
+                                        kelas: filterKelasTersedia
+                                    })
+                                }
                             })
                         }
                     })
@@ -568,7 +628,7 @@ app.get('/kelolaJadwal', redirectLogin, (req, res) => {
 
 // Kelas
 app.get('/kelolaDataKelas', redirectLogin, (req, res) => {
-    dbConnection.con.query("SELECT * FROM dataKelas", (err, rows, field) => {
+    dbConnection.con.query("SELECT dataGuru.id, dataGuru.namaLengkap, dataKelas.kelas, dataGuru.nomorTelefon FROM dataGuru INNER JOIN dataKelas ON dataGuru.id = dataKelas.idGuru", (err, rows, field) => {
         if (err) {
             res.render('panel/admin/kelas/kelolaDataKelas', {
                 listKelas: ''

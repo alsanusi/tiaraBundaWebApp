@@ -203,8 +203,9 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Kelas</th>
-                                        <th scope="col">Guru Penanggung Jawab</th>
-                                        <th scope="col"></th>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Nama Lengkap</th>
+                                        <th scope="col">Nomor Telefon</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -216,9 +217,15 @@
                                             <span class="mb-0 text-sm"><%= data.kelas %></span>
                                         </th>
                                         <td>
-                                            <%= data.idGuru %>
+                                            <%= data.id %>
                                         </td>
-                                        <td class="text-right">
+                                        <td>
+                                            <%= data.namaLengkap %>
+                                        </td>
+                                        <td>
+                                            <%= data.nomorTelefon %>
+                                        </td>
+                                        <!-- <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -229,7 +236,7 @@
                                                         href="/panel/editDataKelas/<%= data.id %>">Edit Data</a>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                     <% }) %>
                                     <% } %>
