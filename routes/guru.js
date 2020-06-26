@@ -3,7 +3,7 @@ const app = express()
 
 // Koneksi Database
 const dbConnection = require('../db_config/db_connection')
-let idGuru, kelasGuru, mapelGuru, pilihanTanggal, idNilaiSiswa;
+let idGuru, namaGuru, kelasGuru, mapelGuru, pilihanTanggal, idNilaiSiswa;
 
 const todayDate = () => {
     let date = new Date();
@@ -74,6 +74,7 @@ app.post('/login', redirectHome, async (req, res) => {
     } else {
         req.session.userId = checkHasilDataGuru[0].id
         idGuru = checkHasilDataGuru[0].id
+        namaGuru = checkHasilDataGuru[0].namaLengkap
         kelasGuru = checkHasilKelasGuru[0].kelas
         res.redirect('kelolaJadwal')
     }
@@ -89,6 +90,7 @@ app.route('/profil', redirectLogin)
                 res.render('guru/profil', {
                     id: data.id,
                     fotoProfil: data.fotoProfil,
+                    namaGuru: namaGuru,
                     namaLengkap: data.namaLengkap,
                     tempatLahir: data.tempatLahir,
                     tanggalLahir: data.tanggalLahir,
@@ -116,6 +118,7 @@ app.route('/profil', redirectLogin)
                 res.render('guru/profil', {
                     id: idGuru,
                     fotoProfil: data.fotoProfil,
+                    namaGuru: namaGuru,
                     namaLengkap: dataGuru.namaLengkap,
                     tempatLahir: dataGuru.tempatLahir,
                     tanggalLahir: dataGuru.tanggalLahir,
@@ -133,14 +136,17 @@ app.route('/profil', redirectLogin)
     })
 
 app.get('/kelolaJadwal', redirectLogin, (req, res) => {
-    res.render('guru/jadwalPelajaran')
+    res.render('guru/jadwalPelajaran', {
+        namaGuru: namaGuru
+    })
 })
 
 app.get('/absensiSiswa', redirectLogin, (req, res) => {
     res.render('guru/absensiSiswa', {
         listSiswa: '',
         pilihanTanggal: todayDate(),
-        mapelGuru: ''
+        mapelGuru: '',
+        namaGuru: namaGuru
     })
 })
 
@@ -151,20 +157,23 @@ app.route('/pilihanMapel', redirectLogin)
                 if (err) {
                     res.render('guru/absensiSiswa', {
                         listSiswa: '',
-                        pilihanTanggal: ''
+                        pilihanTanggal: '',
+                        namaGuru: namaGuru
                     })
                 } else {
                     res.render('guru/absensiSiswa', {
                         listSiswa: rows,
                         mapelGuru: mapelGuru,
-                        pilihanTanggal: todayDate()
+                        pilihanTanggal: todayDate(),
+                        namaGuru: namaGuru
                     })
                 }
             })
         } else {
             res.render('guru/absensiSiswa', {
                 listSiswa: '',
-                pilihanTanggal: ''
+                pilihanTanggal: '',
+                namaGuru: namaGuru
             })
         }
     })
@@ -176,13 +185,15 @@ app.route('/pilihanMapel', redirectLogin)
                     res.render('guru/absensiSiswa', {
                         listSiswa: '',
                         mapelGuru: '',
-                        pilihanTanggal: ''
+                        pilihanTanggal: '',
+                        namaGuru: namaGuru
                     })
                 } else {
                     res.render('guru/absensiSiswa', {
                         listSiswa: rows,
                         mapelGuru: mapelGuru,
                         pilihanTanggal: todayDate(),
+                        namaGuru: namaGuru
                     })
                 }
             })
@@ -191,6 +202,7 @@ app.route('/pilihanMapel', redirectLogin)
                 listSiswa: '',
                 mapelGuru: '',
                 pilihanTanggal: todayDate(),
+                namaGuru: namaGuru
             })
         }
     })
@@ -220,7 +232,8 @@ app.route('/kelolaAbsensi', redirectLogin)
         res.render('guru/kelolaAbsensiSiswa', {
             listSiswa: '',
             pilihanTanggal: '',
-            mapelGuru: ''
+            mapelGuru: '',
+            namaGuru: namaGuru
         })
     })
     .put((req, res) => {
@@ -255,13 +268,15 @@ app.post('/cariAbsensi', redirectLogin, (req, res) => {
             res.render('guru/kelolaAbsensiSiswa', {
                 listSiswa: '',
                 pilihanTanggal: '',
-                mapelGuru: ''
+                mapelGuru: '',
+                namaGuru: namaGuru
             })
         } else {
             res.render('guru/kelolaAbsensiSiswa', {
                 listSiswa: rows,
                 pilihanTanggal: pilihanTanggal,
-                mapelGuru: mapelGuru
+                mapelGuru: mapelGuru,
+                namaGuru: namaGuru
             })
         }
     })
@@ -273,13 +288,15 @@ app.get('/detailAbsensi', redirectLogin, (req, res) => {
             res.render('guru/kelolaAbsensiSiswa', {
                 listSiswa: '',
                 pilihanTanggal: '',
-                mapelGuru: ''
+                mapelGuru: '',
+                namaGuru: namaGuru
             })
         } else {
             res.render('guru/kelolaAbsensiSiswa', {
                 listSiswa: rows,
                 pilihanTanggal: pilihanTanggal,
-                mapelGuru: mapelGuru
+                mapelGuru: mapelGuru,
+                namaGuru: namaGuru
             })
         }
     })
@@ -290,10 +307,12 @@ app.get('/kelolaDataSiswa', redirectLogin, (req, res) => {
         if (err) {
             res.render('guru/kelolaDataSiswa', {
                 listSiswa: '',
+                namaGuru: namaGuru
             })
         } else {
             res.render('guru/kelolaDataSiswa', {
                 listSiswa: rows,
+                namaGuru: namaGuru
             })
         }
     })
@@ -310,6 +329,7 @@ app.get('/kelolaDataSiswa/(:id)', redirectLogin, async (req, res) => {
         } else {
             res.render('guru/detailDataSiswa', {
                 id: req.params.id,
+                namaGuru: namaGuru,
                 fotoProfil: data.fotoProfil,
                 namaLengkap: data.namaLengkap,
                 tempatLahir: data.tempatLahir,
