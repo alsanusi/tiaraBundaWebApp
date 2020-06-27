@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 8.0.16)
 # Database: tiaraBunda
-# Generation Time: 2020-06-24 08:21:35 +0000
+# Generation Time: 2020-06-27 06:45:01 +0000
 # ************************************************************
 
 
@@ -63,7 +63,8 @@ LOCK TABLES `dataGuru` WRITE;
 
 INSERT INTO `dataGuru` (`id`, `fotoProfil`, `namaLengkap`, `tempatLahir`, `tanggalLahir`, `alamat`, `nomorTelefon`, `agama`, `jenisKelamin`, `password`, `email`)
 VALUES
-	('G24235','fotoProfilGuru-1592982398578.jpeg','Tawil Fattawa','Ujung Pandang','2015-11-18','Bojongsoang','01112829758','Islam','Pria','12345','teacher1@gmail.com');
+	('G24235','fotoProfilGuru-1592982398578.jpeg','Tawil Fattawa','Ujung Pandang','2015-11-18','Bojongsoang','01112829758','Islam','Pria','12345','teacher1@gmail.com'),
+	('G26170','fotoProfilGuru-1593180709942.jpeg','Mark Zuckerburger','Makassar','1996-11-18','Bojongsoang','12345','Islam','Pria','12345','teacher2@gmail.com');
 
 /*!40000 ALTER TABLE `dataGuru` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -91,7 +92,7 @@ LOCK TABLES `dataKehadiran` WRITE;
 
 INSERT INTO `dataKehadiran` (`id`, `idSiswa`, `tanggal`, `status`, `idGuru`, `mataPelajaran`, `namaSiswa`)
 VALUES
-	(32,'S24811','2020-06-24','Alfa','G24235','PKN','Muhammad Alkautsar Sanusi');
+	(32,'S24811','2020-06-24','Hadir','G24235','PKN','Muhammad Alkautsar Sanusi');
 
 /*!40000 ALTER TABLE `dataKehadiran` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -103,20 +104,21 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `dataKelas`;
 
 CREATE TABLE `dataKelas` (
-  `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `id` int(100) NOT NULL AUTO_INCREMENT,
   `kelas` int(100) NOT NULL,
   `idGuru` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `idGuru` (`idGuru`),
   CONSTRAINT `idGuru` FOREIGN KEY (`idGuru`) REFERENCES `dataguru` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `dataKelas` WRITE;
 /*!40000 ALTER TABLE `dataKelas` DISABLE KEYS */;
 
 INSERT INTO `dataKelas` (`id`, `kelas`, `idGuru`)
 VALUES
-	('1',1,'G24235');
+	(1,1,'G24235'),
+	(3,2,'G26170');
 
 /*!40000 ALTER TABLE `dataKelas` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -156,15 +158,24 @@ CREATE TABLE `dataNilai` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idGuru` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `idSiswa` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `pkn` int(100) DEFAULT NULL,
-  `matematika` int(11) DEFAULT NULL,
-  `ips` int(11) DEFAULT NULL,
-  `agama` int(11) DEFAULT NULL,
-  `ipa` int(11) DEFAULT NULL,
-  `bahasaIndonesia` int(11) DEFAULT NULL,
-  `bahasaInggris` int(11) DEFAULT NULL,
-  `penjaskes` int(11) DEFAULT NULL,
-  `seniBudaya` int(11) DEFAULT NULL,
+  `nilaiTugasPkn` int(100) DEFAULT NULL,
+  `nilaiUjianPkn` int(11) DEFAULT NULL,
+  `nilaiTugasMatematika` int(11) DEFAULT NULL,
+  `nilaiUjianMatematika` int(11) DEFAULT NULL,
+  `nilaiTugasIps` int(11) DEFAULT NULL,
+  `nilaiUjianIps` int(11) DEFAULT NULL,
+  `nilaiTugasAgama` int(11) DEFAULT NULL,
+  `nilaiUjianAgama` int(11) DEFAULT NULL,
+  `nilaiTugasIpa` int(11) DEFAULT NULL,
+  `nilaiUjianIpa` int(11) DEFAULT NULL,
+  `nilaiTugasBahasaIndonesia` int(11) DEFAULT NULL,
+  `nilaiUjianBahasaIndonesia` int(11) DEFAULT NULL,
+  `nilaiTugasBahasaInggris` int(11) DEFAULT NULL,
+  `nilaiUjianBahasaInggris` int(11) DEFAULT NULL,
+  `nilaiTugasPenjaskes` int(11) DEFAULT NULL,
+  `nilaiUjianPenjaskes` int(11) DEFAULT NULL,
+  `nilaiTugasSeniBudaya` int(11) DEFAULT NULL,
+  `nilaiUjianSeniBudaya` int(11) DEFAULT NULL,
   `catatanSiswa` varchar(5000) DEFAULT NULL,
   `namaSiswa` varchar(100) DEFAULT NULL,
   `kelas` int(11) DEFAULT NULL,
@@ -176,9 +187,9 @@ CREATE TABLE `dataNilai` (
 LOCK TABLES `dataNilai` WRITE;
 /*!40000 ALTER TABLE `dataNilai` DISABLE KEYS */;
 
-INSERT INTO `dataNilai` (`id`, `idGuru`, `idSiswa`, `pkn`, `matematika`, `ips`, `agama`, `ipa`, `bahasaIndonesia`, `bahasaInggris`, `penjaskes`, `seniBudaya`, `catatanSiswa`, `namaSiswa`, `kelas`)
+INSERT INTO `dataNilai` (`id`, `idGuru`, `idSiswa`, `nilaiTugasPkn`, `nilaiUjianPkn`, `nilaiTugasMatematika`, `nilaiUjianMatematika`, `nilaiTugasIps`, `nilaiUjianIps`, `nilaiTugasAgama`, `nilaiUjianAgama`, `nilaiTugasIpa`, `nilaiUjianIpa`, `nilaiTugasBahasaIndonesia`, `nilaiUjianBahasaIndonesia`, `nilaiTugasBahasaInggris`, `nilaiUjianBahasaInggris`, `nilaiTugasPenjaskes`, `nilaiUjianPenjaskes`, `nilaiTugasSeniBudaya`, `nilaiUjianSeniBudaya`, `catatanSiswa`, `namaSiswa`, `kelas`)
 VALUES
-	(4,'G24235','S24811',80,100,90,90,100,60,80,90,100,'Bagus','Muhammad Alkautsar Sanusi',1);
+	(4,'G24235','S24811',80,80,60,60,90,90,90,90,100,100,60,80,80,100,90,100,100,100,'Bagus','Muhammad Alkautsar Sanusi',1);
 
 /*!40000 ALTER TABLE `dataNilai` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -199,7 +210,6 @@ CREATE TABLE `dataSiswa` (
   `namaAyah` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `namaIbu` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `nomorTelefon` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `status` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `agama` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `jenisKelamin` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
@@ -208,9 +218,9 @@ CREATE TABLE `dataSiswa` (
 LOCK TABLES `dataSiswa` WRITE;
 /*!40000 ALTER TABLE `dataSiswa` DISABLE KEYS */;
 
-INSERT INTO `dataSiswa` (`id`, `fotoProfil`, `namaLengkap`, `tempatLahir`, `tanggalLahir`, `alamat`, `namaAyah`, `namaIbu`, `nomorTelefon`, `status`, `agama`, `jenisKelamin`)
+INSERT INTO `dataSiswa` (`id`, `fotoProfil`, `namaLengkap`, `tempatLahir`, `tanggalLahir`, `alamat`, `namaAyah`, `namaIbu`, `nomorTelefon`, `agama`, `jenisKelamin`)
 VALUES
-	('S24811','fotoProfil-1592982276968.jpeg','Muhammad Alkautsar Sanusi','Ujung Pandang','2015-11-18','Jln Toddopuli X No 11','Parent1','Parent2','082194275704','Siswa','Islam','Pria');
+	('S24811','fotoProfil-1592982276968.jpeg','Muhammad Alkautsar Sanusi','Ujung Pandang','2015-11-18','Jln Toddopuli X No 11','Parent1','Parent2','082194275704','Islam','Pria');
 
 /*!40000 ALTER TABLE `dataSiswa` ENABLE KEYS */;
 UNLOCK TABLES;
