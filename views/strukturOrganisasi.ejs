@@ -14,7 +14,7 @@
     </div>
     <div class="logo">
         <a href="./index.html">
-            <img src="../assets/front-end/assets/img/sd-logo.png" alt="">
+            <img src="assets/front-end/assets/img/sd-logo.png" alt="">
         </a>
     </div>
     <div id="mobile-menu-wrap"></div>
@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-lg-2">
                     <div class="logo">
-                        <a href="/"><img src="../assets/front-end/assets/img/sd-logo.png" alt="" style="height: 80px;"></a>
+                        <a href="/"><img src="assets/front-end/assets/img/sd-logo.png" alt="" style="height: 80px;"></a>
                     </div>
                 </div>
                 <div class="col-lg-10">
@@ -57,8 +57,8 @@
                     <nav class="nav-menu">
                         <ul>
                             <li><a href="/">Home</a></li>
-                            <li class="active"><a href="/blog">Berita</a></li>
-                            <li><a href="/strukturOrganisasi">Struktur Organisasi</a></li>
+                            <li><a href="/blog">Berita</a></li>
+                            <li class="active"><a href="/strukturOrganisasi">Struktur Organisasi</a></li>
                             <li><a href="/kotakSaran">Kotak Saran</a></li>
                         </ul>
                     </nav>
@@ -76,39 +76,40 @@
 </header>
 <!-- Header End -->
 
-<!-- Blog Hero Section Begin -->
-<section class="blog-hero-section set-bg" data-setbg="../uploads/berita/<%= gambarBerita %>">
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section spad set-bg" data-setbg="assets/front-end/assets/img/hero/hero-1.jpg">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="bh-text">
-                    <h4><%= judulBerita %></h4>
-                    <ul>
-                        <li>by <span><%= penulis %></span></li>
-                        <li><%= tanggalUpdate %></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Blog Hero Section End -->
-
-<!-- Blog Details Section Begin -->
-<section class="blog-details-section spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 m-auto p-0">
-                <div class="blog-details-content">
-                    <div class="bc-top">
-                        <p><%= deskripsi %>.</p>
+                <div class="breadcrumb-text">
+                    <h4>Struktur Organisasi</h4>
+                    <div class="bt-option">
+                        <a href="/"><i class="fa fa-home"></i> Beranda</a>
+                        <span>Struktur Organisasi</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- Blog Details Section End -->
+<!-- Breadcrumb Section End -->
+
+<!-- Contact Form Section Begin -->
+<section class="contact-form-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cf-content">
+                    <div class="cc-title">
+                        <h4>Struktur Organisasi</h4>
+                        <!-- Masukkan Disini -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact Form Section End -->
 
 <!-- Contact Section Begin -->
 <section class="contact-section">
@@ -166,7 +167,7 @@
                 <div class="fs-about">
                     <div class="fs-logo">
                         <a href="#">
-                            <img src="../assets/front-end/assets/img/sd-logo.png" alt="" style="height: 80px;">
+                            <img src="assets/front-end/assets/img/sd-logo.png" alt="" style="height: 80px;">
                         </a>
                     </div>
                     <p><b>Tiara Bunda</b> merupakan suatu lembaga pendidikan yang berdiri sejak tahun 2003. Terdiri dari
@@ -183,8 +184,8 @@
                 <div class="fs-widget">
                     <h5>Links</h5>
                     <ul>
-                        <li><a href="/views/blog">Berita</a></li>
-                        <li><a href="/views/kotakSaran">Kotak Saran</a></li>
+                        <li><a href="blog">Berita</a></li>
+                        <li><a href="kotakSaran">Kotak Saran</a></li>
                         <li><a href="strukturOrganisasi">Struktur Organisasi</a></li>
                     </ul>
                 </div>

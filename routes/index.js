@@ -39,6 +39,10 @@ app.get('/blog-detail/(:id)', (req, res) => {
     })
 })
 
+app.get('/strukturOrganisasi', (req, res) => {
+    res.render('strukturOrganisasi')
+})
+
 app.route('/kotakSaran')
     .get((req, res) => {
         res.render('kotakSaran')
