@@ -423,7 +423,13 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
             if (err) {
                 res.redirect('/panel/kelolaDataSiswa')
             } else {
-                res.redirect('/panel/kelolaDataSiswa')
+                dbConnection.con.query('DELETE FROM dataKelasSiswa WHERE idSiswa = ?', req.params.id, (err, rows, fields) => {
+                    if (err) {
+                        res.redirect('/panel/kelolaDataSiswa')
+                    } else {
+                        res.redirect('/panel/kelolaDataSiswa')
+                    }
+                })
             }
         })
     })
