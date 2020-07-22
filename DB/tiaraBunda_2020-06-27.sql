@@ -28,13 +28,13 @@ DROP TABLE IF EXISTS `dataBerita`;
 
 CREATE TABLE `dataBerita` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `gambarBerita` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `judulBerita` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `tanggalUpdate` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `deskripsi` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `penulis` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `gambarBerita` varchar(100) CHARACTER SET utf8mb4,
+  `judulBerita` varchar(200) CHARACTER SET utf8mb4,
+  `tanggalUpdate` varchar(100) CHARACTER SET utf8mb4,
+  `deskripsi` varchar(2000) CHARACTER SET utf8mb4,
+  `penulis` varchar(100) CHARACTER SET utf8mb4,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 
 
@@ -44,19 +44,19 @@ CREATE TABLE `dataBerita` (
 DROP TABLE IF EXISTS `dataGuru`;
 
 CREATE TABLE `dataGuru` (
-  `id` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `fotoProfil` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `namaLengkap` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `tempatLahir` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `tanggalLahir` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `alamat` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `nomorTelefon` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `agama` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `jenisKelamin` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `password` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `email` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `id` varchar(150) CHARACTER SET utf8mb4,
+  `fotoProfil` varchar(150) CHARACTER SET utf8mb4,
+  `namaLengkap` varchar(150) CHARACTER SET utf8mb4,
+  `tempatLahir` varchar(150) CHARACTER SET utf8mb4,
+  `tanggalLahir` varchar(150) CHARACTER SET utf8mb4,
+  `alamat` varchar(150) CHARACTER SET utf8mb4,
+  `nomorTelefon` varchar(200) CHARACTER SET utf8mb4,
+  `agama` varchar(150) CHARACTER SET utf8mb4,
+  `jenisKelamin` varchar(150) CHARACTER SET utf8mb4,
+  `password` varchar(150) CHARACTER SET utf8mb4,
+  `email` varchar(150) CHARACTER SET utf8mb4,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `dataGuru` WRITE;
 /*!40000 ALTER TABLE `dataGuru` DISABLE KEYS */;
@@ -77,15 +77,15 @@ DROP TABLE IF EXISTS `dataKehadiran`;
 
 CREATE TABLE `dataKehadiran` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `idSiswa` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `tanggal` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `status` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `idGuru` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `mataPelajaran` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `namaSiswa` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `idSiswa` varchar(100) CHARACTER SET utf8mb4,
+  `tanggal` varchar(100) CHARACTER SET utf8mb4,
+  `status` varchar(100) CHARACTER SET utf8mb4,
+  `idGuru` varchar(100) CHARACTER SET utf8mb4,
+  `mataPelajaran` varchar(100) CHARACTER SET utf8mb4,
+  `namaSiswa` varchar(100) CHARACTER SET utf8mb4,
   PRIMARY KEY (`id`),
   KEY `idSiswa` (`idSiswa`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `dataKehadiran` WRITE;
 /*!40000 ALTER TABLE `dataKehadiran` DISABLE KEYS */;
@@ -106,11 +106,11 @@ DROP TABLE IF EXISTS `dataKelas`;
 CREATE TABLE `dataKelas` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `kelas` int(100) NOT NULL,
-  `idGuru` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `idGuru` varchar(100) CHARACTER SET utf8mb4,
   PRIMARY KEY (`id`),
   KEY `idGuru` (`idGuru`),
   CONSTRAINT `idGuru` FOREIGN KEY (`idGuru`) REFERENCES `dataguru` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `dataKelas` WRITE;
 /*!40000 ALTER TABLE `dataKelas` DISABLE KEYS */;
@@ -136,7 +136,7 @@ CREATE TABLE `dataKelasSiswa` (
   `kelas` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `siswa` (`idSiswa`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `dataKelasSiswa` WRITE;
 /*!40000 ALTER TABLE `dataKelasSiswa` DISABLE KEYS */;
@@ -156,8 +156,8 @@ DROP TABLE IF EXISTS `dataNilai`;
 
 CREATE TABLE `dataNilai` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `idGuru` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `idSiswa` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `idGuru` varchar(100) CHARACTER SET utf8mb4,
+  `idSiswa` varchar(100) CHARACTER SET utf8mb4,
   `nilaiTugasPkn` int(100) DEFAULT NULL,
   `nilaiUjianPkn` int(11) DEFAULT NULL,
   `nilaiTugasMatematika` int(11) DEFAULT NULL,
@@ -182,7 +182,7 @@ CREATE TABLE `dataNilai` (
   PRIMARY KEY (`id`),
   KEY `idKelas2` (`idGuru`),
   KEY `idSiswa2` (`idSiswa`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `dataNilai` WRITE;
 /*!40000 ALTER TABLE `dataNilai` DISABLE KEYS */;
@@ -201,19 +201,19 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `dataSiswa`;
 
 CREATE TABLE `dataSiswa` (
-  `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `fotoProfil` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `namaLengkap` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `tempatLahir` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `tanggalLahir` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `alamat` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `namaAyah` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `namaIbu` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `nomorTelefon` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `agama` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `jenisKelamin` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `id` varchar(100) CHARACTER SET utf8mb4,
+  `fotoProfil` varchar(150) CHARACTER SET utf8mb4,
+  `namaLengkap` varchar(150) CHARACTER SET utf8mb4,
+  `tempatLahir` varchar(150) CHARACTER SET utf8mb4,
+  `tanggalLahir` varchar(150) CHARACTER SET utf8mb4,
+  `alamat` varchar(150) CHARACTER SET utf8mb4,
+  `namaAyah` varchar(150) CHARACTER SET utf8mb4,
+  `namaIbu` varchar(150) CHARACTER SET utf8mb4,
+  `nomorTelefon` varchar(150) CHARACTER SET utf8mb4,
+  `agama` varchar(150) CHARACTER SET utf8mb4,
+  `jenisKelamin` varchar(150) CHARACTER SET utf8mb4,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `dataSiswa` WRITE;
 /*!40000 ALTER TABLE `dataSiswa` DISABLE KEYS */;
@@ -233,12 +233,12 @@ DROP TABLE IF EXISTS `kotakSaran`;
 
 CREATE TABLE `kotakSaran` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `namaLengkap` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `namaLengkap` varchar(100) CHARACTER SET utf8mb4,
+  `email` varchar(100) CHARACTER SET utf8mb4,
   `nomorTelefon` varchar(30) NOT NULL DEFAULT '',
-  `saran` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `saran` varchar(2000) CHARACTER SET utf8mb4,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 
 
