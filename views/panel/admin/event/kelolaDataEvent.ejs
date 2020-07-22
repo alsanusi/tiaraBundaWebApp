@@ -120,13 +120,13 @@
                             <i class="ni ni-single-copy-04 text-black"></i> Jadwal Pelajaran
                         </a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link " href="/panel/tambahDataBerita">
                             <i class="ni ni-single-copy-04 text-blue"></i> Tambah Berita
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="/panel/kelolaDataBerita">
+                        <a class="nav-link active" href="/panel/kelolaDataBerita">
                             <i class="ni ni-bullet-list-67 text-blue"></i> Kelola Berita
                         </a>
                     </li>
@@ -135,12 +135,12 @@
                             <i class="ni ni-bullet-list-67 text-green"></i> Kelola Kotak Saran
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item ">
                         <a class="nav-link " href="/panel/tambahDataEvent">
                             <i class="ni ni-single-copy-04 text-orange"></i> Tambah Data Event
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link " href="/panel/kelolaDataEvent">
                             <i class="ni ni-bullet-list-67 text-orange"></i> Kelola Data Event
                         </a>
@@ -190,107 +190,77 @@
         </nav>
         <!-- End Navbar -->
         <!-- Header -->
-        <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-            style="min-height: 600px; background-image: url(../assets/back-end/assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
-            <!-- Mask -->
-            <span class="mask bg-gradient-default opacity-8"></span>
-            <!-- Header container -->
-            <div class="container-fluid d-flex align-items-center">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <h1 class="display-2 text-white">Hi Admin</h1>
-                        <p class="text-white mt-0 mb-5">Masukkan berita.</p>
-                        <!-- Error and Success Message -->
-                        <% if(messages.error){ %>
-                        <h4 style="color:#d82436">Berita Gagal Ditambahkan!</h4>
-                        <p><%- messages.error %></p>
-                        <!-- </br> -->
-                        <%} else if(messages.success){ %>
-                        <h4 style="color:#5cb85c">Berita Berhasil Ditambahkan!</h4>
-                        </br>
-                        <% } %>
+        <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+            <div class="container-fluid">
+                <div class="header-body">
+                    <!-- Card stats -->
+                    <div class="row">
                     </div>
                 </div>
             </div>
         </div>
         <!-- Page content -->
         <div class="container-fluid mt--7">
+            <!-- Table -->
             <div class="row">
-                <div class="col-xl-12 order-xl-1">
-                    <div class="card bg-secondary shadow">
-                        <form name="tambahDataGuru" action="/panel/tambahDataBerita" method="POST"
-                            enctype="multipart/form-data">
-                            <div class="card-header bg-white border-0">
-                                <div class="row align-items-center">
-                                    <div class="col-8">
-                                        <h3 class="mb-0">Form Berita</h3>
-                                    </div>
-                                    <div class="col-4 text-right">
-                                        <button type="submit" class="btn btn-primary notika-btn-primary">Tambah
-                                            Berita</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <form>
-                                    <h6 class="heading-small text-muted mb-4">Header Berita.</h6>
-                                    <div class="pl-lg-4">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label"
-                                                        for="input-username">Gambar</label>
-                                                    <input type="file" class="form-control form-control-alternative"
-                                                        name="gambarBerita" accept="" required>
+                <div class="col">
+                    <div class="card shadow">
+                        <div class="card-header border-0">
+                            <h3 class="mb-0">Tabel Event</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Tanggal Event</th>
+                                        <th scope="col">Judul Event</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Data -->
+                                    <% if(listEvent) { %>
+                                    <% listEvent.forEach((data, i) => { %>
+                                    <tr>
+                                        <td>
+                                            <%= i + 1 %>
+                                        </td>
+                                        <td>
+                                            <%= data.tanggal %>
+                                        </td>
+                                        <td>
+                                            <%= data.event %>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown">
+                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                    <a class="dropdown-item"
+                                                        href="/panel/editDataEvent/<%= data.id %>">Edit Event</a>
+                                                    <form action="/panel/editDataEvent/<%= data.id %>" method="POST">
+                                                        <form method="POST" action="/panel/editDataEvent/<%= data.id %>"
+                                                            style="float:right">
+                                                            <button type="submit" name="delete" value='Delete'
+                                                                onClick="return confirm('Hapus Data Event <%= data.event %> ?')"
+                                                                class="btn"
+                                                                style="background-color: unset; width: 100%; text-align: left; color: #f5365c;">Hapus
+                                                                Event </button>
+                                                            <input type="hidden" name="_method" value="DELETE" />
+                                                        </form>
+                                                    </form>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-email">Judul
-                                                        Berita</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="judulBerita" placeholder="Judul Berita" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-first-name">Tanggal
-                                                        Update</label>
-                                                    <input type="date" id="input-first-name"
-                                                        class="form-control form-control-alternative"
-                                                        name="tanggalUpdate" placeholder="Tanggal Update" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label"
-                                                        for="input-last-name">Penulis</label>
-                                                    <input type="text" id="input-last-name" name="penulis"
-                                                        class="form-control form-control-alternative"
-                                                        placeholder="Penulis" value="<%= penulis %>" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr class="my-4" />
-                                    <!-- Description -->
-                                    <h6 class="heading-small text-muted mb-4">Detail Berita</h6>
-                                    <div class="pl-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-last-name">Deskripsi
-                                                Berita</label>
-                                            <textarea rows="4" class="form-control form-control-alternative"
-                                                placeholder="Deskripsi Berita." name="deskripsiBerita"
-                                                required></textarea>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </form>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

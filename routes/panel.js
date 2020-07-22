@@ -859,6 +859,86 @@ app.route('/detailSaran/(:id)', redirectLogin)
         })
     })
 
+app.route('/tambahDataEvent', redirectLogin)
+    .get((req, res) => {
+        res.render('panel/admin/event/tambahDataEvent')
+    })
+    .post((req, res) => {
+        let dataEvent = {
+            tanggal: req.sanitize("tanggal").escape().trim(),
+            event: req.sanitize("event").escape().trim(),
+        }
+        dbConnection.con.query("INSERT INTO dataEvent SET ?", dataEvent, (err, result) => {
+            if (err) {
+                req.flash('error', err)
+                res.render("panel/admin/event/tambahDataEvent", {
+                    tanggal: dataEvent.tanggal,
+                    event: dataEvent.event,
+                })
+            } else {
+                req.flash('success', "Event berhasil ditambakan!")
+                res.render("panel/admin/event/tambahDataEvent")
+            }
+        })
+    })
+
+app.get('/kelolaDataEvent', redirectLogin, (req, res) => {
+    dbConnection.con.query("SELECT * FROM dataEvent", (err, rows, field) => {
+        if (err) {
+            res.render('panel/admin/event/kelolaDataEvent', {
+                listEvent: ''
+            })
+        } else {
+            res.render('panel/admin/event/kelolaDataEvent', {
+                listEvent: rows
+            })
+        }
+    })
+})
+
+app.route('/editDataEvent/(:id)', redirectLogin)
+    .get((req, res) => {
+        dbConnection.con.query('SELECT * FROM dataEvent WHERE id = ?', [req.params.id], (err, rows, fields) => {
+            if (err) {
+                res.redirect('/panel/kelolaDataEvent')
+            } else {
+                res.render('panel/admin/event/editDataEvent', {
+                    id: rows[0].id,
+                    tanggal: rows[0].tanggal,
+                    event: rows[0].event,
+                })
+            }
+        })
+    })
+    .put((req, res) => {
+        let dataEvent = {
+            id: req.params.id,
+            event: req.sanitize('event').escape().trim(),
+            tanggal: req.sanitize('tanggal').escape().trim()
+        }
+        dbConnection.con.query("UPDATE dataEvent SET ? WHERE id = ?", [dataEvent, req.params.id], (err, rows) => {
+            if (err) {
+                req.flash('error', err)
+                res.render('panel/admin/event/editDataEvent', {
+                    id: req.params.id,
+                    event: dataEvent.event,
+                    tanggal: dataEvent.tanggal,
+                })
+            } else {
+                res.redirect('/panel/kelolaDataEvent')
+            }
+        })
+    })
+    .delete((req, res) => {
+        dbConnection.con.query('DELETE FROM dataEvent WHERE id = ?', req.params.id, (err, rows, fields) => {
+            if (err) {
+                res.redirect('/panel/kelolaDataEvent')
+            } else {
+                res.redirect('/panel/kelolaDataEvent')
+            }
+        })
+    })
+
 app.post('/logout', redirectLogin, (req, res) => {
     req.session.destroy(err => {
         if (err) {
