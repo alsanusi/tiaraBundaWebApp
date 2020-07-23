@@ -145,7 +145,26 @@
                 <div class="section-title">
                     <h4>Event</h4>
                 </div>
-                <p>List Event</p>
+                <!-- Data -->
+                <% if(listEvent) { %>
+                <% listEvent.forEach((data, i) => { %>
+                <p>
+                    <div style="display: flex;">
+                        <div style="align-self: center;">
+                            <img src="assets/front-end/assets/img/calendar.png" style="height: 30px;" />
+                        </div>
+                        <div style="margin-left: 20px">
+                            <div style="font-weight: bold; font-size: 13px;">
+                                <%= data.tanggal %>
+                            </div>
+                            <div>
+                                <%= data.event %>
+                            </div>
+                        </div>
+                    </div>
+                </p>
+                <% }) %>
+                <% } %>
             </div>
         </div>
     </div>

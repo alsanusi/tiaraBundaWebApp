@@ -5,7 +5,15 @@ const app = express()
 const dbConnection = require('../db_config/db_connection')
 
 app.get('/', (req, res) => {
-    res.render('index')
+    dbConnection.con.query("SELECT * FROM dataEvent ORDER BY id DESC LIMIT 3", [req.params.id], (err, rows, field) => {
+        if (err) {
+            throw err
+        } else {
+            res.render('index', {
+                listEvent: rows
+            })
+        }
+    })
 })
 
 app.get('/blog', (req, res) => {
