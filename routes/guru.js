@@ -56,6 +56,14 @@ const checkKelasGuru = (idGuru) => {
     })
 }
 
+// const listAbsensiSiswa = (idGuru, mapelGuru) => {
+//     return new Promise((resolve, reject) => {
+//         dbConnection.con.query("SELECT * FROM dataKehadiran WHERE idGuru = ? AND mataPelajaran = ?", [idGuru, mapelGuru], (err, rows) => {
+//             err ? reject(err) : resolve(rows)
+//         })
+//     })
+// }
+
 app.get('/', (req, res) => {
     res.render('guru/index')
 })
