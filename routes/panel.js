@@ -638,20 +638,50 @@ app.get('/kelolaJadwal', redirectLogin, (req, res) => {
     res.render('panel/admin/jadwalPelajaran/kelolaJadwal')
 })
 
-// Maple
+// Mapel
 app.get('/kelolaMapel', redirectLogin, (req, res) => {
-    dbConnection.con.query("SELECT dataGuru.id, dataGuru.namaLengkap, dataKelas.kelas, dataGuru.nomorTelefon FROM dataGuru INNER JOIN dataKelas ON dataGuru.id = dataKelas.idGuru", (err, rows, field) => {
+    dbConnection.con.query("SELECT * from dataMapel", (err, rows, field) => {
         if (err) {
             res.render('panel/admin/mapel/kelolaMapel', {
-                listKelas: ''
+                listKelas: '',
+                mapel: ''
             })
         } else {
             res.render('panel/admin/mapel/kelolaMapel', {
-                listKelas: rows
+                listKelas: rows,
+                mapel: ''
             })
         }
     })
 })
+
+app.post('/tambahMapel', redirectLogin, (req, res) => {
+    let dataMapel = {
+        mapel: req.sanitize("mapel").escape().trim(),
+    }
+    dbConnection.con.query("INSERT INTO dataMapel SET ?", dataMapel, (err, result) => {
+        if (err) {
+            req.flash('error', err)
+            res.render("panel/admin/mapel/kelolaMapel", {
+                mapel: dataEvent.mapel
+            })
+        } else {
+            req.flash('success', "Mata Pelajaran berhasil ditambakan!")
+            res.redirect('kelolaMapel')
+        }
+    })
+})
+
+app.route('/editMapel/(:id)', redirectLogin)
+    .delete((req, res) => {
+        dbConnection.con.query('DELETE FROM dataMapel WHERE id = ?', req.params.id, (err, rows, fields) => {
+            if (err) {
+                res.redirect('/panel/kelolaMapel')
+            } else {
+                res.redirect('/panel/kelolaMapel')
+            }
+        })
+    })
 
 // Kelas
 app.get('/kelolaDataKelas', redirectLogin, (req, res) => {
