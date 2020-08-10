@@ -638,6 +638,21 @@ app.get('/kelolaJadwal', redirectLogin, (req, res) => {
     res.render('panel/admin/jadwalPelajaran/kelolaJadwal')
 })
 
+// Maple
+app.get('/kelolaMapel', redirectLogin, (req, res) => {
+    dbConnection.con.query("SELECT dataGuru.id, dataGuru.namaLengkap, dataKelas.kelas, dataGuru.nomorTelefon FROM dataGuru INNER JOIN dataKelas ON dataGuru.id = dataKelas.idGuru", (err, rows, field) => {
+        if (err) {
+            res.render('panel/admin/mapel/kelolaMapel', {
+                listKelas: ''
+            })
+        } else {
+            res.render('panel/admin/mapel/kelolaMapel', {
+                listKelas: rows
+            })
+        }
+    })
+})
+
 // Kelas
 app.get('/kelolaDataKelas', redirectLogin, (req, res) => {
     dbConnection.con.query("SELECT dataGuru.id, dataGuru.namaLengkap, dataKelas.kelas, dataGuru.nomorTelefon FROM dataGuru INNER JOIN dataKelas ON dataGuru.id = dataKelas.idGuru", (err, rows, field) => {
