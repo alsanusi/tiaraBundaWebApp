@@ -347,6 +347,7 @@
                                         <th scope="col">Waktu</th>
                                         <th scope="col">Hari</th>
                                         <th scope="col">Mata Pelajaran</th>
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -362,6 +363,27 @@
                                         </td>
                                         <td>
                                             <%= data.mapel %>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown">
+                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                    <form action="/panel/editJadwal/<%= data.id %>" method="POST">
+                                                        <form method="POST" action="/panel/editJadwal/<%= data.id %>"
+                                                            style="float:right">
+                                                            <button type="submit" name="delete" value='Delete'
+                                                                onClick="return confirm('Hapus Jadwal Pelajaran <%= data.mapel %> ?')"
+                                                                class="btn"
+                                                                style="background-color: unset; width: 100%; text-align: left; color: #f5365c;">Hapus
+                                                                Jadwal Pelajaran </button>
+                                                            <input type="hidden" name="_method" value="DELETE" />
+                                                        </form>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     <% }) %>

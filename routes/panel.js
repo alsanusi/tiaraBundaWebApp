@@ -687,6 +687,17 @@ app.post('/cariJadwal', redirectLogin, async (req, res) => {
     })
 })
 
+app.route('/editJadwal/(:id)', redirectLogin)
+    .delete((req, res) => {
+        dbConnection.con.query('DELETE FROM dataJadwalMapel WHERE id = ?', req.params.id, (err, rows, fields) => {
+            if (err) {
+                res.redirect('/panel/kelolaJadwal')
+            } else {
+                res.redirect('/panel/kelolaJadwal')
+            }
+        })
+    })
+
 // Mapel
 app.get('/kelolaMapel', redirectLogin, (req, res) => {
     dbConnection.con.query("SELECT * from dataMapel", (err, rows, field) => {
