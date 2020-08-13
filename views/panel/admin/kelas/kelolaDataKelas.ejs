@@ -270,7 +270,7 @@
                 <div class="col">
                     <div class="card shadow">
                         <div class="card-header border-0">
-                            <h3 class="mb-0">Tabel Penanggung Jawab Kelas</h3>
+                            <h3 class="mb-0">List Wali Kelas</h3>
                         </div>
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush">
@@ -313,6 +313,17 @@
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                     <a class="dropdown-item"
                                                         href="/panel/editDataKelas/<%= data.id %>">Edit Data</a>
+                                                    <form action="/panel/editDataKelas/<%= data.id %>" method="POST">
+                                                        <form method="POST" action="/panel/editDataKelas/<%= data.id %>"
+                                                            style="float:right">
+                                                            <button type="submit" name="delete" value='Delete'
+                                                                onClick="return confirm('Hapus Wali Kelas <%= data.namaLengkap %> ?')"
+                                                                class="btn"
+                                                                style="background-color: unset; width: 100%; text-align: left; color: #f5365c;">Hapus
+                                                                Wali Kelas </button>
+                                                            <input type="hidden" name="_method" value="DELETE" />
+                                                        </form>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>

@@ -796,38 +796,44 @@ app.post('/tambahWaliKelas', redirectLogin, (req, res) => {
 })
 
 app.route('/editDataKelas/(:id)', redirectLogin)
-    .get((req, res) => {
-        dbConnection.con.query('SELECT * FROM dataKelas WHERE id = ?', [req.params.id], async (err, rows, fields) => {
+    .get(async (req, res) => {
+        const hasilCheckDataKelas = await checkDataKelas()
+        let filterKelasTersedia = objectKelas.filter(elm => !hasilCheckDataKelas.map(elm => JSON.stringify(elm)).includes(JSON.stringify(elm)));
+        dbConnection.con.query('SELECT * FROM dataKelas WHERE idGuru = ?', [req.params.id], async (err, rows, fields) => {
             let data = rows[0];
-            const hasilListDataGuru = await listDataGuru();
-            const hasilDataGuru = await cariDataGuru(data.idGuru)
             if (err) {
                 res.redirect('/panel/kelolaDataKelas')
             } else {
                 res.render('panel/admin/kelas/editDataKelas', {
-                    id: req.params.id,
-                    kelas: data.kelas,
-                    idGuru: data.idGuru,
-                    namaGuru: hasilDataGuru[0].namaLengkap,
-                    listDataGuru: hasilListDataGuru
+                    id: data.id,
+                    listKelas: filterKelasTersedia,
+                    dataWaliKelas: data
                 })
             }
         })
     })
     .put((req, res) => {
         let dataKelas = {
-            id: req.params.id,
+            id: req.sanitize('id').escape().trim(),
             kelas: req.sanitize('kelas').escape().trim(),
-            idGuru: req.sanitize('idGuru').escape().trim(),
         }
-        dbConnection.con.query("UPDATE dataKelas SET ? WHERE id = ?", [dataKelas, req.params.id], (err, rows) => {
+        dbConnection.con.query("UPDATE dataKelas SET ? WHERE id = ?", [dataKelas, dataKelas.id], (err, rows) => {
             if (err) {
                 req.flash('error', err)
                 res.render('panel/admin/kelas/editDataKelas', {
-                    id: req.params.id,
+                    id: dataKelas.id,
                     kelas: dataKelas.kelas,
                     idGuru: dataKelas.idGuru,
                 })
+            } else {
+                res.redirect('/panel/kelolaDataKelas')
+            }
+        })
+    })
+    .delete((req, res) => {
+        dbConnection.con.query('DELETE FROM dataKelas WHERE idGuru = ?', req.params.id, (err, rows, fields) => {
+            if (err) {
+                res.redirect('/panel/kelolaDataKelas')
             } else {
                 res.redirect('/panel/kelolaDataKelas')
             }
