@@ -196,15 +196,12 @@
                                                     <option value="<%= mapelGuru %>"><%= mapelGuru %></option>
                                                 </optgroup>
                                                 <optgroup label="OPSI">
-                                                    <option value="PKN">PKN</option>
-                                                    <option value="Matematika">Matematika</option>
-                                                    <option value="IPS">IPS</option>
-                                                    <option value="Agama">Agama</option>
-                                                    <option value="IPA">IPA</option>
-                                                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                                                    <option value="Bahasa Inggris">Bahasa Inggris</option>
-                                                    <option value="Penjaskes">Penjaskes</option>
-                                                    <option value="Seni Budaya">Seni Budaya</option>
+                                                    <% if(listMapelGuru) { %>
+                                                    <% listMapelGuru.map((data, i) => { %>
+                                                    <option value="<%= data.mapel %>"><%= data.mapel %> -
+                                                        <%= data.category %></option>
+                                                    <% }) %>
+                                                    <% } %>
                                                 </optgroup>
                                             </select>
                                         </div>

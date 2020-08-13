@@ -64,6 +64,14 @@ const checkJadwalGuru = (kelasGuru) => {
     })
 }
 
+const checkListMapel = () => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query("SELECT * FROM dataMapel", (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
 app.get('/', (req, res) => {
     res.render('guru/index')
 })
@@ -152,28 +160,33 @@ app.get('/kelolaJadwal', redirectLogin, async (req, res) => {
     })
 })
 
-app.get('/absensiSiswa', redirectLogin, (req, res) => {
+app.get('/absensiSiswa', redirectLogin, async (req, res) => {
+    const hasilCheckListMapel = await checkListMapel();
     res.render('guru/absensiSiswa', {
         listSiswa: '',
         pilihanTanggal: todayDate(),
+        listMapelGuru: hasilCheckListMapel,
         mapelGuru: '',
         namaGuru: namaGuru
     })
 })
 
 app.route('/pilihanMapel', redirectLogin)
-    .get((req, res) => {
+    .get(async (req, res) => {
+        const hasilCheckListMapel = await checkListMapel();
         if (mapelGuru) {
             dbConnection.con.query("SELECT * FROM dataKelasSiswa WHERE kelas = ?", [kelasGuru], (err, rows, field) => {
                 if (err) {
                     res.render('guru/absensiSiswa', {
                         listSiswa: '',
                         pilihanTanggal: '',
-                        namaGuru: namaGuru
+                        namaGuru: namaGuru,
+                        listMapelGuru: hasilCheckListMapel,
                     })
                 } else {
                     res.render('guru/absensiSiswa', {
                         listSiswa: rows,
+                        listMapelGuru: hasilCheckListMapel,
                         mapelGuru: mapelGuru,
                         pilihanTanggal: todayDate(),
                         namaGuru: namaGuru
@@ -184,17 +197,20 @@ app.route('/pilihanMapel', redirectLogin)
             res.render('guru/absensiSiswa', {
                 listSiswa: '',
                 pilihanTanggal: '',
+                listMapelGuru: hasilCheckListMapel,
                 namaGuru: namaGuru
             })
         }
     })
-    .post((req, res) => {
+    .post(async (req, res) => {
+        const hasilCheckListMapel = await checkListMapel();
         mapelGuru = req.sanitize('mapel').escape().trim()
         if (mapelGuru) {
             dbConnection.con.query("SELECT * FROM dataKelasSiswa WHERE kelas = ?", [kelasGuru], (err, rows, field) => {
                 if (err) {
                     res.render('guru/absensiSiswa', {
                         listSiswa: '',
+                        listMapelGuru: hasilCheckListMapel,
                         mapelGuru: '',
                         pilihanTanggal: '',
                         namaGuru: namaGuru
@@ -202,6 +218,7 @@ app.route('/pilihanMapel', redirectLogin)
                 } else {
                     res.render('guru/absensiSiswa', {
                         listSiswa: rows,
+                        listMapelGuru: hasilCheckListMapel,
                         mapelGuru: mapelGuru,
                         pilihanTanggal: todayDate(),
                         namaGuru: namaGuru
@@ -211,6 +228,7 @@ app.route('/pilihanMapel', redirectLogin)
         } else {
             res.render('guru/absensiSiswa', {
                 listSiswa: '',
+                listMapelGuru: hasilCheckListMapel,
                 mapelGuru: '',
                 pilihanTanggal: todayDate(),
                 namaGuru: namaGuru
@@ -239,10 +257,12 @@ app.post('/absensiSiswa', redirectLogin, (req, res) => {
 })
 
 app.route('/kelolaAbsensi', redirectLogin)
-    .get((req, res) => {
+    .get(async (req, res) => {
+        const hasilCheckListMapel = await checkListMapel();
         res.render('guru/kelolaAbsensiSiswa', {
             listSiswa: '',
             pilihanTanggal: '',
+            listMapelGuru: hasilCheckListMapel,
             mapelGuru: '',
             namaGuru: namaGuru
         })
@@ -268,8 +288,9 @@ app.route('/kelolaAbsensi', redirectLogin)
         })
     })
 
-app.post('/cariAbsensi', redirectLogin, (req, res) => {
+app.post('/cariAbsensi', redirectLogin, async (req, res) => {
     let tanggal, mataPelajaran;
+    const hasilCheckListMapel = await checkListMapel();
     tanggal = req.sanitize('tanggalPelajaran').escape().trim();
     mataPelajaran = req.sanitize('mapel').escape().trim();
     mapelGuru = mataPelajaran
@@ -279,6 +300,7 @@ app.post('/cariAbsensi', redirectLogin, (req, res) => {
             res.render('guru/kelolaAbsensiSiswa', {
                 listSiswa: '',
                 pilihanTanggal: '',
+                listMapelGuru: hasilCheckListMapel,
                 mapelGuru: '',
                 namaGuru: namaGuru
             })
@@ -286,6 +308,7 @@ app.post('/cariAbsensi', redirectLogin, (req, res) => {
             res.render('guru/kelolaAbsensiSiswa', {
                 listSiswa: rows,
                 pilihanTanggal: pilihanTanggal,
+                listMapelGuru: hasilCheckListMapel,
                 mapelGuru: mapelGuru,
                 namaGuru: namaGuru
             })
@@ -293,12 +316,14 @@ app.post('/cariAbsensi', redirectLogin, (req, res) => {
     })
 })
 
-app.get('/detailAbsensi', redirectLogin, (req, res) => {
+app.get('/detailAbsensi', redirectLogin, async (req, res) => {
+    const hasilCheckListMapel = await checkListMapel();
     dbConnection.con.query("SELECT * FROM dataKehadiran WHERE tanggal = ? AND mataPelajaran = ?", [pilihanTanggal, mapelGuru], (err, rows, field) => {
         if (err) {
             res.render('guru/kelolaAbsensiSiswa', {
                 listSiswa: '',
                 pilihanTanggal: '',
+                listMapelGuru: hasilCheckListMapel,
                 mapelGuru: '',
                 namaGuru: namaGuru
             })
@@ -306,6 +331,7 @@ app.get('/detailAbsensi', redirectLogin, (req, res) => {
             res.render('guru/kelolaAbsensiSiswa', {
                 listSiswa: rows,
                 pilihanTanggal: pilihanTanggal,
+                listMapelGuru: hasilCheckListMapel,
                 mapelGuru: mapelGuru,
                 namaGuru: namaGuru
             })
