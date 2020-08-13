@@ -234,6 +234,17 @@
                                                         name="mapel" placeholder="Mata Pelajaran" required>
                                                 </div>
                                             </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-last-name">Kategori
+                                                        Pelajaran</label>
+                                                    <select class="form-control" name="category">
+                                                        <option disabled selected>Silahkan Dipilih!</option>
+                                                        <option value="Umum">Umum</option>
+                                                        <option value="Mulok">Mulok</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -255,6 +266,7 @@
                                     <tr>
                                         <th scope="col">Id</th>
                                         <th scope="col">Mata Pelajaran</th>
+                                        <th scope="col">Kategori Pelajaran</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -268,6 +280,9 @@
                                         </th>
                                         <td>
                                             <%= data.mapel %>
+                                        </td>
+                                        <td>
+                                            <%= data.category %>
                                         </td>
                                         <td class="text-right">
                                             <div class="dropdown">

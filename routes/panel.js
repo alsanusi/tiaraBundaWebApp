@@ -658,6 +658,7 @@ app.get('/kelolaMapel', redirectLogin, (req, res) => {
 app.post('/tambahMapel', redirectLogin, (req, res) => {
     let dataMapel = {
         mapel: req.sanitize("mapel").escape().trim(),
+        category: req.sanitize('category').escape().trim()
     }
     dbConnection.con.query("INSERT INTO dataMapel SET ?", dataMapel, (err, result) => {
         if (err) {
