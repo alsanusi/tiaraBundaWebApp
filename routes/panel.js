@@ -688,6 +688,40 @@ app.post('/cariJadwal', redirectLogin, async (req, res) => {
 })
 
 app.route('/editJadwal/(:id)', redirectLogin)
+    .get(async (req, res) => {
+        dbConnection.con.query('SELECT * FROM dataJadwalMapel WHERE id = ?', [req.params.id], async (err, rows, fields) => {
+            let data = rows[0];
+            const hasilCheckMapel = await listMapel()
+            if (err) {
+                res.redirect('/panel/kelolaJadwal')
+            } else {
+                res.render('panel/admin/jadwalPelajaran/editJadwal', {
+                    id: req.params.id,
+                    listMapel: hasilCheckMapel,
+                    dataMapel: data
+                })
+            }
+        })
+    })
+    .put(async (req, res) => {
+        const hasilCheckMapel = await listMapel();
+        let dataJadwal = {
+            id: req.params.id,
+            mapel: req.sanitize('mapel').escape().trim(),
+        }
+        dbConnection.con.query("UPDATE dataJadwalMapel SET ? WHERE id = ?", [dataJadwal, req.params.id], (err, rows) => {
+            if (err) {
+                req.flash('error', err)
+                res.render('panel/admin/jadwalPelajaran/editJadwal', {
+                    id: req.params.id,
+                    listMapel: hasilCheckMapel,
+                    dataMapel: dataJadwal
+                })
+            } else {
+                res.redirect('/panel/kelolaJadwal')
+            }
+        })
+    })
     .delete((req, res) => {
         dbConnection.con.query('DELETE FROM dataJadwalMapel WHERE id = ?', req.params.id, (err, rows, fields) => {
             if (err) {

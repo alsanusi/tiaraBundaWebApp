@@ -11,7 +11,7 @@
             </button>
             <!-- Brand -->
             <a class="navbar-brand pt-0" href="./dashboard">
-                <img src="/assets/back-end/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+                <img src="../../assets/back-end/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
             <!-- User -->
             <ul class="nav align-items-center d-md-none">
@@ -34,7 +34,7 @@
                         <div class="media align-items-center">
                             <span class="avatar avatar-sm rounded-circle">
                                 <img alt="Image placeholder"
-                                    src="../assets/back-end/assets/img/theme/team-1-800x800.jpg">
+                                    src="../../assets/back-end/assets/img/theme/team-1-800x800.jpg">
                             </span>
                         </div>
                     </a>
@@ -58,7 +58,7 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a href="./dashboard">
-                                <img src="../assets/back-end/assets/img/brand/blue.png">
+                                <img src="../../assets/back-end/assets/img/brand/blue.png">
                             </a>
                         </div>
                         <div class="col-6 collapse-close">
@@ -171,7 +171,7 @@
                             <div class="media align-items-center">
                                 <span class="avatar avatar-sm rounded-circle">
                                     <img alt="Image placeholder"
-                                        src="../assets/back-end/assets/img/theme/team-4-800x800.jpg">
+                                        src="../../assets/back-end/assets/img/theme/team-4-800x800.jpg">
                                 </span>
                                 <div class="media-body ml-2 d-none d-lg-block">
                                     <span class="mb-0 text-sm  font-weight-bold">Admin</span>
@@ -209,15 +209,16 @@
                 <div class="col">
                     <div class="card shadow">
                         <div class="table-responsive">
-                            <form name="tambahDataEvent" action="/panel/tambahJadwal" method="POST">
+                            <form name="tambahDataEvent" action="/panel/editJadwal/<%= id %>" method="POST">
                                 <div class="card-header bg-white border-0">
                                     <div class="row align-items-center">
                                         <div class="col-8">
-                                            <h3 class="mb-0">Form Jadwal Pelajaran</h3>
+                                            <h3 class="mb-0">Form Edit Jadwal Pelajaran</h3>
                                         </div>
                                         <div class="col-4 text-right">
-                                            <button type="submit" class="btn btn-primary notika-btn-primary">Tambah
+                                            <button type="submit" class="btn btn-primary notika-btn-primary">Edit
                                                 Jadwal Pelajaran</button>
+                                            <input type="hidden" name="_method" value="PUT" />
                                         </div>
                                     </div>
                                 </div>
@@ -227,13 +228,8 @@
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-last-name">Hari</label>
-                                                    <select class="form-control" name="hari">
-                                                        <option disabled selected>Silahkan Dipilih!</option>
-                                                        <option value="Senin">Senin</option>
-                                                        <option value="Selasa">Selasa</option>
-                                                        <option value="Rabu">Rabu</option>
-                                                        <option value="Kamis">Kamis</option>
-                                                        <option value="Jumat">Jumat</option>
+                                                    <select class="form-control" name="hari" disabled>
+                                                        <option disabled selected><%= dataMapel.hari %></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -241,14 +237,8 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-last-name">Jadwal
                                                         Pelajaran</label>
-                                                    <select class="form-control" name="jam">
-                                                        <option disabled selected>Silahkan Dipilih!</option>
-                                                        <option value="07.00 - 08.30">07.00 - 08.30</option>
-                                                        <option value="08.30 - 10.00">08.30 - 10.00</option>
-                                                        <option value="10.00 - 10.30">10.00 - 10.30</option>
-                                                        <option value="10.30 - 12.00">10.30 - 12.00</option>
-                                                        <option value="12.00 - 12.30">12.00 - 12.30</option>
-                                                        <option value="12.30 - 13.30">12.30 - 13.30</option>
+                                                    <select class="form-control" name="jam" disabled>
+                                                        <option disabled selected><%= dataMapel.jam %></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -257,15 +247,21 @@
                                                     <label class="form-control-label" for="input-last-name">Mata
                                                         Pelajaran</label>
                                                     <select class="form-control" name="mapel">
-                                                        <option disabled selected>Silahkan Dipilih!</option>
-                                                        <% if(listMapel) { %>
-                                                        <% listMapel.forEach((data, i) => { %>
-                                                        <option value="<%= data.mapel %>"><%= data.mapel %> -
-                                                            <%= data.category %>
-                                                        </option>
-                                                        <% }) %>
-                                                        <% } %>
-                                                        <option value="Istirahat">Istirahat</option>
+                                                        <optgroup label="SELECTED">
+                                                            <option value="<%= dataMapel.mapel %>">
+                                                                <%= dataMapel.mapel %>
+                                                            </option>
+                                                        </optgroup>
+                                                        <optgroup label="OPSI">
+                                                            <% if(listMapel) { %>
+                                                            <% listMapel.forEach((data, i) => { %>
+                                                            <option value="<%= data.mapel %>"><%= data.mapel %> -
+                                                                <%= data.category %>
+                                                            </option>
+                                                            <% }) %>
+                                                            <% } %>
+                                                            <option value="Istirahat">Istirahat</option>
+                                                        </optgroup>
                                                     </select>
                                                 </div>
                                             </div>
@@ -273,14 +269,8 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label"
                                                         for="input-last-name">Kelas</label>
-                                                    <select class="form-control" name="kelas">
-                                                        <option disabled selected>Silahkan Dipilih!</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
+                                                    <select class="form-control" name="kelas" disabled>
+                                                        <option disabled selected><%= dataMapel.kelas %></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -292,111 +282,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Table -->
-            <div class="row" style="margin-top: 40px;">
-                <div class="col">
-                    <div class="card shadow">
-                        <div class="table-responsive">
-                            <form name="tambahDataEvent" action="/panel/cariJadwal" method="POST">
-                                <div class="card-header bg-white border-0">
-                                    <div class="row align-items-center">
-                                        <div class="col-8">
-                                            <h3 class="mb-0">Cari Jadwal Pelajaran</h3>
-                                        </div>
-                                        <div class="col-4 text-right">
-                                            <button type="submit" class="btn btn-primary notika-btn-primary">Cari
-                                                Jadwal Pelajaran</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <form>
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label class="form-control-label" for="input-last-name">Kelas</label>
-                                                <select class="form-control" name="kelas">
-                                                    <option disabled selected>Silahkan Dipilih!</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                </div>
-                            </form>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- Table -->
-            <% if(jadwalKelas) { %>
-            <div class="row" style="margin-top: 40px;">
-                <div class="col">
-                    <div class="card shadow">
-                        <div class="card-header border-0">
-                            <h3 class="mb-0">Jadwal Pelajaran - Kelas <%= kelas %></h3>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table align-items-center table-flush">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col">Waktu</th>
-                                        <th scope="col">Hari</th>
-                                        <th scope="col">Mata Pelajaran</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Data -->
-                                    <% if(jadwalKelas) { %>
-                                    <% jadwalKelas.map((data, i) => { %>
-                                    <tr>
-                                        <td>
-                                            <%= data.jam %>
-                                        </td>
-                                        <td>
-                                            <b><%= data.hari %></b>
-                                        </td>
-                                        <td>
-                                            <%= data.mapel %>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item"
-                                                        href="/panel/editJadwal/<%= data.id %>">Edit Jadwal</a>
-                                                    <form action="/panel/editJadwal/<%= data.id %>" method="POST">
-                                                        <form method="POST" action="/panel/editJadwal/<%= data.id %>"
-                                                            style="float:right">
-                                                            <button type="submit" name="delete" value='Delete'
-                                                                onClick="return confirm('Hapus Jadwal Pelajaran <%= data.mapel %> ?')"
-                                                                class="btn"
-                                                                style="background-color: unset; width: 100%; text-align: left; color: #f5365c;">Hapus
-                                                                Jadwal Pelajaran </button>
-                                                            <input type="hidden" name="_method" value="DELETE" />
-                                                        </form>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <% }) %>
-                                    <% } %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <% } %>
         </div>
         <!-- Footer -->
         <footer class="footer">
