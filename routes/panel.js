@@ -198,6 +198,14 @@ const listMapel = () => {
     })
 }
 
+const removeTeacherFromClass = (id) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('DELETE FROM dataKelas WHERE idGuru = ?', [id], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
 app.get('/', (req, res) => {
     res.render('panel/index')
 })
@@ -603,14 +611,19 @@ app.route('/editDataGuru/(:id)', redirectLogin)
             }
         })
     })
-    .delete((req, res) => {
-        dbConnection.con.query('DELETE FROM dataGuru WHERE id = ?', req.params.id, (err, rows, fields) => {
-            if (err) {
-                res.redirect('/panel/kelolaDataGuru')
-            } else {
-                res.redirect('/panel/kelolaDataGuru')
-            }
-        })
+    .delete(async (req, res) => {
+        const hasilHapusGuruDariKelas = removeTeacherFromClass(req.params.id);
+        if (hasilHapusGuruDariKelas) {
+            dbConnection.con.query('DELETE FROM dataGuru WHERE id = ?', req.params.id, (err, rows, fields) => {
+                if (err) {
+                    res.redirect('/panel/kelolaDataGuru')
+                } else {
+                    res.redirect('/panel/kelolaDataGuru')
+                }
+            })
+        } else {
+            res.redirect('/panel/kelolaDataGuru')
+        }
     })
 
 // Jadwal
