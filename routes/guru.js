@@ -56,13 +56,13 @@ const checkKelasGuru = (idGuru) => {
     })
 }
 
-// const listAbsensiSiswa = (idGuru, mapelGuru) => {
-//     return new Promise((resolve, reject) => {
-//         dbConnection.con.query("SELECT * FROM dataKehadiran WHERE idGuru = ? AND mataPelajaran = ?", [idGuru, mapelGuru], (err, rows) => {
-//             err ? reject(err) : resolve(rows)
-//         })
-//     })
-// }
+const checkJadwalGuru = (kelasGuru) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query("SELECT * FROM dataJadwalMapel WHERE kelas = ?", [kelasGuru], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
 
 app.get('/', (req, res) => {
     res.render('guru/index')
@@ -143,9 +143,12 @@ app.route('/profil', redirectLogin)
         })
     })
 
-app.get('/kelolaJadwal', redirectLogin, (req, res) => {
+app.get('/kelolaJadwal', redirectLogin, async (req, res) => {
+    const hasilCheckJadwalGuru = await checkJadwalGuru(kelasGuru);
     res.render('guru/jadwalPelajaran', {
-        namaGuru: namaGuru
+        namaGuru: namaGuru,
+        jadwalKelas: hasilCheckJadwalGuru,
+        kelas: kelasGuru
     })
 })
 
