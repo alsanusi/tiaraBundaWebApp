@@ -122,7 +122,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/panel/kelolaJadwal">
-                            <i class="ni ni-single-copy-04 text-black"></i> Jadwal Pelajaran
+                            <i class="ni ni-single-copy-04 text-black"></i> Kelola Jadwal Pelajaran
                         </a>
                     </li>
                     <li class="nav-item">
@@ -208,255 +208,183 @@
             <div class="row">
                 <div class="col">
                     <div class="card shadow">
+                        <div class="table-responsive">
+                            <form name="tambahDataEvent" action="/panel/tambahJadwal" method="POST">
+                                <div class="card-header bg-white border-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-8">
+                                            <h3 class="mb-0">Form Jadwal Pelajaran</h3>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <button type="submit" class="btn btn-primary notika-btn-primary">Tambah
+                                                Jadwal Pelajaran</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-last-name">Hari</label>
+                                                    <select class="form-control" name="hari">
+                                                        <option disabled selected>Silahkan Dipilih!</option>
+                                                        <option value="Senin">Senin</option>
+                                                        <option value="Selasa">Selasa</option>
+                                                        <option value="Rabu">Rabu</option>
+                                                        <option value="Kamis">Kamis</option>
+                                                        <option value="Jumat">Jumat</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-last-name">Jadwal
+                                                        Pelajaran</label>
+                                                    <select class="form-control" name="jam">
+                                                        <option disabled selected>Silahkan Dipilih!</option>
+                                                        <option value="07.00 - 08.30">07.00 - 08.30</option>
+                                                        <option value="08.30 - 10.00">08.30 - 10.00</option>
+                                                        <option value="10.00 - 10.30">10.00 - 10.30</option>
+                                                        <option value="10.30 - 12.00">10.30 - 12.00</option>
+                                                        <option value="12.00 - 12.30">12.00 - 12.30</option>
+                                                        <option value="12.30 - 13.30">12.30 - 13.30</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-last-name">Mata
+                                                        Pelajaran</label>
+                                                    <select class="form-control" name="mapel">
+                                                        <option disabled selected>Silahkan Dipilih!</option>
+                                                        <% if(listMapel) { %>
+                                                        <% listMapel.forEach((data, i) => { %>
+                                                        <option value="<%= data.mapel %>"><%= data.mapel %> -
+                                                            <%= data.category %>
+                                                        </option>
+                                                        <% }) %>
+                                                        <% } %>
+                                                        <option value="Istirahat">Istirahat</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label"
+                                                        for="input-last-name">Kelas</label>
+                                                    <select class="form-control" name="kelas">
+                                                        <option disabled selected>Silahkan Dipilih!</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Table -->
+            <div class="row" style="margin-top: 40px;">
+                <div class="col">
+                    <div class="card shadow">
+                        <div class="table-responsive">
+                            <form name="tambahDataEvent" action="/panel/cariJadwal" method="POST">
+                                <div class="card-header bg-white border-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-8">
+                                            <h3 class="mb-0">Cari Jadwal Pelajaran</h3>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <button type="submit" class="btn btn-primary notika-btn-primary">Cari
+                                                Jadwal Pelajaran</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-last-name">Kelas</label>
+                                                <select class="form-control" name="kelas">
+                                                    <option disabled selected>Silahkan Dipilih!</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                </div>
+                            </form>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Table -->
+            <% if(jadwalKelas) { %>
+            <div class="row" style="margin-top: 40px;">
+                <div class="col">
+                    <div class="card shadow">
                         <div class="card-header border-0">
-                            <h3 class="mb-0">Jadwal Pelajaran</h3>
+                            <h3 class="mb-0">Jadwal Pelajaran - Kelas <%= kelas %></h3>
                         </div>
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Waktu</th>
-                                        <th scope="col">Senin</th>
-                                        <th scope="col">Selasa</th>
-                                        <th scope="col">Rabu</th>
-                                        <th scope="col">Kamis</th>
-                                        <th scope="col">Jumat</th>
-                                        <th scope="col">Sabtu</th>
+                                        <th scope="col">Hari</th>
+                                        <th scope="col">Mata Pelajaran</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!-- Data -->
+                                    <% if(jadwalKelas) { %>
+                                    <% jadwalKelas.map((data, i) => { %>
                                     <tr>
                                         <td>
-                                            07.00 - 07.30
+                                            <%= data.jam %>
                                         </td>
                                         <td>
-                                            Upacara
+                                            <b><%= data.hari %></b>
                                         </td>
                                         <td>
-                                            Agama
-                                        </td>
-                                        <td>
-                                            Penjaskes
-                                        </td>
-                                        <td>
-                                            Bahasa Indonesia
-                                        </td>
-                                        <td>
-                                            Matematika
-                                        </td>
-                                        <td>
-                                            Senam
+                                            <%= data.mapel %>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            07.30 - 08.30
-                                        </td>
-                                        <td>
-                                            PKN
-                                        </td>
-                                        <td>
-                                            Agama
-                                        </td>
-                                        <td>
-                                            Penjaskes
-                                        </td>
-                                        <td>
-                                            Bahasa Indonesia
-                                        </td>
-                                        <td>
-                                            Matematika
-                                        </td>
-                                        <td>
-                                            Senam
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            08.30 - 09.30
-                                        </td>
-                                        <td>
-                                            PKN
-                                        </td>
-                                        <td>
-                                            IPA
-                                        </td>
-                                        <td>
-                                            Penjaskes
-                                        </td>
-                                        <td>
-                                            Bahasa Indonesia
-                                        </td>
-                                        <td>
-                                            IPS
-                                        </td>
-                                        <td>
-                                            Eksul
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            09.30 - 10.00
-                                        </td>
-                                        <td>
-                                            Matematika
-                                        </td>
-                                        <td>
-                                            IPA
-                                        </td>
-                                        <td>
-                                            IPA
-                                        </td>
-                                        <td>
-                                            Agama
-                                        </td>
-                                        <td>
-                                            IPS
-                                        </td>
-                                        <td>
-                                            Eksul
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            10.00 - 10.30
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Pulang</b>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            10.30 - 11.30
-                                        </td>
-                                        <td>
-                                            Matematika
-                                        </td>
-                                        <td>
-                                            Bahasa Indonesia
-                                        </td>
-                                        <td>
-                                            IPS
-                                        </td>
-                                        <td>
-                                            Agama
-                                        </td>
-                                        <td>
-                                            IPA
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            11.30 - 12.00
-                                        </td>
-                                        <td>
-                                            Matematika
-                                        </td>
-                                        <td>
-                                            Bahasa Indonesia
-                                        </td>
-                                        <td>
-                                            Seni Budaya
-                                        </td>
-                                        <td>
-                                            PKN
-                                        </td>
-                                        <td>
-                                            IPA
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            12.00 - 12.30
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            12.30 - 13.00
-                                        </td>
-                                        <td>
-                                            IPS
-                                        </td>
-                                        <td>
-                                            Bahasa Inggris
-                                        </td>
-                                        <td>
-                                            Seni Budaya
-                                        </td>
-                                        <td>
-                                            Bahasa Inggris
-                                        </td>
-                                        <td>
-                                            Seni Budaya
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            13.00 - 13.30
-                                        </td>
-                                        <td>
-                                            IPS
-                                        </td>
-                                        <td>
-                                            Bahasa Inggris
-                                        </td>
-                                        <td>
-                                            Seni Budaya
-                                        </td>
-                                        <td>
-                                            PKN
-                                        </td>
-                                        <td>
-                                            Seni Budaya
-                                        </td>
-                                    </tr>
+                                    <% }) %>
+                                    <% } %>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Footer -->
-            <footer class="footer">
-                <div class="row align-items-center justify-content-xl-between">
-                    <div class="col-xl-6">
-                        <div class="copyright text-center text-xl-left text-muted">
-                            &copy; 2020 <a class="font-weight-bold ml-1">Tiara Bunda</a>
-                        </div>
+            <% } %>
+        </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="row align-items-center justify-content-xl-between">
+                <div class="col-xl-6">
+                    <div class="copyright text-center text-xl-left text-muted">
+                        &copy; 2020 <a class="font-weight-bold ml-1">Tiara Bunda</a>
                     </div>
                 </div>
-            </footer>
-        </div>
+            </div>
+        </footer>
+    </div>
     </div>
 
     <!-- Include Footer -->

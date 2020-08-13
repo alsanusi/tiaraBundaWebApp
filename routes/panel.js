@@ -190,6 +190,14 @@ const redirectHome = (req, res, next) => {
     }
 }
 
+const listMapel = () => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query('SELECT * FROM dataMapel', (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
 app.get('/', (req, res) => {
     res.render('panel/index')
 })
@@ -634,8 +642,49 @@ app.route('/editDataGuru/(:id)', redirectLogin)
     })
 
 // Jadwal
-app.get('/kelolaJadwal', redirectLogin, (req, res) => {
-    res.render('panel/admin/jadwalPelajaran/kelolaJadwal')
+app.get('/kelolaJadwal', redirectLogin, async (req, res) => {
+    const hasilCheckMapel = await listMapel()
+    res.render('panel/admin/jadwalPelajaran/kelolaJadwal', {
+        listMapel: hasilCheckMapel,
+        jadwalKelas: ''
+    })
+})
+
+app.post('/tambahJadwal', redirectLogin, (req, res) => {
+    let dataJadwal = {
+        hari: req.sanitize("hari").escape().trim(),
+        jam: req.sanitize('jam').escape().trim(),
+        mapel: req.sanitize('mapel').escape().trim(),
+        kelas: req.sanitize('kelas').escape().trim(),
+    }
+    dbConnection.con.query("INSERT INTO dataJadwalMapel SET ?", dataJadwal, (err, result) => {
+        if (err) {
+            req.flash('error', err)
+            res.redirect('kelolaJadwal')
+        } else {
+            req.flash('success', "Jadwal Pelajaran berhasil ditambakan!")
+            res.redirect('kelolaJadwal')
+        }
+    })
+})
+
+app.post('/cariJadwal', redirectLogin, async (req, res) => {
+    const hasilCheckMapel = await listMapel()
+    let dataJadwal = {
+        kelas: req.sanitize('kelas').escape().trim(),
+    }
+    dbConnection.con.query("SELECT * FROM dataJadwalMapel WHERE kelas = ?", dataJadwal, (err, rows, field) => {
+        if (err) {
+            req.flash('error', err)
+            res.redirect('kelolaJadwal')
+        } else {
+            res.render('panel/admin/jadwalPelajaran/kelolaJadwal', {
+                kelas: dataJadwal.kelas,
+                listMapel: hasilCheckMapel,
+                jadwalKelas: rows
+            })
+        }
+    })
 })
 
 // Mapel
