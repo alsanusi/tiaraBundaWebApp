@@ -117,7 +117,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="/panel/kelolaDataKelas">
-                            <i class="ni ni-single-copy-04 text-purple"></i> Kelola Data Kelas
+                            <i class="ni ni-single-copy-04 text-purple"></i> Kelola Wali Kelas
                         </a>
                     </li>
                     <li class="nav-item">
@@ -361,28 +361,6 @@
                                                         for="input-address">Password</label>
                                                     <input class="form-control form-control-alternative" name="password"
                                                         placeholder="Password" type="password" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Kelas -->
-                                    <hr class="my-4" />
-                                    <!-- Informasi Kelas -->
-                                    <h6 class="heading-small text-muted mb-4">Informasi Kelas Guru</h6>
-                                    <div class="pl-lg-4">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label"
-                                                        for="input-last-name">Kelas</label>
-                                                    <select class="form-control" name="kelas">
-                                                        <% if(kelas) { %>
-                                                        <% kelas.forEach((data, i) => { %>
-                                                        <option value="<%= data.kelas %>"><%= data.kelas %>
-                                                        </option>
-                                                        <% }) %>
-                                                        <% } %>
-                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

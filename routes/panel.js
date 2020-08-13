@@ -451,17 +451,16 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
 // Guru
 const fotoProfilGuru = upload.single("fotoProfilGuru")
 app.route('/tambahDataGuru', redirectLogin)
-    .get(async (req, res) => {
-        const hasilCheckDataKelas = await checkDataKelas()
-        let filterKelasTersedia = objectKelas.filter(elm => !hasilCheckDataKelas.map(elm => JSON.stringify(elm)).includes(JSON.stringify(elm)));
+    .get((req, res) => {
+        // const hasilCheckDataKelas = await checkDataKelas()
+        // let filterKelasTersedia = objectKelas.filter(elm => !hasilCheckDataKelas.map(elm => JSON.stringify(elm)).includes(JSON.stringify(elm)));
         res.render('panel/admin/guru/tambahDataGuru', {
-            id: generateIdGuru(),
-            kelas: filterKelasTersedia
+            id: generateIdGuru()
         })
     })
-    .post(async (req, res) => {
-        const hasilCheckDataKelas = await checkDataKelas()
-        let filterKelasTersedia = objectKelas.filter(elm => !hasilCheckDataKelas.map(elm => JSON.stringify(elm)).includes(JSON.stringify(elm)));
+    .post((req, res) => {
+        // const hasilCheckDataKelas = await checkDataKelas()
+        // let filterKelasTersedia = objectKelas.filter(elm => !hasilCheckDataKelas.map(elm => JSON.stringify(elm)).includes(JSON.stringify(elm)));
         fotoProfilGuru(req, res, (err) => {
             if (err) {
                 let error_msg = "Besar foto profil guru melebihi 3 MB!"
@@ -477,7 +476,6 @@ app.route('/tambahDataGuru', redirectLogin)
                     nomorTelefon: '',
                     email: '',
                     password: '',
-                    kelas: filterKelasTersedia
                 })
             } else {
                 if (req.file === null) {
@@ -494,7 +492,6 @@ app.route('/tambahDataGuru', redirectLogin)
                         agama: '',
                         email: '',
                         password: '',
-                        kelas: filterKelasTersedia
                     })
                 } else {
                     let dataGuru = {
@@ -510,10 +507,6 @@ app.route('/tambahDataGuru', redirectLogin)
                         email: req.sanitize('email').escape().trim(),
                         password: req.sanitize('password').escape().trim()
                     }
-                    let dataKelas = {
-                        kelas: req.sanitize('kelas').escape().trim(),
-                        idGuru: dataGuru.id,
-                    }
                     dbConnection.con.query("INSERT INTO dataGuru SET ?", dataGuru, (err, result) => {
                         if (err) {
                             req.flash('error', err)
@@ -527,42 +520,21 @@ app.route('/tambahDataGuru', redirectLogin)
                                 jenisKelamin: dataGuru.jenisKelamin,
                                 agama: dataGuru.agama,
                                 email: dataGuru.email,
-                                password: dataGuru.password,
-                                kelas: filterKelasTersedia
+                                password: dataGuru.password
                             })
                         } else {
-                            dbConnection.con.query("INSERT INTO dataKelas SET ?", dataKelas, (err, result) => {
-                                if (err) {
-                                    req.flash('error', err)
-                                    res.render('panel/admin/guru/tambahDataGuru', {
-                                        id: dataGuru.id,
-                                        namaLengkap: dataGuru.namaLengkap,
-                                        tempatLahir: dataGuru.tempatLahir,
-                                        tanggalLahir: dataGuru.tanggalLahir,
-                                        alamat: dataGuru.alamat,
-                                        nomorTelefon: dataGuru.nomorTelefon,
-                                        jenisKelamin: dataGuru.jenisKelamin,
-                                        agama: dataGuru.agama,
-                                        email: dataGuru.email,
-                                        password: dataGuru.password,
-                                        kelas: filterKelasTersedia
-                                    })
-                                } else {
-                                    req.flash('success', 'Data guru berhasil ditambahkan!')
-                                    res.render('panel/admin/guru/tambahDataGuru', {
-                                        id: generateIdGuru(),
-                                        namaLengkap: '',
-                                        tempatLahir: '',
-                                        tanggalLahir: '',
-                                        alamat: '',
-                                        nomorTelefon: '',
-                                        jenisKelamin: '',
-                                        agama: '',
-                                        email: '',
-                                        password: '',
-                                        kelas: filterKelasTersedia
-                                    })
-                                }
+                            req.flash('success', 'Data guru berhasil ditambahkan!')
+                            res.render('panel/admin/guru/tambahDataGuru', {
+                                id: generateIdGuru(),
+                                namaLengkap: '',
+                                tempatLahir: '',
+                                tanggalLahir: '',
+                                alamat: '',
+                                nomorTelefon: '',
+                                jenisKelamin: '',
+                                agama: '',
+                                email: '',
+                                password: ''
                             })
                         }
                     })
