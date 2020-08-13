@@ -164,6 +164,21 @@ app.get('/absensiSiswa', redirectLogin, (req, res) => {
     })
 })
 
+app.post('/cariAbsensiSiswa', redirectLogin, (req, res) => {
+    let tanggal;
+    tanggal = req.sanitize('tanggalPelajaran').escape().trim();
+    dbConnection.con.query("SELECT * FROM dataKehadiran WHERE tanggal = ? and idSiswa = ?", [tanggal, idSiswa], (err, rows, field) => {
+        if (err) {
+            res.redirect('absensiSiswa')
+        } else {
+            res.render('siswa/absenSiswa', {
+                listSiswa: rows,
+                namaSiswa: namaSiswa ? namaSiswa : "Siswa"
+            })
+        }
+    })
+})
+
 app.get('/profilSiswa', redirectLogin, (req, res) => {
     dbConnection.con.query('SELECT * FROM dataSiswa WHERE id = ?', [idSiswa], (err, rows, fields) => {
         let data = rows[0];
