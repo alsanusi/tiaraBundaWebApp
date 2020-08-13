@@ -460,15 +460,11 @@ app.route('/editDataSiswa/(:id)', redirectLogin)
 const fotoProfilGuru = upload.single("fotoProfilGuru")
 app.route('/tambahDataGuru', redirectLogin)
     .get((req, res) => {
-        // const hasilCheckDataKelas = await checkDataKelas()
-        // let filterKelasTersedia = objectKelas.filter(elm => !hasilCheckDataKelas.map(elm => JSON.stringify(elm)).includes(JSON.stringify(elm)));
         res.render('panel/admin/guru/tambahDataGuru', {
             id: generateIdGuru()
         })
     })
     .post((req, res) => {
-        // const hasilCheckDataKelas = await checkDataKelas()
-        // let filterKelasTersedia = objectKelas.filter(elm => !hasilCheckDataKelas.map(elm => JSON.stringify(elm)).includes(JSON.stringify(elm)));
         fotoProfilGuru(req, res, (err) => {
             if (err) {
                 let error_msg = "Besar foto profil guru melebihi 3 MB!"
@@ -612,7 +608,7 @@ app.route('/editDataGuru/(:id)', redirectLogin)
         })
     })
     .delete(async (req, res) => {
-        const hasilHapusGuruDariKelas = removeTeacherFromClass(req.params.id);
+        const hasilHapusGuruDariKelas = await removeTeacherFromClass(req.params.id);
         if (hasilHapusGuruDariKelas) {
             dbConnection.con.query('DELETE FROM dataGuru WHERE id = ?', req.params.id, (err, rows, fields) => {
                 if (err) {
@@ -763,17 +759,38 @@ app.route('/editMapel/(:id)', redirectLogin)
         })
     })
 
-// Kelas
-app.get('/kelolaDataKelas', redirectLogin, (req, res) => {
+// Wali Kelas
+app.get('/kelolaDataKelas', redirectLogin, async (req, res) => {
+    const hasilListDataGuru = await listDataGuru()
+    const hasilCheckDataKelas = await checkDataKelas()
+    let filterKelasTersedia = objectKelas.filter(elm => !hasilCheckDataKelas.map(elm => JSON.stringify(elm)).includes(JSON.stringify(elm)));
     dbConnection.con.query("SELECT dataGuru.id, dataGuru.namaLengkap, dataKelas.kelas, dataGuru.nomorTelefon FROM dataGuru INNER JOIN dataKelas ON dataGuru.id = dataKelas.idGuru", (err, rows, field) => {
         if (err) {
             res.render('panel/admin/kelas/kelolaDataKelas', {
-                listKelas: ''
+                listWaliKelas: '',
+                listGuru: hasilListDataGuru,
+                listKelas: filterKelasTersedia
             })
         } else {
             res.render('panel/admin/kelas/kelolaDataKelas', {
-                listKelas: rows
+                listWaliKelas: rows,
+                listGuru: hasilListDataGuru,
+                listKelas: filterKelasTersedia
             })
+        }
+    })
+})
+
+app.post('/tambahWaliKelas', redirectLogin, (req, res) => {
+    let dataKelas = {
+        kelas: req.sanitize('kelas').escape().trim(),
+        idGuru: req.sanitize('idGuru').escape().trim(),
+    }
+    dbConnection.con.query("INSERT INTO dataKelas SET ?", [dataKelas], (err, rows) => {
+        if (err) {
+            res.redirect('/panel/kelolaDataKelas')
+        } else {
+            res.redirect('/panel/kelolaDataKelas')
         }
     })
 })
