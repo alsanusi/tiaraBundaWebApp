@@ -42,7 +42,7 @@ const checkDataGuru = (email, pass) => {
 
 const checkNilaiSiswa = (idSiswa) => {
     return new Promise((resolve, reject) => {
-        dbConnection.con.query("SELECT * FROM dataNilai WHERE idSiswa = ?", [idSiswa], (err, rows) => {
+        dbConnection.con.query("SELECT * FROM dataNilaiSiswa WHERE idSiswa = ?", [idSiswa], (err, rows) => {
             err ? reject(err) : resolve(rows)
         })
     })
@@ -358,9 +358,7 @@ app.get('/kelolaDataSiswa', redirectLogin, (req, res) => {
 app.get('/kelolaDataSiswa/(:id)', redirectLogin, async (req, res) => {
     const hasilCheckNilaiSiswa = await checkNilaiSiswa(req.params.id)
     const hasilCheckListMapel = await checkListMapel()
-    let nilaiSiswa = hasilCheckNilaiSiswa[0]
     dbConnection.con.query('SELECT * FROM dataSiswa WHERE id = ?', [req.params.id], (err, rows, fields) => {
-        idNilaiSiswa = nilaiSiswa.id
         let data = rows[0];
         if (err) {
             res.redirect('kelolaDataSiswa')
@@ -372,8 +370,8 @@ app.get('/kelolaDataSiswa/(:id)', redirectLogin, async (req, res) => {
                 namaLengkap: data.namaLengkap,
                 kelas: kelasGuru,
                 status: data.status,
-                catatanSiswa: nilaiSiswa.catatanSiswa ? nilaiSiswa.catatanSiswa : "-",
-                listMapel: hasilCheckListMapel
+                listMapel: hasilCheckListMapel,
+                listNilaiSiswa: hasilCheckNilaiSiswa
             })
         }
     })
@@ -382,7 +380,7 @@ app.get('/kelolaDataSiswa/(:id)', redirectLogin, async (req, res) => {
 app.post('/tambahNilaiSiswa', redirectLogin, (req, res) => {
     let dataNilaiSiswa = {
         idGuru: idGuru,
-        idSiswa: req.params.id,
+        idSiswa: req.sanitize('id').escape().trim(),
         mapel: req.sanitize('mapel').escape().trim(),
         namaSiswa: req.sanitize('namaLengkap').escape().trim(),
         nilaiTugas: req.sanitize('nilaiTugas').toInt(),
@@ -393,7 +391,14 @@ app.post('/tambahNilaiSiswa', redirectLogin, (req, res) => {
         nilaiUjian3: req.sanitize('nilaiUjian3').escape().trim() ? req.sanitize('nilaiUjian3').toInt() : 0,
         kelas: kelasGuru
     }
-    console.log(dataNilaiSiswa)
+    dbConnection.con.query("INSERT INTO dataNilaiSiswa SET ?", dataNilaiSiswa, (err, result) => {
+        if (err) {
+            req.flash('error', err)
+            res.redirect("/guru/kelolaDataSiswa")
+        } else {
+            res.redirect("/guru/kelolaDataSiswa")
+        }
+    })
 })
 
 app.put('/kelolaDataSiswa/(:id)', redirectLogin, (req, res) => {
