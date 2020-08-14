@@ -401,42 +401,42 @@ app.post('/tambahNilaiSiswa', redirectLogin, (req, res) => {
     })
 })
 
-app.put('/kelolaDataSiswa/(:id)', redirectLogin, (req, res) => {
-    let dataNilaiSiswa = {
-        idGuru: idGuru,
-        idSiswa: req.params.id,
-        namaSiswa: req.sanitize('namaLengkap').escape().trim(),
-        catatanSiswa: req.sanitize('catatanSiswa').escape().trim(),
-        nilaiTugasPkn: req.sanitize('nilaiTugasPkn').escape().trim(),
-        nilaiUjianPkn: req.sanitize('nilaiUjianPkn').escape().trim(),
-        nilaiTugasMatematika: req.sanitize('nilaiTugasMatematika').escape().trim(),
-        nilaiUjianMatematika: req.sanitize('nilaiUjianMatematika').escape().trim(),
-        nilaiTugasIps: req.sanitize('nilaiTugasIps').escape().trim(),
-        nilaiUjianIps: req.sanitize('nilaiUjianIps').escape().trim(),
-        nilaiTugasAgama: req.sanitize('nilaiTugasAgama').escape().trim(),
-        nilaiUjianAgama: req.sanitize('nilaiUjianAgama').escape().trim(),
-        nilaiTugasIpa: req.sanitize('nilaiTugasIpa').escape().trim(),
-        nilaiUjianIpa: req.sanitize('nilaiUjianIpa').escape().trim(),
-        nilaiTugasBahasaIndonesia: req.sanitize('nilaiTugasBahasaIndonesia').escape().trim(),
-        nilaiUjianBahasaIndonesia: req.sanitize('nilaiUjianBahasaIndonesia').escape().trim(),
-        nilaiTugasBahasaInggris: req.sanitize('nilaiTugasBahasaInggris').escape().trim(),
-        nilaiUjianBahasaInggris: req.sanitize('nilaiUjianBahasaInggris').escape().trim(),
-        nilaiTugasPenjaskes: req.sanitize('nilaiTugasPenjaskes').escape().trim(),
-        nilaiUjianPenjaskes: req.sanitize('nilaiUjianPenjaskes').escape().trim(),
-        nilaiTugasSeniBudaya: req.sanitize('nilaiTugasSeniBudaya').escape().trim(),
-        nilaiUjianSeniBudaya: req.sanitize('nilaiUjianSeniBudaya').escape().trim(),
-        catatanSiswa: req.sanitize('catatanSiswa').escape().trim(),
-        kelas: kelasGuru
-    }
-    dbConnection.con.query("UPDATE dataNilai SET ? WHERE id = ?", [dataNilaiSiswa, idNilaiSiswa], (err, rows) => {
-        if (err) {
-            req.flash('error', err)
-            res.redirect('/guru/kelolaDataSiswa')
-        } else {
-            res.redirect('/guru/kelolaDataSiswa')
-        }
+app.route('/editNilaiSiswa/(:id)', redirectLogin)
+    .get(async (req, res) => {
+        const hasilCheckListMapel = await checkListMapel()
+        dbConnection.con.query('SELECT * FROM dataNilaiSiswa WHERE id = ?', [req.params.id], (err, rows, fields) => {
+            if (err) {
+                res.redirect('kelolaDataSiswa')
+            } else {
+                res.render('guru/editDataSiswa', {
+                    id: req.params.id,
+                    namaGuru: namaGuru,
+                    listMapel: hasilCheckListMapel,
+                    listNilaiSiswa: rows
+                })
+            }
+        })
     })
-})
+    .put((req, res) => {
+        let dataNilaiSiswa = {
+            id: req.params.id,
+            idGuru: idGuru,
+            nilaiTugas: req.sanitize('nilaiTugas').toInt(),
+            nilaiTugas2: req.sanitize('nilaiTugas2').escape().trim() ? req.sanitize('nilaiTugas2').toInt() : 0,
+            nilaiTugas3: req.sanitize('nilaiTugas3').escape().trim() ? req.sanitize('nilaiTugas3').toInt() : 0,
+            nilaiUjian: req.sanitize('nilaiUjian').toInt(),
+            nilaiUjian2: req.sanitize('nilaiUjian2').escape().trim() ? req.sanitize('nilaiUjian2').toInt() : 0,
+            nilaiUjian3: req.sanitize('nilaiUjian3').escape().trim() ? req.sanitize('nilaiUjian3').toInt() : 0,
+        }
+        dbConnection.con.query("UPDATE dataNilaiSiswa SET ? WHERE id = ?", [dataNilaiSiswa, req.params.id], (err, rows) => {
+            if (err) {
+                req.flash('error', err)
+                res.redirect('/guru/kelolaDataSiswa')
+            } else {
+                res.redirect('/guru/kelolaDataSiswa')
+            }
+        })
+    })
 
 app.post('/logout', redirectLogin, (req, res) => {
     req.session.destroy(err => {

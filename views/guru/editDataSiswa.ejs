@@ -181,194 +181,23 @@
         <!-- Page content -->
         <div class="container-fluid mt--7">
             <div class="row">
-                <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
-                    <div class="card card-profile shadow">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-3 order-lg-2">
-                                <div class="card-profile-image">
-                                    <img src="../../uploads/siswa/<%= fotoProfil %>" class="rounded-circle">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body pt-0 pt-md-4">
-                            <div class="text-center" style="margin-top: 130px;">
-                                <h5>
-                                    Informasi Siswa:
-                                </h5>
-                                <h3>
-                                    <%= id %>
-                                </h3>
-                                <h3 style="font-weight: bold;">
-                                    <%= namaLengkap %>
-                                </h3>
-                                <h3>
-                                    Kelas <%= kelas %>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-8 order-xl-1">
+                <div class="col-xl-12 order-xl-1">
                     <div class="card bg-secondary shadow">
-                        <form action="/guru/tambahNilaiSiswa" method="POST">
+                        <form action="/guru/editNilaiSiswa/<%= id %>" method="POST">
                             <div class="card-header bg-white border-0">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h3 class="mb-0">Form Nilai Data Siswa</h3>
+                                        <h3 class="mb-0">Form Edit Nilai Siswa</h3>
                                     </div>
                                     <div class="col-4 text-right">
-                                        <button type="submit" class="btn btn-primary notika-btn-primary">Tambah Nilai
+                                        <button type="submit" class="btn btn-primary notika-btn-primary">Edit Nilai
                                             Siswa</button>
+                                        <input type="hidden" name="_method" value="PUT" />
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <form>
-                                    <!-- Description -->
-                                    <h6 class="heading-small text-muted mb-4">Tambah Nilai Siswa</h6>
-                                    <div>
-                                        <!-- Mata Pelajaran -->
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-last-name">Mata
-                                                        Pelajaran</label>
-                                                    <select class="form-control" name="mapel" required>
-                                                        <option disabled selected>Silahkan Dipilih!</option>
-                                                        <% if(listMapel) { %>
-                                                        <% listMapel.map((data, i) => { %>
-                                                        <option value="<%= data.mapel %>"><%= data.mapel %> -
-                                                            <%= data.category %></option>
-                                                        <% }) %>
-                                                        <% } %>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <!-- Nilai Tugas -->
-                                            <div class="col-lg-12">
-                                                <div class="form-group" style="margin-bottom: unset;">
-                                                    <label class="form-control-label" for="input-city"
-                                                        style="font-size: 20px;">Nilai Tugas Siswa</label>
-                                                </div>
-                                            </div>
-                                            <!-- TambahNilai1 -->
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Tugas</label>
-                                                    <input class="form-control form-control-alternative"
-                                                        name="nilaiTugas" placeholder="Nilai Tugas" type="number">
-                                                </div>
-                                            </div>
-                                            <div id="button1" class="col-lg-12">
-                                                <input type="button" class="btn"
-                                                    style="padding: unset; background-color: unset; color: green;"
-                                                    onclick="viewNilai2()" value="Tambah Nilai Tugas">
-                                            </div>
-                                            <script>
-                                                function viewNilai2() {
-                                                    document.getElementById("tambahNilai2").style.display = "block";
-                                                    document.getElementById("button1").style.display = "none";
-                                                }
-                                            </script>
-                                            <!-- TambahNilai 2 -->
-                                            <div id="tambahNilai2" class="col-lg-12" style="display: none;">
-                                                <div>
-                                                    <div class="form-group">
-                                                        <label class="form-control-label" for="input-country">Nilai
-                                                            Tugas - 2</label>
-                                                        <input class="form-control form-control-alternative"
-                                                            name="nilaiTugas2" placeholder="Nilai Tugas" type="number">
-                                                    </div>
-                                                </div>
-                                                <!-- TambahNilai 3 -->
-                                                <div id="button2">
-                                                    <input type="button" class="btn"
-                                                        style="padding: unset; background-color: unset; margin-bottom: 10px; color: green;"
-                                                        onclick="viewNilai3()" value="Tambah Nilai Tugas">
-                                                </div>
-                                            </div>
-                                            <script>
-                                                function viewNilai3() {
-                                                    document.getElementById("tambahNilai3").style.display = "block";
-                                                    document.getElementById("button2").style.display = "none";
-                                                }
-                                            </script>
-                                            <!-- TambahNilai 3 -->
-                                            <div id="tambahNilai3" style="display: none;" class="col-lg-12"
-                                                style="margin-top: 10px;">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Tugas - 3</label>
-                                                    <input class="form-control form-control-alternative"
-                                                        name="nilaiTugas3" placeholder="Nilai Tugas" type="number">
-                                                </div>
-                                            </div>
-                                            <!-- Nilai Ujian -->
-                                            <div class="col-lg-12" style="margin-top: 20px;">
-                                                <div class="form-group" style="margin-bottom: unset;">
-                                                    <label class="form-control-label" for="input-city"
-                                                        style="font-size: 20px;">Nilai Ujian Siswa</label>
-                                                </div>
-                                            </div>
-                                            <!-- TambahNilaiUjian1 -->
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Ujian</label>
-                                                    <input class="form-control form-control-alternative"
-                                                        name="nilaiUjian" placeholder="Nilai Ujian" type="number">
-                                                </div>
-                                            </div>
-                                            <div id="button3" class="col-lg-12">
-                                                <input type="button" class="btn"
-                                                    style="padding: unset; background-color: unset; color: green;"
-                                                    onclick="viewUjian2()" value="Tambah Nilai Ujian">
-                                            </div>
-                                            <script>
-                                                function viewUjian2() {
-                                                    document.getElementById("tambahNilaiUjian2").style.display =
-                                                        "block";
-                                                    document.getElementById("button3").style.display = "none";
-                                                }
-                                            </script>
-                                            <!-- TambahNilaiUjian2 -->
-                                            <div id="tambahNilaiUjian2" class="col-lg-12" style="display: none;">
-                                                <div>
-                                                    <div class="form-group">
-                                                        <label class="form-control-label" for="input-country">Nilai
-                                                            Ujian - 2</label>
-                                                        <input class="form-control form-control-alternative"
-                                                            name="nilaiUjian2" placeholder="Nilai Ujian" type="number">
-                                                    </div>
-                                                </div>
-                                                <!-- TambahNilai 3 -->
-                                                <div id="button4">
-                                                    <input type="button" class="btn"
-                                                        style="padding: unset; background-color: unset; margin-bottom: 10px; color: green;"
-                                                        onclick="viewUjian3()" value="Tambah Nilai Ujian">
-                                                </div>
-                                            </div>
-                                            <script>
-                                                function viewUjian3() {
-                                                    document.getElementById("tambahNilaiUjian3").style.display =
-                                                        "block";
-                                                    document.getElementById("button4").style.display = "none";
-                                                }
-                                            </script>
-                                            <!-- TambahNilaiUjian3 -->
-                                            <div id="tambahNilaiUjian3" style="display: none;" class="col-lg-12"
-                                                style="margin-top: 10px;">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Ujian - 3</label>
-                                                    <input class="form-control form-control-alternative"
-                                                        name="nilaiUjian3" placeholder="Nilai Ujian" type="number">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr class="my-4" />
                                     <!-- List Nilai Siswa -->
                                     <h6 class="heading-small text-muted mb-4">List Nilai Siswa</h6>
                                     <% if(listNilaiSiswa) { %>
@@ -377,17 +206,9 @@
                                         <!-- Nilai Tugas -->
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <div style="display: flex;">
-                                                    <div class="form-group" style="margin-bottom: unset; width: 90%;">
-                                                        <label class="form-control-label" for="input-city"
-                                                            style="font-size: 20px; margin-bottom: 15px;"><%= data.mapel %></label>
-                                                    </div>
-                                                    <div class="form-group" style="margin-bottom: unset;">
-                                                        <label class="form-control-label" for="input-city"
-                                                            style="font-size: 14px; margin-bottom: 15px; font-weight: bold;"><a
-                                                                href="/guru/editNilaiSiswa/<%= data.id %>">Edit
-                                                                Nilai</a></label>
-                                                    </div>
+                                                <div class="form-group" style="margin-bottom: unset; width: 90%;">
+                                                    <label class="form-control-label" for="input-city"
+                                                        style="font-size: 20px; margin-bottom: 15px;"><%= data.mapel %></label>
                                                 </div>
                                                 <div style="display: flex;">
                                                     <div class="form-group" style="margin-bottom: unset; width: 50%;">
@@ -410,8 +231,8 @@
                                                     <label class="form-control-label" for="input-country">Nilai
                                                         Tugas</label>
                                                     <input class="form-control form-control-alternative"
-                                                        value="<%= data.nilaiTugas %>" placeholder=" Nilai Tugas"
-                                                        type="number" disabled>
+                                                        name="nilaiTugas" value="<%= data.nilaiTugas %>"
+                                                        placeholder=" Nilai Tugas" type="number">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -419,21 +240,99 @@
                                                     <label class="form-control-label" for="input-country">Nilai
                                                         Ujian</label>
                                                     <input class="form-control form-control-alternative"
-                                                        value="<%= data.nilaiUjian %>" placeholder=" Nilai Ujian"
-                                                        type="number" disabled>
+                                                        name="nilaiUjian" value="<%= data.nilaiUjian %>"
+                                                        placeholder=" Nilai Ujian" type="number">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
+                                            <% if(data.nilaiTugas2 === 0) { %>
+                                            <div id="button1" class="col-lg-6">
+                                                <input type="button" class="btn"
+                                                    style="padding: unset; background-color: unset; color: green; margin-bottom: 10px;"
+                                                    onclick="viewNilai2()" value="Tambah Nilai Tugas">
+                                            </div>
+                                            <script>
+                                                function viewNilai2() {
+                                                    document.getElementById("tambahNilai2").style.display = "block";
+                                                    document.getElementById("button1").style.display = "none";
+                                                }
+                                            </script>
+                                            <!-- TambahNilai 2 -->
+                                            <div id="tambahNilai2" class="col-lg-6" style="display: none;">
+                                                <div>
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-country">Nilai
+                                                            Tugas - 2</label>
+                                                        <input class="form-control form-control-alternative"
+                                                            name="nilaiTugas2" placeholder="Nilai Tugas" type="number">
+                                                    </div>
+                                                </div>
+                                                <!-- TambahNilai 3 -->
+                                                <% if(data.nilaiTugas3 === 0) { %>
+                                                <div id="button2">
+                                                    <input type="button" class="btn"
+                                                        style="padding: unset; background-color: unset; margin-bottom: 10px; color: green;"
+                                                        onclick="viewNilai3()" value="Tambah Nilai Tugas">
+                                                </div>
+                                                <script>
+                                                    function viewNilai3() {
+                                                        document.getElementById("tambahNilai3").style.display = "block";
+                                                        document.getElementById("button2").style.display = "none";
+                                                    }
+                                                </script>
+                                                <% } %>
+                                            </div>
+                                            <% } %>
                                             <% if(data.nilaiTugas2 !== 0) { %>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-country">Nilai
                                                         Tugas - 2</label>
                                                     <input class="form-control form-control-alternative"
-                                                        value="<%= data.nilaiTugas2 %>" placeholder=" Nilai Tugas"
-                                                        type="number" disabled>
+                                                        name="nilaiTugas2" value="<%= data.nilaiTugas2 %>"
+                                                        placeholder=" Nilai Tugas" type="number">
                                                 </div>
+                                            </div>
+                                            <% } %>
+                                            <% if(data.nilaiUjian2 === 0) { %>
+                                            <div id="button3" class="col-lg-6">
+                                                <input type="button" class="btn"
+                                                    style="padding: unset; background-color: unset; color: green; margin-bottom: 10px;"
+                                                    onclick="viewNilaiUjian2()" value="Tambah Nilai Ujian">
+                                            </div>
+                                            <script>
+                                                function viewNilaiUjian2() {
+                                                    document.getElementById("tambahNilaiUjian2").style.display =
+                                                        "block";
+                                                    document.getElementById("button3").style.display = "none";
+                                                }
+                                            </script>
+                                            <!-- TambahNilai 2 -->
+                                            <div id="tambahNilaiUjian2" class="col-lg-6" style="display: none;">
+                                                <div>
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-country">Nilai
+                                                            Ujian - 2</label>
+                                                        <input class="form-control form-control-alternative"
+                                                            name="nilaiUjian2" placeholder="Nilai Ujian" type="number">
+                                                    </div>
+                                                </div>
+                                                <!-- TambahNilai 3 -->
+                                                <% if(data.nilaiUjian3 === 0) { %>
+                                                <div id="button4">
+                                                    <input type="button" class="btn"
+                                                        style="padding: unset; background-color: unset; margin-bottom: 10px; color: green;"
+                                                        onclick="viewNilaiUjian3()" value="Tambah Nilai Ujian">
+                                                </div>
+                                                <script>
+                                                    function viewNilaiUjian3() {
+                                                        document.getElementById("tambahNilaiUjian3").style.display =
+                                                            "block";
+                                                        document.getElementById("button4").style.display = "none";
+                                                    }
+                                                </script>
+                                                <% } %>
                                             </div>
                                             <% } %>
                                             <% if(data.nilaiUjian2 !== 0) { %>
@@ -442,21 +341,42 @@
                                                     <label class="form-control-label" for="input-country">Nilai
                                                         Ujian - 2</label>
                                                     <input class="form-control form-control-alternative"
-                                                        value="<%= data.nilaiUjian2 %>" placeholder=" Nilai Ujian"
-                                                        type="number" disabled>
+                                                        name="nilaiUjian2" value="<%= data.nilaiUjian2 %>"
+                                                        placeholder=" Nilai Ujian" type="number">
                                                 </div>
                                             </div>
                                             <% } %>
                                         </div>
                                         <div class="row">
+                                            <!-- TambahNilai 3 -->
+                                            <% if(data.nilaiTugas3 === 0) { %>
+                                            <div id="tambahNilai3" style="display: none;" class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-country">Nilai
+                                                        Tugas - 3</label>
+                                                    <input class="form-control form-control-alternative"
+                                                        name="nilaiTugas3" placeholder="Nilai Tugas" type="number">
+                                                </div>
+                                            </div>
+                                            <% } %>
                                             <% if(data.nilaiTugas3 !== 0) { %>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-country">Nilai
                                                         Tugas - 3</label>
                                                     <input class="form-control form-control-alternative"
-                                                        value="<%= data.nilaiTugas3 %>" placeholder=" Nilai Tugas"
-                                                        type="number" disabled>
+                                                        name="nilaiTugas3" value="<%= data.nilaiTugas3 %>"
+                                                        placeholder=" Nilai Tugas" type="number">
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                            <% if(data.nilaiUjian3 === 0) { %>
+                                            <div id="tambahNilaiUjian3" style="display: none;" class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-country">Nilai
+                                                        Ujian - 3</label>
+                                                    <input class="form-control form-control-alternative"
+                                                        name="nilaiUjian3" placeholder="Nilai Ujian" type="number">
                                                 </div>
                                             </div>
                                             <% } %>
@@ -466,8 +386,8 @@
                                                     <label class="form-control-label" for="input-country">Nilai
                                                         Ujian - 3</label>
                                                     <input class="form-control form-control-alternative"
-                                                        value="<%= data.nilaiUjian3 %>" placeholder=" Nilai Ujian"
-                                                        type="number" disabled>
+                                                        name="nilaiUjian3" value="<%= data.nilaiUjian3 %>"
+                                                        placeholder=" Nilai Ujian" type="number">
                                                 </div>
                                             </div>
                                             <% } %>
