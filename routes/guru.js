@@ -382,7 +382,7 @@ app.post('/tambahNilaiSiswa', redirectLogin, (req, res) => {
         idGuru: idGuru,
         idSiswa: req.sanitize('id').escape().trim(),
         mapel: req.sanitize('mapel').escape().trim(),
-        namaSiswa: req.sanitize('namaLengkap').escape().trim(),
+        namaSiswa: req.sanitize('namaSiswa').escape().trim(),
         nilaiTugas: req.sanitize('nilaiTugas').toInt(),
         nilaiTugas2: req.sanitize('nilaiTugas2').escape().trim() ? req.sanitize('nilaiTugas2').toInt() : 0,
         nilaiTugas3: req.sanitize('nilaiTugas3').escape().trim() ? req.sanitize('nilaiTugas3').toInt() : 0,
@@ -421,6 +421,7 @@ app.route('/editNilaiSiswa/(:id)', redirectLogin)
         let dataNilaiSiswa = {
             id: req.params.id,
             idGuru: idGuru,
+            idSiswa: req.sanitize('id').escape().trim(),
             nilaiTugas: req.sanitize('nilaiTugas').toInt(),
             nilaiTugas2: req.sanitize('nilaiTugas2').escape().trim() ? req.sanitize('nilaiTugas2').toInt() : 0,
             nilaiTugas3: req.sanitize('nilaiTugas3').escape().trim() ? req.sanitize('nilaiTugas3').toInt() : 0,
@@ -431,6 +432,15 @@ app.route('/editNilaiSiswa/(:id)', redirectLogin)
         dbConnection.con.query("UPDATE dataNilaiSiswa SET ? WHERE id = ?", [dataNilaiSiswa, req.params.id], (err, rows) => {
             if (err) {
                 req.flash('error', err)
+                res.redirect('/guru/kelolaDataSiswa')
+            } else {
+                res.redirect('/guru/kelolaDataSiswa')
+            }
+        })
+    })
+    .delete((req, res) => {
+        dbConnection.con.query('DELETE FROM dataNilaiSiswa WHERE id = ?', req.params.id, (err, rows, fields) => {
+            if (err) {
                 res.redirect('/guru/kelolaDataSiswa')
             } else {
                 res.redirect('/guru/kelolaDataSiswa')
