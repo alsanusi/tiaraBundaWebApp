@@ -357,6 +357,7 @@ app.get('/kelolaDataSiswa', redirectLogin, (req, res) => {
 
 app.get('/kelolaDataSiswa/(:id)', redirectLogin, async (req, res) => {
     const hasilCheckNilaiSiswa = await checkNilaiSiswa(req.params.id)
+    const hasilCheckListMapel = await checkListMapel()
     let nilaiSiswa = hasilCheckNilaiSiswa[0]
     dbConnection.con.query('SELECT * FROM dataSiswa WHERE id = ?', [req.params.id], (err, rows, fields) => {
         idNilaiSiswa = nilaiSiswa.id
@@ -369,45 +370,30 @@ app.get('/kelolaDataSiswa/(:id)', redirectLogin, async (req, res) => {
                 namaGuru: namaGuru,
                 fotoProfil: data.fotoProfil,
                 namaLengkap: data.namaLengkap,
-                tempatLahir: data.tempatLahir,
-                tanggalLahir: data.tanggalLahir,
                 kelas: kelasGuru,
-                alamat: data.alamat,
-                namaAyah: data.namaAyah,
-                namaIbu: data.namaIbu,
-                nomorTelefon: data.nomorTelefon,
                 status: data.status,
-                nilaiTugasPkn: nilaiSiswa.nilaiTugasPkn ? nilaiSiswa.nilaiTugasPkn : 0,
-                nilaiUjianPkn: nilaiSiswa.nilaiUjianPkn ? nilaiSiswa.nilaiUjianPkn : 0,
-                nilaiAkhirPkn: (nilaiSiswa.nilaiTugasPkn + nilaiSiswa.nilaiUjianPkn) / 2,
-                nilaiTugasMatematika: nilaiSiswa.nilaiTugasMatematika ? nilaiSiswa.nilaiTugasMatematika : 0,
-                nilaiUjianMatematika: nilaiSiswa.nilaiUjianMatematika ? nilaiSiswa.nilaiUjianMatematika : 0,
-                nilaiAkhirMatematika: (nilaiSiswa.nilaiTugasMatematika + nilaiSiswa.nilaiUjianMatematika) / 2,
-                nilaiTugasIps: nilaiSiswa.nilaiTugasIps ? nilaiSiswa.nilaiTugasIps : 0,
-                nilaiUjianIps: nilaiSiswa.nilaiUjianIps ? nilaiSiswa.nilaiUjianIps : 0,
-                nilaiAkhirIps: (nilaiSiswa.nilaiTugasIps + nilaiSiswa.nilaiUjianIps) / 2,
-                nilaiTugasAgama: nilaiSiswa.nilaiTugasAgama ? nilaiSiswa.nilaiTugasAgama : 0,
-                nilaiUjianAgama: nilaiSiswa.nilaiUjianAgama ? nilaiSiswa.nilaiUjianAgama : 0,
-                nilaiAkhirAgama: (nilaiSiswa.nilaiTugasAgama + nilaiSiswa.nilaiUjianAgama) / 2,
-                nilaiTugasIpa: nilaiSiswa.nilaiTugasIpa ? nilaiSiswa.nilaiTugasIpa : 0,
-                nilaiUjianIpa: nilaiSiswa.nilaiUjianIpa ? nilaiSiswa.nilaiUjianIpa : 0,
-                nilaiAkhirIpa: (nilaiSiswa.nilaiTugasIpa + nilaiSiswa.nilaiUjianIpa) / 2,
-                nilaiTugasBahasaIndonesia: nilaiSiswa.nilaiTugasBahasaIndonesia ? nilaiSiswa.nilaiTugasBahasaIndonesia : 0,
-                nilaiUjianBahasaIndonesia: nilaiSiswa.nilaiUjianBahasaIndonesia ? nilaiSiswa.nilaiUjianBahasaIndonesia : 0,
-                nilaiAkhirBahasaIndonesia: (nilaiSiswa.nilaiTugasBahasaIndonesia + nilaiSiswa.nilaiUjianBahasaIndonesia) / 2,
-                nilaiTugasBahasaInggris: nilaiSiswa.nilaiTugasBahasaInggris ? nilaiSiswa.nilaiTugasBahasaInggris : 0,
-                nilaiUjianBahasaInggris: nilaiSiswa.nilaiUjianBahasaInggris ? nilaiSiswa.nilaiUjianBahasaInggris : 0,
-                nilaiAkhirBahasaInggris: (nilaiSiswa.nilaiTugasBahasaInggris + nilaiSiswa.nilaiUjianBahasaInggris) / 2,
-                nilaiTugasPenjaskes: nilaiSiswa.nilaiTugasPenjaskes ? nilaiSiswa.nilaiTugasPenjaskes : 0,
-                nilaiUjianPenjaskes: nilaiSiswa.nilaiUjianPenjaskes ? nilaiSiswa.nilaiUjianPenjaskes : 0,
-                nilaiAkhirPenjaskes: (nilaiSiswa.nilaiTugasPenjaskes + nilaiSiswa.nilaiUjianPenjaskes) / 2,
-                nilaiTugasSeniBudaya: nilaiSiswa.nilaiTugasSeniBudaya ? nilaiSiswa.nilaiTugasSeniBudaya : 0,
-                nilaiUjianSeniBudaya: nilaiSiswa.nilaiUjianSeniBudaya ? nilaiSiswa.nilaiUjianSeniBudaya : 0,
-                nilaiAkhirSeniBudaya: (nilaiSiswa.nilaiTugasSeniBudaya + nilaiSiswa.nilaiUjianSeniBudaya) / 2,
                 catatanSiswa: nilaiSiswa.catatanSiswa ? nilaiSiswa.catatanSiswa : "-",
+                listMapel: hasilCheckListMapel
             })
         }
     })
+})
+
+app.post('/tambahNilaiSiswa', redirectLogin, (req, res) => {
+    let dataNilaiSiswa = {
+        idGuru: idGuru,
+        idSiswa: req.params.id,
+        mapel: req.sanitize('mapel').escape().trim(),
+        namaSiswa: req.sanitize('namaLengkap').escape().trim(),
+        nilaiTugas: req.sanitize('nilaiTugas').toInt(),
+        nilaiTugas2: req.sanitize('nilaiTugas2').escape().trim() ? req.sanitize('nilaiTugas2').toInt() : 0,
+        nilaiTugas3: req.sanitize('nilaiTugas3').escape().trim() ? req.sanitize('nilaiTugas3').toInt() : 0,
+        nilaiUjian: req.sanitize('nilaiUjian').toInt(),
+        nilaiUjian2: req.sanitize('nilaiUjian2').escape().trim() ? req.sanitize('nilaiUjian2').toInt() : 0,
+        nilaiUjian3: req.sanitize('nilaiUjian3').escape().trim() ? req.sanitize('nilaiUjian3').toInt() : 0,
+        kelas: kelasGuru
+    }
+    console.log(dataNilaiSiswa)
 })
 
 app.put('/kelolaDataSiswa/(:id)', redirectLogin, (req, res) => {

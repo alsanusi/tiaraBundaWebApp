@@ -164,7 +164,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
                         <h1 class="display-2 text-white">Hi <%= namaGuru %></h1>
-                        <p class="text-white mt-0 mb-5">Masukkan data siswa.</p>
+                        <p class="text-white mt-0 mb-5">Masukkan data nilai siswa.</p>
                         <!-- Error and Success Message -->
                         <% if(messages.error){ %>
                         <h4 style="color:#d82436">Data Siswa Gagal Ditambahkan!</h4>
@@ -201,16 +201,15 @@
                 </div>
                 <div class="col-xl-8 order-xl-1">
                     <div class="card bg-secondary shadow">
-                        <form action="/guru/kelolaDataSiswa/<%= id %>" method="POST">
+                        <form action="/guru/tambahNilaiSiswa" method="POST">
                             <div class="card-header bg-white border-0">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h3 class="mb-0">Form Update Data Siswa</h3>
+                                        <h3 class="mb-0">Form Nilai Data Siswa</h3>
                                     </div>
                                     <div class="col-4 text-right">
-                                        <button type="submit" class="btn btn-primary notika-btn-primary">Update Data
+                                        <button type="submit" class="btn btn-primary notika-btn-primary">Tambah Nilai
                                             Siswa</button>
-                                        <input type="hidden" name="_method" value="PUT" />
                                     </div>
                                 </div>
                             </div>
@@ -238,27 +237,6 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-first-name">Tempat
-                                                        Lahir</label>
-                                                    <input type="text" id="input-first-name"
-                                                        class="form-control form-control-alternative" name="tempatLahir"
-                                                        value="<%= tempatLahir %>" placeholder="Tempat Lahir" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-last-name">Tanggal
-                                                        Lahir</label>
-                                                    <input type="date" id="input-last-name" name="tanggalLahir"
-                                                        class="form-control form-control-alternative"
-                                                        value="<%= tanggalLahir %>" placeholder="Tanggal Lahir"
-                                                        readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label"
@@ -270,385 +248,153 @@
                                         </div>
                                     </div>
                                     <hr class="my-4" />
-                                    <!-- Address -->
-                                    <h6 class="heading-small text-muted mb-4">Informasi Kontak Siswa.</h6>
+                                    <!-- Description -->
+                                    <h6 class="heading-small text-muted mb-4">Tambah Nilai Siswa</h6>
                                     <div class="pl-lg-4">
+                                        <!-- Mata Pelajaran -->
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <label class="form-control-label" for="input-address">Alamat</label>
-                                                    <input class="form-control form-control-alternative" name="alamat"
-                                                        placeholder="Alamat" type="text" value="<%= alamat %>" readonly>
+                                                    <label class="form-control-label" for="input-last-name">Mata
+                                                        Pelajaran</label>
+                                                    <select class="form-control" name="mapel" required>
+                                                        <option disabled selected>Silahkan Dipilih!</option>
+                                                        <% if(listMapel) { %>
+                                                        <% listMapel.map((data, i) => { %>
+                                                        <option value="<%= data.mapel %>"><%= data.mapel %> -
+                                                            <%= data.category %></option>
+                                                        <% }) %>
+                                                        <% } %>
+                                                    </select>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city">Nama Ayah</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="namaAyah" placeholder="Nama Ayah" value="<%= namaAyah %>"
-                                                        readonly>
+                                            <!-- Nilai Tugas -->
+                                            <div class="col-lg-12">
+                                                <div class="form-group" style="margin-bottom: unset;">
+                                                    <label class="form-control-label" for="input-city"
+                                                        style="font-size: 20px;">Nilai Tugas Siswa</label>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <!-- TambahNilai1 -->
+                                            <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nama
-                                                        Ibu</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="namaIbu" placeholder="Nama Ibu" value="<%= namaIbu %>"
-                                                        readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-address">Nomor
-                                                        Telefon</label>
+                                                    <label class="form-control-label" for="input-country">Nilai
+                                                        Tugas</label>
                                                     <input class="form-control form-control-alternative"
-                                                        name="nomorTelefon" placeholder="Nomor Telefon" type="number"
-                                                        value="<%= nomorTelefon %>" readonly>
+                                                        name="nilaiTugas" placeholder="Nilai Tugas" type="number">
+                                                </div>
+                                            </div>
+                                            <div id="button1" class="col-lg-12">
+                                                <input type="button" class="btn"
+                                                    style="padding: unset; background-color: unset; color: green;"
+                                                    onclick="viewNilai2()" value="Tambah Nilai Tugas">
+                                            </div>
+                                            <script>
+                                                function viewNilai2() {
+                                                    document.getElementById("tambahNilai2").style.display = "block";
+                                                    document.getElementById("button1").style.display = "none";
+                                                }
+                                            </script>
+                                            <!-- TambahNilai 2 -->
+                                            <div id="tambahNilai2" class="col-lg-12" style="display: none;">
+                                                <div>
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-country">Nilai
+                                                            Tugas - 2</label>
+                                                        <input class="form-control form-control-alternative"
+                                                            name="nilaiTugas2" placeholder="Nilai Tugas" type="number">
+                                                    </div>
+                                                </div>
+                                                <!-- TambahNilai 3 -->
+                                                <div id="button2">
+                                                    <input type="button" class="btn"
+                                                        style="padding: unset; background-color: unset; margin-bottom: 10px; color: green;"
+                                                        onclick="viewNilai3()" value="Tambah Nilai Tugas">
+                                                </div>
+                                            </div>
+                                            <script>
+                                                function viewNilai3() {
+                                                    document.getElementById("tambahNilai3").style.display = "block";
+                                                    document.getElementById("button2").style.display = "none";
+                                                }
+                                            </script>
+                                            <!-- TambahNilai 3 -->
+                                            <div id="tambahNilai3" style="display: none;" class="col-lg-12"
+                                                style="margin-top: 10px;">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-country">Nilai
+                                                        Tugas - 3</label>
+                                                    <input class="form-control form-control-alternative"
+                                                        name="nilaiTugas3" placeholder="Nilai Tugas" type="number">
+                                                </div>
+                                            </div>
+                                            <!-- Nilai Ujian -->
+                                            <div class="col-lg-12" style="margin-top: 20px;">
+                                                <div class="form-group" style="margin-bottom: unset;">
+                                                    <label class="form-control-label" for="input-city"
+                                                        style="font-size: 20px;">Nilai Ujian Siswa</label>
+                                                </div>
+                                            </div>
+                                            <!-- TambahNilaiUjian1 -->
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-country">Nilai
+                                                        Ujian</label>
+                                                    <input class="form-control form-control-alternative"
+                                                        name="nilaiUjian" placeholder="Nilai Ujian" type="number">
+                                                </div>
+                                            </div>
+                                            <div id="button3" class="col-lg-12">
+                                                <input type="button" class="btn"
+                                                    style="padding: unset; background-color: unset; color: green;"
+                                                    onclick="viewUjian2()" value="Tambah Nilai Ujian">
+                                            </div>
+                                            <script>
+                                                function viewUjian2() {
+                                                    document.getElementById("tambahNilaiUjian2").style.display =
+                                                        "block";
+                                                    document.getElementById("button3").style.display = "none";
+                                                }
+                                            </script>
+                                            <!-- TambahNilaiUjian2 -->
+                                            <div id="tambahNilaiUjian2" class="col-lg-12" style="display: none;">
+                                                <div>
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-country">Nilai
+                                                            Ujian - 2</label>
+                                                        <input class="form-control form-control-alternative"
+                                                            name="nilaiUjian2" placeholder="Nilai Ujian" type="number">
+                                                    </div>
+                                                </div>
+                                                <!-- TambahNilai 3 -->
+                                                <div id="button4">
+                                                    <input type="button" class="btn"
+                                                        style="padding: unset; background-color: unset; margin-bottom: 10px; color: green;"
+                                                        onclick="viewUjian3()" value="Tambah Nilai Ujian">
+                                                </div>
+                                            </div>
+                                            <script>
+                                                function viewUjian3() {
+                                                    document.getElementById("tambahNilaiUjian3").style.display =
+                                                        "block";
+                                                    document.getElementById("button4").style.display = "none";
+                                                }
+                                            </script>
+                                            <!-- TambahNilaiUjian3 -->
+                                            <div id="tambahNilaiUjian3" style="display: none;" class="col-lg-12"
+                                                style="margin-top: 10px;">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-country">Nilai
+                                                        Ujian - 3</label>
+                                                    <input class="form-control form-control-alternative"
+                                                        name="nilaiUjian3" placeholder="Nilai Ujian" type="number">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <hr class="my-4" />
+                                    <!-- <hr class="my-4" /> -->
                                     <!-- Description -->
-                                    <h6 class="heading-small text-muted mb-4">Informasi Nilai Siswa</h6>
-                                    <div class="pl-lg-4">
-                                        <!-- Nilai PKN -->
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city"
-                                                        style="font-size: 20px;">PKN</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Tugas</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiTugasPkn" value="<%= nilaiTugasPkn %>"
-                                                        placeholder="Nilai Tugas PKN" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Ujian</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiUjianPkn" value="<%= nilaiUjianPkn %>"
-                                                        placeholder="Nilai Ujian PKN" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Akhir</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        placeholder="Nilai Akhir PKN" value="<%= nilaiAkhirPkn %>"
-                                                        type="number">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Nilai Matematika -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city"
-                                                        style="font-size: 20px;">Matematika</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Tugas</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiTugasMatematika" value="<%= nilaiTugasMatematika %>"
-                                                        placeholder="Nilai Tugas Matematika" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Ujian</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiUjianMatematika" value="<%= nilaiUjianMatematika %>"
-                                                        placeholder="Nilai Ujian Matematika" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Akhir</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        placeholder="Nilai Akhir Matematika"
-                                                        value="<%= nilaiAkhirMatematika %>" type="number">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Nilai IPS -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city"
-                                                        style="font-size: 20px;">IPS</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Tugas</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiTugasIps" value="<%= nilaiTugasIps %>"
-                                                        placeholder="Nilai Tugas IPS" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Ujian</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiUjianIps" value="<%= nilaiUjianIps %>"
-                                                        placeholder="Nilai Ujian IPS" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Akhir</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        placeholder="Nilai Akhir IPS" value="<%= nilaiAkhirIps %>"
-                                                        type="number">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Nilai Agama -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city"
-                                                        style="font-size: 20px;">Agama</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Tugas</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiTugasAgama" value="<%= nilaiTugasAgama %>"
-                                                        placeholder="Nilai Tugas Agama" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Ujian</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiUjianAgama" value="<%= nilaiUjianAgama %>"
-                                                        placeholder="Nilai Ujian Agama" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Akhir</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        placeholder="Nilai Akhir Agama" value="<%= nilaiAkhirAgama %>"
-                                                        type="number">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Nilai IPA -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city"
-                                                        style="font-size: 20px;">IPA</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Tugas</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiTugasIpa" value="<%= nilaiTugasIpa %>"
-                                                        placeholder="Nilai Tugas IPA" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Ujian</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiUjianIpa" value="<%= nilaiUjianIpa %>"
-                                                        placeholder="Nilai Ujian IPA" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Akhir</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        placeholder="Nilai Akhir IPA" value="<%= nilaiAkhirIpa %>"
-                                                        type="number">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Nilai Bahasa Indonesia -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city"
-                                                        style="font-size: 20px;">Bahasa Indonesia</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Tugas</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiTugasBahasaIndonesia"
-                                                        value="<%= nilaiTugasBahasaIndonesia %>"
-                                                        placeholder="Nilai Tugas Bahasa Indonesia" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Ujian</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiUjianBahasaIndonesia"
-                                                        value="<%= nilaiUjianBahasaIndonesia %>"
-                                                        placeholder="Nilai Ujian Bahasa Indonesia" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Akhir</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        placeholder="Nilai Akhir Bahasa Indonesia"
-                                                        value="<%= nilaiAkhirBahasaIndonesia %>" type="number">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Nilai Bahasa Inggris -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city"
-                                                        style="font-size: 20px;">Bahasa Inggris</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Tugas</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiTugasBahasaInggris"
-                                                        value="<%= nilaiTugasBahasaInggris %>"
-                                                        placeholder="Nilai Tugas Bahasa Inggris" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Ujian</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiUjianBahasaInggris"
-                                                        value="<%= nilaiUjianBahasaInggris %>"
-                                                        placeholder="Nilai Ujian Bahasa Inggris" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Akhir</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        placeholder="Nilai Akhir Bahasa Inggris"
-                                                        value="<%= nilaiAkhirBahasaInggris %>" type="number">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Nilai Penjaskes -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city"
-                                                        style="font-size: 20px;">Penjaskes</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Tugas</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiTugasPenjaskes" value="<%= nilaiTugasPenjaskes %>"
-                                                        placeholder="Nilai Tugas Penjaskes" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Ujian</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiUjianPenjaskes" value="<%= nilaiUjianPenjaskes %>"
-                                                        placeholder="Nilai Ujian Penjaskes" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Akhir</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        placeholder="Nilai Akhir Penjaskes"
-                                                        value="<%= nilaiAkhirPenjaskes %>" type="number">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Nilai Seni Budaya -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-city"
-                                                        style="font-size: 20px;">Seni Budaya</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Tugas</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiTugasSeniBudaya" value="<%= nilaiTugasSeniBudaya %>"
-                                                        placeholder="Nilai Tugas Seni Budaya" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Ujian</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        name="nilaiUjianSeniBudaya" value="<%= nilaiUjianSeniBudaya %>"
-                                                        placeholder="Nilai Ujian Seni Budaya" type="number">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Nilai
-                                                        Akhir</label>
-                                                    <input type="text" class="form-control form-control-alternative"
-                                                        placeholder="Nilai Akhir Seni Budaya"
-                                                        value="<%= nilaiAkhirSeniBudaya %>" type="number">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr class="my-4" />
-                                    <!-- Description -->
-                                    <h6 class="heading-small text-muted mb-4">Informasi Catatan Siswa</h6>
+                                    <!-- <h6 class="heading-small text-muted mb-4">Informasi Catatan Siswa</h6>
                                     <div class="pl-lg-4">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-last-name">Catatan
@@ -657,7 +403,7 @@
                                                 placeholder="Catatan Siswa"
                                                 name="catatanSiswa"><%= catatanSiswa %></textarea>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </form>
                             </div>
                         </form>
