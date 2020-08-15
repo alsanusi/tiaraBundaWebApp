@@ -232,7 +232,8 @@ app.put('/profilSiswa', redirectLogin, (req, res) => {
 app.get('/nilaiSiswa', redirectLogin, async (req, res) => {
     const hasilCheckNilaiSiswa = await checkNilaiSiswa(idSiswa)
     res.render('siswa/nilaiSiswa', {
-        namaSiswa: namaSiswa
+        namaSiswa: namaSiswa,
+        listNilaiSiswa: hasilCheckNilaiSiswa
     })
 })
 
