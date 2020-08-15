@@ -101,6 +101,15 @@ const checkKelasSiswa = (idSiswa) => {
     })
 }
 
+const checkJadwalSiswa = (kelasSiswa) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query("SELECT * FROM dataJadwalMapel WHERE kelas = ?", [kelasSiswa], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+
 app.get('/', (req, res) => {
     res.render('siswa/index')
 })
@@ -150,9 +159,12 @@ app.get('/dashboard', redirectLogin, async (req, res) => {
     })
 })
 
-app.get('/jadwalPelajaran', redirectLogin, (req, res) => {
+app.get('/jadwalPelajaran', redirectLogin, async (req, res) => {
+    const hasilCheckJadwalSiswa = await checkJadwalSiswa(kelasSiswa)
     res.render('siswa/jadwalPelajaran', {
-        namaSiswa: namaSiswa ? namaSiswa : "Siswa"
+        namaSiswa: namaSiswa ? namaSiswa : "Siswa",
+        jadwalKelas: hasilCheckJadwalSiswa,
+        kelas: kelasSiswa
     })
 })
 

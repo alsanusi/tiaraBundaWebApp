@@ -170,237 +170,34 @@
                 <div class="col">
                     <div class="card shadow">
                         <div class="card-header border-0">
-                            <h3 class="mb-0">Jadwal Pelajaran</h3>
+                            <h3 class="mb-0">Jadwal Pelajaran - Kelas <%= kelas %></h3>
                         </div>
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Waktu</th>
-                                        <th scope="col">Senin</th>
-                                        <th scope="col">Selasa</th>
-                                        <th scope="col">Rabu</th>
-                                        <th scope="col">Kamis</th>
-                                        <th scope="col">Jumat</th>
-                                        <th scope="col">Sabtu</th>
+                                        <th scope="col">Hari</th>
+                                        <th scope="col">Mata Pelajaran</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!-- Data -->
+                                    <% if(jadwalKelas) { %>
+                                    <% jadwalKelas.map((data, i) => { %>
                                     <tr>
                                         <td>
-                                            07.00 - 07.30
+                                            <%= data.jam %>
                                         </td>
                                         <td>
-                                            Upacara
+                                            <b><%= data.hari %></b>
                                         </td>
                                         <td>
-                                            Agama
-                                        </td>
-                                        <td>
-                                            Penjaskes
-                                        </td>
-                                        <td>
-                                            Bahasa Indonesia
-                                        </td>
-                                        <td>
-                                            Matematika
-                                        </td>
-                                        <td>
-                                            Senam
+                                            <%= data.mapel %>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            07.30 - 08.30
-                                        </td>
-                                        <td>
-                                            PKN
-                                        </td>
-                                        <td>
-                                            Agama
-                                        </td>
-                                        <td>
-                                            Penjaskes
-                                        </td>
-                                        <td>
-                                            Bahasa Indonesia
-                                        </td>
-                                        <td>
-                                            Matematika
-                                        </td>
-                                        <td>
-                                            Senam
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            08.30 - 09.30
-                                        </td>
-                                        <td>
-                                            PKN
-                                        </td>
-                                        <td>
-                                            IPA
-                                        </td>
-                                        <td>
-                                            Penjaskes
-                                        </td>
-                                        <td>
-                                            Bahasa Indonesia
-                                        </td>
-                                        <td>
-                                            IPS
-                                        </td>
-                                        <td>
-                                            Eksul
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            09.30 - 10.00
-                                        </td>
-                                        <td>
-                                            Matematika
-                                        </td>
-                                        <td>
-                                            IPA
-                                        </td>
-                                        <td>
-                                            IPA
-                                        </td>
-                                        <td>
-                                            Agama
-                                        </td>
-                                        <td>
-                                            IPS
-                                        </td>
-                                        <td>
-                                            Eksul
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            10.00 - 10.30
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Pulang</b>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            10.30 - 11.30
-                                        </td>
-                                        <td>
-                                            Matematika
-                                        </td>
-                                        <td>
-                                            Bahasa Indonesia
-                                        </td>
-                                        <td>
-                                            IPS
-                                        </td>
-                                        <td>
-                                            Agama
-                                        </td>
-                                        <td>
-                                            IPA
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            11.30 - 12.00
-                                        </td>
-                                        <td>
-                                            Matematika
-                                        </td>
-                                        <td>
-                                            Bahasa Indonesia
-                                        </td>
-                                        <td>
-                                            Seni Budaya
-                                        </td>
-                                        <td>
-                                            PKN
-                                        </td>
-                                        <td>
-                                            IPA
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            12.00 - 12.30
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                        <td>
-                                            <b>Istirahat</b>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            12.30 - 13.00
-                                        </td>
-                                        <td>
-                                            IPS
-                                        </td>
-                                        <td>
-                                            Bahasa Inggris
-                                        </td>
-                                        <td>
-                                            Seni Budaya
-                                        </td>
-                                        <td>
-                                            Bahasa Inggris
-                                        </td>
-                                        <td>
-                                            Seni Budaya
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            13.00 - 13.30
-                                        </td>
-                                        <td>
-                                            IPS
-                                        </td>
-                                        <td>
-                                            Bahasa Inggris
-                                        </td>
-                                        <td>
-                                            Seni Budaya
-                                        </td>
-                                        <td>
-                                            PKN
-                                        </td>
-                                        <td>
-                                            Seni Budaya
-                                        </td>
-                                    </tr>
+                                    <% }) %>
+                                    <% } %>
                                 </tbody>
                             </table>
                         </div>
