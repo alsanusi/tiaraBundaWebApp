@@ -72,6 +72,14 @@ const checkListMapel = () => {
     })
 }
 
+const checkCatatanSiswa = (idSiswa) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query("SELECT * FROM dataCatatanSiswa WHERE idSiswa = ?", [idSiswa], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
 app.get('/', (req, res) => {
     res.render('guru/index')
 })
@@ -358,6 +366,7 @@ app.get('/kelolaDataSiswa', redirectLogin, (req, res) => {
 app.get('/kelolaDataSiswa/(:id)', redirectLogin, async (req, res) => {
     const hasilCheckNilaiSiswa = await checkNilaiSiswa(req.params.id)
     const hasilCheckListMapel = await checkListMapel()
+    const hasilCheckCatatanSiswa = await checkCatatanSiswa(req.params.id)
     dbConnection.con.query('SELECT * FROM dataSiswa WHERE id = ?', [req.params.id], (err, rows, fields) => {
         let data = rows[0];
         if (err) {
@@ -371,7 +380,9 @@ app.get('/kelolaDataSiswa/(:id)', redirectLogin, async (req, res) => {
                 kelas: kelasGuru,
                 status: data.status,
                 listMapel: hasilCheckListMapel,
-                listNilaiSiswa: hasilCheckNilaiSiswa
+                listNilaiSiswa: hasilCheckNilaiSiswa,
+                catatanSiswa: hasilCheckCatatanSiswa[0].catatan === null ? "-" : hasilCheckCatatanSiswa[0].catatan,
+                idCatatanSiswa: hasilCheckCatatanSiswa[0].id
             })
         }
     })
@@ -397,6 +408,22 @@ app.post('/tambahNilaiSiswa', redirectLogin, (req, res) => {
             res.redirect("/guru/kelolaDataSiswa")
         } else {
             res.redirect("/guru/kelolaDataSiswa")
+        }
+    })
+})
+
+app.put('/tambahCatatanSiswa/(:id)', redirectLogin, (req, res) => {
+    let catatanSiswa = {
+        id: req.sanitize('idCatatanSiswa').escape().trim(),
+        idGuru: idGuru,
+        catatan: req.sanitize('catatanSiswa').escape().trim()
+    }
+    dbConnection.con.query("UPDATE dataCatatanSiswa SET ? WHERE id = ?", [catatanSiswa, catatanSiswa.id], (err, rows) => {
+        if (err) {
+            req.flash('error', err)
+            res.redirect('/guru/kelolaDataSiswa')
+        } else {
+            res.redirect('/guru/kelolaDataSiswa')
         }
     })
 })
