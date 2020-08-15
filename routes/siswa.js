@@ -63,7 +63,15 @@ const checkAlfaSiswa = (idSiswa) => {
 
 const checkNilaiSiswa = (idSiswa) => {
     return new Promise((resolve, reject) => {
-        dbConnection.con.query("SELECT * FROM dataNilai WHERE idSiswa = ?", [idSiswa], (err, rows) => {
+        dbConnection.con.query("SELECT * FROM dataNilaiSiswa WHERE idSiswa = ?", [idSiswa], (err, rows) => {
+            err ? reject(err) : resolve(rows)
+        })
+    })
+}
+
+const checkCatatanSiswa = (idSiswa) => {
+    return new Promise((resolve, reject) => {
+        dbConnection.con.query("SELECT catatan FROM dataCatatanSiswa WHERE idSiswa = ?", [idSiswa], (err, rows) => {
             err ? reject(err) : resolve(rows)
         })
     })
@@ -119,7 +127,6 @@ app.get('/dashboard', redirectLogin, async (req, res) => {
     const hasilCheckHadirSiswa = await checkHadirSiswa(idSiswa)
     const hasilCheckIzinSiswa = await checkIzinSiswa(idSiswa)
     const hasilCheckSakitSiswa = await checkSakitSiswa(idSiswa)
-    const hasilCheckNilaiSiswa = await checkNilaiSiswa(idSiswa)
     const hasilCheckAlfaSiswa = await checkAlfaSiswa(idSiswa)
     const hasilCheckKelasSiswa = await checkKelasSiswa(idSiswa)
     kelasSiswa = hasilCheckKelasSiswa[0].kelas
@@ -127,6 +134,7 @@ app.get('/dashboard', redirectLogin, async (req, res) => {
     idGuru = hasilCheckWaliKelasSiswa[0].idGuru
     const hasilCheckDetailWaliKelasSiswa = await checkDetailWaliKelasSiswa(idGuru)
     namaGuru = hasilCheckDetailWaliKelasSiswa[0].namaLengkap
+    const hasilCheckCatatanSiswa = await checkCatatanSiswa(idSiswa)
 
     res.render('siswa/dashboard', {
         namaSiswa: namaSiswa ? namaSiswa : "Siswa",
@@ -134,11 +142,11 @@ app.get('/dashboard', redirectLogin, async (req, res) => {
         totalIzin: hasilCheckIzinSiswa ? hasilCheckIzinSiswa.length : 0,
         totalSakit: hasilCheckSakitSiswa ? hasilCheckSakitSiswa.length : 0,
         totalAlfa: hasilCheckAlfaSiswa ? hasilCheckAlfaSiswa.length : 0,
-        listNilaiSiswa: hasilCheckNilaiSiswa ? hasilCheckNilaiSiswa : [],
         idGuru: idGuru ? idGuru : "-",
         namaGuru: namaGuru ? namaGuru : "-",
         nomorTelefonGuru: hasilCheckDetailWaliKelasSiswa ? hasilCheckDetailWaliKelasSiswa[0].nomorTelefon : "-",
-        emailGuru: hasilCheckDetailWaliKelasSiswa ? hasilCheckDetailWaliKelasSiswa[0].email : "-"
+        emailGuru: hasilCheckDetailWaliKelasSiswa ? hasilCheckDetailWaliKelasSiswa[0].email : "-",
+        catatanSiswa: hasilCheckCatatanSiswa[0].catatan
     })
 })
 
@@ -218,6 +226,13 @@ app.put('/profilSiswa', redirectLogin, (req, res) => {
         } else {
             res.redirect('profilSiswa')
         }
+    })
+})
+
+app.get('/nilaiSiswa', redirectLogin, async (req, res) => {
+    const hasilCheckNilaiSiswa = await checkNilaiSiswa(idSiswa)
+    res.render('siswa/nilaiSiswa', {
+        namaSiswa: namaSiswa
     })
 })
 

@@ -448,7 +448,7 @@ app.route('/editNilaiSiswa/(:id)', redirectLogin)
         let dataNilaiSiswa = {
             id: req.params.id,
             idGuru: idGuru,
-            idSiswa: req.sanitize('id').escape().trim(),
+            idSiswa: req.sanitize('idSiswa').escape().trim(),
             nilaiTugas: req.sanitize('nilaiTugas').toInt(),
             nilaiTugas2: req.sanitize('nilaiTugas2').escape().trim() ? req.sanitize('nilaiTugas2').toInt() : 0,
             nilaiTugas3: req.sanitize('nilaiTugas3').escape().trim() ? req.sanitize('nilaiTugas3').toInt() : 0,

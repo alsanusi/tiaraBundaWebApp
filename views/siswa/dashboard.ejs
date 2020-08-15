@@ -105,6 +105,11 @@
                             <i class="ni ni-single-copy-04 text-red"></i> Daftar Hadir Siswa
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/siswa/nilaiSiswa">
+                            <i class="ni ni-single-copy-04 text-green"></i> List Nilai Siswa
+                        </a>
+                    </li>
                 </ul>
                 <!-- Divider -->
                 <hr class="my-3">
@@ -262,213 +267,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="margin-top: 50px;">
-                <div class="col-xl-12 mb-5 mb-xl-0">
-                    <div class="card shadow">
-                        <div class="card-header border-0">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h3 class="mb-0">Daftar Nilai</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="table-responsive">
-                            <!-- Projects table -->
-                            <table class="table align-items-center table-flush">
-                                <!-- <thead class="thead-light">
-
-                                </thead> -->
-                                <!-- <tbody> -->
-                                <% if(listNilaiSiswa) { %>
-                                <% listNilaiSiswa.forEach((data, i) => { %>
-                                <tr>
-                                    <th scope="col">ID Siswa</th>
-                                    <td><%= data.idSiswa %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nama Siswa</th>
-                                    <td><%= data.namaSiswa %></td>
-                                </tr>
-                                <!-- Nilai PKN -->
-                                <tr>
-                                    <th scope="col" style="font-size: 18px;">PKN</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Tugas</th>
-                                    <td><%= data.nilaiTugasPkn %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Ujian</th>
-                                    <td><%= data.nilaiUjianPkn %></td>
-                                </tr>
-                                <tr style="font-weight: bold; font-size: 16px;">
-                                    <th scope="col">Nilai Akhir</th>
-                                    <td style="color: green;"><%= (data.nilaiTugasPkn + data. nilaiUjianPkn) / 2%>
-                                    </td>
-                                </tr>
-                                <!-- NIlai Matematika -->
-                                <tr>
-                                    <th scope="col" style="font-size: 18px;">Matematika</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Tugas</th>
-                                    <td><%= data.nilaiTugasMatematika %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Ujian</th>
-                                    <td><%= data.nilaiUjianMatematika %></td>
-                                </tr>
-                                <tr style="font-weight: bold; font-size: 16px;">
-                                    <th scope="col">Nilai Akhir</th>
-                                    <td style="color: green;">
-                                        <%= (data.nilaiTugasMatematika + data. nilaiUjianMatematika) / 2%>
-                                    </td>
-                                </tr>
-                                <!-- NIlai IPS -->
-                                <tr>
-                                    <th scope="col" style="font-size: 18px;">IPS</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Tugas</th>
-                                    <td><%= data.nilaiTugasIps %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Ujian</th>
-                                    <td><%= data.nilaiUjianIps %></td>
-                                </tr>
-                                <tr style="font-weight: bold; font-size: 16px;">
-                                    <th scope="col">Nilai Akhir</th>
-                                    <td style="color: green;">
-                                        <%= (data.nilaiTugasIps + data. nilaiUjianIps) / 2%>
-                                    </td>
-                                </tr>
-                                <!-- Nilai Agama -->
-                                <tr>
-                                    <th scope="col" style="font-size: 18px;">Agama</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Tugas</th>
-                                    <td><%= data.nilaiTugasAgama %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Ujian</th>
-                                    <td><%= data.nilaiUjianAgama %></td>
-                                </tr>
-                                <tr style="font-weight: bold; font-size: 16px;">
-                                    <th scope="col">Nilai Akhir</th>
-                                    <td style="color: green;">
-                                        <%= (data.nilaiTugasAgama + data. nilaiUjianAgama) / 2%>
-                                    </td>
-                                </tr>
-                                <!-- Nilai IPA -->
-                                <tr>
-                                    <th scope="col" style="font-size: 18px;">IPA</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Tugas</th>
-                                    <td><%= data.nilaiTugasIpa %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Ujian</th>
-                                    <td><%= data.nilaiUjianIpa %></td>
-                                </tr>
-                                <tr style="font-weight: bold; font-size: 16px;">
-                                    <th scope="col">Nilai Akhir</th>
-                                    <td style="color: green;">
-                                        <%= (data.nilaiTugasIpa + data. nilaiUjianIpa) / 2%>
-                                    </td>
-                                </tr>
-                                <!-- Nilai Bahasa Indonesia -->
-                                <tr>
-                                    <th scope="col" style="font-size: 18px;">Bahasa Indonesia</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Tugas</th>
-                                    <td><%= data.nilaiTugasBahasaIndonesia %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Ujian</th>
-                                    <td><%= data.nilaiUjianBahasaIndonesia %></td>
-                                </tr>
-                                <tr style="font-weight: bold; font-size: 16px;">
-                                    <th scope="col">Nilai Akhir</th>
-                                    <td style="color: green;">
-                                        <%= (data.nilaiTugasBahasaIndonesia + data. nilaiUjianBahasaIndonesia) / 2%>
-                                    </td>
-                                </tr>
-                                <!-- NIlai Bahasa Inggris -->
-                                <tr>
-                                    <th scope="col" style="font-size: 18px;">Bahasa Inggris</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Tugas</th>
-                                    <td><%= data.nilaiTugasBahasaInggris %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Ujian</th>
-                                    <td><%= data.nilaiUjianBahasaInggris %></td>
-                                </tr>
-                                <tr style="font-weight: bold; font-size: 16px;">
-                                    <th scope="col">Nilai Akhir</th>
-                                    <td style="color: green;">
-                                        <%= (data.nilaiTugasBahasaInggris + data. nilaiUjianBahasaInggris) / 2%>
-                                    </td>
-                                </tr>
-                                <!-- Nilai Penjaskes -->
-                                <tr>
-                                    <th scope="col" style="font-size: 18px;">Penjaskes</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Tugas</th>
-                                    <td><%= data.nilaiTugasPenjaskes %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Ujian</th>
-                                    <td><%= data.nilaiUjianPenjaskes %></td>
-                                </tr>
-                                <tr style="font-weight: bold; font-size: 16px;">
-                                    <th scope="col">Nilai Akhir</th>
-                                    <td style="color: green;">
-                                        <%= (data.nilaiTugasPenjaskes + data. nilaiUjianPenjaskes) / 2%>
-                                    </td>
-                                </tr>
-                                <!-- Nilai Seni Budaya -->
-                                <tr>
-                                    <th scope="col" style="font-size: 18px;">Seni Budaya</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Tugas</th>
-                                    <td><%= data.nilaiTugasSeniBudaya %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Nilai Ujian</th>
-                                    <td><%= data.nilaiUjianSeniBudaya %></td>
-                                </tr>
-                                <tr style="font-weight: bold; font-size: 16px;">
-                                    <th scope="col">Nilai Akhir</th>
-                                    <td style="color: green;">
-                                        <%= (data.nilaiTugasSeniBudaya + data. nilaiUjianSeniBudaya) / 2%>
-                                    </td>
-                                </tr>
-                                <!-- </tr> -->
-                                <% }) %>
-                                <% } %>
-                                <!-- </tbody> -->
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="margin-top: 50px;">
+            <div class="row" style="margin-top: 10px;">
                 <div class="col-xl-12 mb-5 mb-xl-0">
                     <div class="card shadow">
                         <div class="card-header border-0">
@@ -479,22 +278,11 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <!-- Projects table -->
                             <table class="table align-items-center table-flush">
-                                <!-- <thead class="thead-light">
-
-                                </thead> -->
-                                <!-- <tbody> -->
-                                <% if(listNilaiSiswa) { %>
-                                <% listNilaiSiswa.forEach((data, i) => { %>
                                 <tr>
                                     <th scope="col">Catatan Guru</th>
-                                    <td><%= data.catatanSiswa%></td>
+                                    <td><%= catatanSiswa %></td>
                                 </tr>
-                                <!-- </tr> -->
-                                <% }) %>
-                                <% } %>
-                                <!-- </tbody> -->
                             </table>
                         </div>
                     </div>
