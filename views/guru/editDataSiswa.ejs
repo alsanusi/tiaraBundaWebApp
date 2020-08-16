@@ -301,6 +301,20 @@
                                                         name="nilaiTugas2" value="<%= data.nilaiTugas2 %>"
                                                         placeholder=" Nilai Tugas" type="number">
                                                 </div>
+                                                <!-- TambahNilai 3 -->
+                                                <% if(data.nilaiTugas3 === 0) { %>
+                                                <div id="button2">
+                                                    <input type="button" class="btn"
+                                                        style="padding: unset; background-color: unset; margin-bottom: 10px; color: green;"
+                                                        onclick="viewNilai3()" value="Tambah Nilai Tugas">
+                                                </div>
+                                                <script>
+                                                    function viewNilai3() {
+                                                        document.getElementById("tambahNilai3").style.display = "block";
+                                                        document.getElementById("button2").style.display = "none";
+                                                    }
+                                                </script>
+                                                <% } %>
                                             </div>
                                             <% } %>
                                             <% if(data.nilaiUjian2 === 0) { %>
@@ -352,6 +366,21 @@
                                                         name="nilaiUjian2" value="<%= data.nilaiUjian2 %>"
                                                         placeholder=" Nilai Ujian" type="number">
                                                 </div>
+                                                <!-- TambahNilai 3 -->
+                                                <% if(data.nilaiUjian3 === 0) { %>
+                                                <div id="button4">
+                                                    <input type="button" class="btn"
+                                                        style="padding: unset; background-color: unset; margin-bottom: 10px; color: green;"
+                                                        onclick="viewNilaiUjian3()" value="Tambah Nilai Ujian">
+                                                </div>
+                                                <script>
+                                                    function viewNilaiUjian3() {
+                                                        document.getElementById("tambahNilaiUjian3").style.display =
+                                                            "block";
+                                                        document.getElementById("button4").style.display = "none";
+                                                    }
+                                                </script>
+                                                <% } %>
                                             </div>
                                             <% } %>
                                         </div>
