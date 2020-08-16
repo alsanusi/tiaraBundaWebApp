@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 28, 2020 at 08:35 AM
+-- Generation Time: Aug 16, 2020 at 10:23 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.2.31
 
@@ -39,6 +39,27 @@ CREATE TABLE `dataBerita` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dataCatatanSiswa`
+--
+
+CREATE TABLE `dataCatatanSiswa` (
+  `id` int(11) NOT NULL,
+  `idSiswa` varchar(1000) NOT NULL,
+  `idGuru` varchar(1000) DEFAULT NULL,
+  `catatan` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `dataCatatanSiswa`
+--
+
+INSERT INTO `dataCatatanSiswa` (`id`, `idSiswa`, `idGuru`, `catatan`) VALUES
+(1, 'S1531', NULL, NULL),
+(2, 'S24811', 'G13423', 'Anak yang baik dan sopan');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dataEvent`
 --
 
@@ -53,7 +74,7 @@ CREATE TABLE `dataEvent` (
 --
 
 INSERT INTO `dataEvent` (`id`, `tanggal`, `event`) VALUES
-(1, '2020-07-22', 'Event Test'),
+(1, '2020-07-22', 'Event Test1'),
 (2, '2020-07-23', 'Event Test 2');
 
 -- --------------------------------------------------------
@@ -81,8 +102,35 @@ CREATE TABLE `dataGuru` (
 --
 
 INSERT INTO `dataGuru` (`id`, `fotoProfil`, `namaLengkap`, `tempatLahir`, `tanggalLahir`, `alamat`, `nomorTelefon`, `agama`, `jenisKelamin`, `password`, `email`) VALUES
-('G24235', 'fotoProfilGuru-1592982398578.jpeg', 'Tawil Fattawa', 'Ujung Pandang', '2015-11-18', 'Bojongsoang', '01112829758', 'Islam', 'Pria', '12345', 'teacher1@gmail.com'),
-('G26170', 'fotoProfilGuru-1593180709942.jpeg', 'Mark Zuckerburger', 'Makassar', '1996-11-18', 'Bojongsoang', '12345', 'Islam', 'Pria', '12345', 'teacher2@gmail.com');
+('G13151', 'fotoProfilGuru-1597332809836.jpeg', 'Mamang Ganteng', 'Bandung', '1996-11-18', 'Toddopuli', '01112829758', 'Islam', 'Pria', '12345', 'teacher2@gmail.com'),
+('G13423', 'fotoProfilGuru-1597327271988.jpeg', 'Tetew', 'Taraktandung', '1996-11-18', 'Toddopuli', '01112829758', 'Islam', 'Pria', '12345', 'teacher1@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dataJadwalMapel`
+--
+
+CREATE TABLE `dataJadwalMapel` (
+  `id` int(11) NOT NULL,
+  `hari` varchar(1000) NOT NULL,
+  `jam` varchar(1000) NOT NULL,
+  `mapel` varchar(1000) NOT NULL,
+  `kelas` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `dataJadwalMapel`
+--
+
+INSERT INTO `dataJadwalMapel` (`id`, `hari`, `jam`, `mapel`, `kelas`) VALUES
+(1, 'Senin', '07.00 - 08.30', 'Matematika', '1'),
+(10, 'Senin', '08.30 - 10.00', 'Pendidikan Kewarganegaraan', '1'),
+(11, 'Senin', '10.00 - 10.30', 'Istirahat', '1'),
+(12, 'Senin', '10.30 - 12.00', 'Seni Budaya dan Keterampilan', '1'),
+(13, 'Senin', '12.00 - 12.30', 'Istirahat', '1'),
+(14, 'Senin', '12.30 - 13.30', 'Bahasa Mandarin', '1'),
+(17, 'Selasa', '07.00 - 08.30', 'Bahasa dan Sastra Sunda', '1');
 
 -- --------------------------------------------------------
 
@@ -105,7 +153,9 @@ CREATE TABLE `dataKehadiran` (
 --
 
 INSERT INTO `dataKehadiran` (`id`, `idSiswa`, `tanggal`, `status`, `idGuru`, `mataPelajaran`, `namaSiswa`) VALUES
-(37, 'S24811', '2020-07-24', 'Hadir', 'G24235', 'PKN', 'Muhammad Alkautsar Sanusi');
+(37, 'S24811', '2020-07-24', 'Hadir', 'G24235', 'PKN', 'Muhammad Alkautsar Sanusi'),
+(38, 'S24811', '2020-08-10', 'Hadir', 'G24235', 'PKN', 'Muhammad Alkautsar Sanusi'),
+(39, 'S24811', '2020-08-14', 'Hadir', 'G13423', 'Matematika', 'Muhammad Alkautsar Sanusi');
 
 -- --------------------------------------------------------
 
@@ -124,8 +174,7 @@ CREATE TABLE `dataKelas` (
 --
 
 INSERT INTO `dataKelas` (`id`, `kelas`, `idGuru`) VALUES
-(1, 1, 'G24235'),
-(3, 2, 'G26170');
+(8, 1, 'G13423');
 
 -- --------------------------------------------------------
 
@@ -145,47 +194,67 @@ CREATE TABLE `dataKelasSiswa` (
 --
 
 INSERT INTO `dataKelasSiswa` (`id`, `idSiswa`, `namaSiswa`, `kelas`) VALUES
-(10, 'S24811', 'Muhammad Alkautsar Sanusi', 1);
+(10, 'S24811', 'Muhammad Alkautsar Sanusi', 1),
+(15, 'S1531', 'Ahmad Sadiq Sanusi', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dataNilai`
+-- Table structure for table `dataMapel`
 --
 
-CREATE TABLE `dataNilai` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `idGuru` varchar(100) DEFAULT NULL,
-  `idSiswa` varchar(100) DEFAULT NULL,
-  `nilaiTugasPkn` int(100) DEFAULT NULL,
-  `nilaiUjianPkn` int(11) DEFAULT NULL,
-  `nilaiTugasMatematika` int(11) DEFAULT NULL,
-  `nilaiUjianMatematika` int(11) DEFAULT NULL,
-  `nilaiTugasIps` int(11) DEFAULT NULL,
-  `nilaiUjianIps` int(11) DEFAULT NULL,
-  `nilaiTugasAgama` int(11) DEFAULT NULL,
-  `nilaiUjianAgama` int(11) DEFAULT NULL,
-  `nilaiTugasIpa` int(11) DEFAULT NULL,
-  `nilaiUjianIpa` int(11) DEFAULT NULL,
-  `nilaiTugasBahasaIndonesia` int(11) DEFAULT NULL,
-  `nilaiUjianBahasaIndonesia` int(11) DEFAULT NULL,
-  `nilaiTugasBahasaInggris` int(11) DEFAULT NULL,
-  `nilaiUjianBahasaInggris` int(11) DEFAULT NULL,
-  `nilaiTugasPenjaskes` int(11) DEFAULT NULL,
-  `nilaiUjianPenjaskes` int(11) DEFAULT NULL,
-  `nilaiTugasSeniBudaya` int(11) DEFAULT NULL,
-  `nilaiUjianSeniBudaya` int(11) DEFAULT NULL,
-  `catatanSiswa` varchar(5000) DEFAULT NULL,
-  `namaSiswa` varchar(100) DEFAULT NULL,
-  `kelas` int(11) DEFAULT NULL
+CREATE TABLE `dataMapel` (
+  `id` int(11) NOT NULL,
+  `mapel` varchar(100) NOT NULL,
+  `category` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `dataNilai`
+-- Dumping data for table `dataMapel`
 --
 
-INSERT INTO `dataNilai` (`id`, `idGuru`, `idSiswa`, `nilaiTugasPkn`, `nilaiUjianPkn`, `nilaiTugasMatematika`, `nilaiUjianMatematika`, `nilaiTugasIps`, `nilaiUjianIps`, `nilaiTugasAgama`, `nilaiUjianAgama`, `nilaiTugasIpa`, `nilaiUjianIpa`, `nilaiTugasBahasaIndonesia`, `nilaiUjianBahasaIndonesia`, `nilaiTugasBahasaInggris`, `nilaiUjianBahasaInggris`, `nilaiTugasPenjaskes`, `nilaiUjianPenjaskes`, `nilaiTugasSeniBudaya`, `nilaiUjianSeniBudaya`, `catatanSiswa`, `namaSiswa`, `kelas`) VALUES
-(4, 'G24235', 'S24811', 80, 80, 60, 60, 90, 90, 90, 90, 100, 100, 60, 80, 80, 100, 90, 100, 100, 100, 'Bagus', 'Muhammad Alkautsar Sanusi', 1);
+INSERT INTO `dataMapel` (`id`, `mapel`, `category`) VALUES
+(5, 'Pendidikan Agama Katolik', 'Umum'),
+(6, 'Pendidikan Kewarganegaraan', 'Umum'),
+(7, 'Bahasa Indonesia', 'Umum'),
+(8, 'Matematika', 'Umum'),
+(9, 'Ilmu Pengetahuan Alam', 'Umum'),
+(10, 'Ilmu Pengetahuan Sosial', 'Umum'),
+(11, 'Seni Budaya dan Keterampilan', 'Umum'),
+(12, 'Pendidikan Jasmani, Olahraga dan Kesehatan', 'Umum'),
+(13, 'Bahasa dan Sastra Sunda', 'Mulok'),
+(14, 'PLH', 'Mulok'),
+(15, 'Bahasa Inggris', 'Mulok'),
+(17, 'Bahasa Mandarin', 'Mulok');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dataNilaiSiswa`
+--
+
+CREATE TABLE `dataNilaiSiswa` (
+  `id` int(11) NOT NULL,
+  `idGuru` varchar(100) NOT NULL,
+  `idSiswa` varchar(100) NOT NULL,
+  `mapel` varchar(1000) NOT NULL,
+  `nilaiTugas` int(11) NOT NULL,
+  `nilaiTugas2` int(11) NOT NULL,
+  `nilaiTugas3` int(11) NOT NULL,
+  `nilaiUjian` int(11) NOT NULL,
+  `nilaiUjian2` int(11) NOT NULL,
+  `nilaiUjian3` int(11) NOT NULL,
+  `namaSiswa` varchar(1000) NOT NULL,
+  `kelas` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `dataNilaiSiswa`
+--
+
+INSERT INTO `dataNilaiSiswa` (`id`, `idGuru`, `idSiswa`, `mapel`, `nilaiTugas`, `nilaiTugas2`, `nilaiTugas3`, `nilaiUjian`, `nilaiUjian2`, `nilaiUjian3`, `namaSiswa`, `kelas`) VALUES
+(1, 'G13423', 'S24811', 'Matematika', 100, 40, 40, 40, 40, 40, 'Muhammad Alkautsar Sanusi', '1'),
+(2, 'G13423', 'S24811', 'Bahasa Indonesia', 100, 100, 0, 100, 80, 0, 'Muhammad Alkautsar Sanusi', '1');
 
 -- --------------------------------------------------------
 
@@ -212,6 +281,7 @@ CREATE TABLE `dataSiswa` (
 --
 
 INSERT INTO `dataSiswa` (`id`, `fotoProfil`, `namaLengkap`, `tempatLahir`, `tanggalLahir`, `alamat`, `namaAyah`, `namaIbu`, `nomorTelefon`, `agama`, `jenisKelamin`) VALUES
+('S1531', 'fotoProfil-1597467291755.jpeg', 'Ahmad Sadiq Sanusi', 'Ujung Pandang', '1996-11-18', 'Toddopuli', 'Parent1', 'Parent2', '01112829758', 'Islam', 'Pria'),
 ('S24811', 'fotoProfil-1592982276968.jpeg', 'Muhammad Alkautsar Sanusi', 'Ujung Pandang', '2015-11-18', 'Jln Toddopuli X No 11', 'Parent1', 'Parent2', '082194275704', 'Islam', 'Pria');
 
 -- --------------------------------------------------------
@@ -239,6 +309,12 @@ ALTER TABLE `dataBerita`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dataCatatanSiswa`
+--
+ALTER TABLE `dataCatatanSiswa`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dataEvent`
 --
 ALTER TABLE `dataEvent`
@@ -248,6 +324,12 @@ ALTER TABLE `dataEvent`
 -- Indexes for table `dataGuru`
 --
 ALTER TABLE `dataGuru`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dataJadwalMapel`
+--
+ALTER TABLE `dataJadwalMapel`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -272,12 +354,16 @@ ALTER TABLE `dataKelasSiswa`
   ADD KEY `siswa` (`idSiswa`);
 
 --
--- Indexes for table `dataNilai`
+-- Indexes for table `dataMapel`
 --
-ALTER TABLE `dataNilai`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idKelas2` (`idGuru`),
-  ADD KEY `idSiswa2` (`idSiswa`);
+ALTER TABLE `dataMapel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dataNilaiSiswa`
+--
+ALTER TABLE `dataNilaiSiswa`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `dataSiswa`
@@ -302,34 +388,52 @@ ALTER TABLE `dataBerita`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `dataCatatanSiswa`
+--
+ALTER TABLE `dataCatatanSiswa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `dataEvent`
 --
 ALTER TABLE `dataEvent`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `dataJadwalMapel`
+--
+ALTER TABLE `dataJadwalMapel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- AUTO_INCREMENT for table `dataKehadiran`
 --
 ALTER TABLE `dataKehadiran`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `dataKelas`
 --
 ALTER TABLE `dataKelas`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `dataKelasSiswa`
 --
 ALTER TABLE `dataKelasSiswa`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `dataNilai`
+-- AUTO_INCREMENT for table `dataMapel`
 --
-ALTER TABLE `dataNilai`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `dataMapel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `dataNilaiSiswa`
+--
+ALTER TABLE `dataNilaiSiswa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `kotakSaran`
